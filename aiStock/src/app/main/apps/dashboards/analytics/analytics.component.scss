@@ -1,0 +1,147 @@
+@import "~@fuse/scss/fuse";
+
+#dashboard-analytics {   
+    background-color: #F3F7FA;
+    .main-widget {
+        display: flex;
+        flex-direction: column;
+        .nav-bar{
+            background-color: #8262fa;
+            color:white;
+            cursor: pointer;            
+            .active{
+                background-color: #8262fa;
+                color: white;  
+                mat-icon{               
+                    color:white;                      
+                }  
+                span{
+                    color:white;
+                    h2{
+                        color:white;
+                    } 
+                }  
+                
+            }
+        }
+        .nav-header{
+            padding: 32px;
+            display: inline-block;
+            mat-card{  
+                cursor: pointer;
+                max-width: 270px;
+                max-height: 176px;
+                mat-icon{
+                    //padding: 0px 46px 0px 0px;
+                    padding-left: -40px;
+                    color: #8262fa;                      
+                }                               
+                span{
+                    color: #b1b1b4;
+                    display: inline-block;
+                    // padding: 10px 10px 10px 10px;
+                    h2{
+                        color: #8262fa;
+                    }
+                }               
+            }
+            
+            
+        }
+    }
+
+    .header {
+        background-color: #E8E7F9; color: #8262fa;
+    }
+    /*  */
+    .content {
+        display: flex;
+        flex: 1 1 auto;
+        padding: 32px;
+        min-width: 0;        
+        .product-card {
+            text-align: center; 
+            padding: 10px;                        
+            mat-grid-tile {
+                background-color: white;
+                text-align: center;                                
+            }
+            mat-grid-tile-header{
+                background: none;
+                text-align: center; 
+                h2{
+                    color: #8262fa;
+                    text-align: center;
+                }
+            }                      
+            mat-grid-list{
+                color: #8262fa;
+                text-align: center;
+            }
+            mat-grid-tile-footer{
+                background: none;
+                text-align: center;
+            }
+           /*  p{
+                
+            } */
+        }
+        .example-header-image {
+            background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+            background-size: cover;
+        }
+        .submit-button{
+            background-color: white;
+            color: #8262fa; 
+            border: 5em;  
+            border-color: #8262fa;
+           // border: none;
+            outline:5em;
+        }
+        .submit-button:hover{
+            background-color: #8262fa;
+            color: white;   
+        }
+        @include media-breakpoint-down('md') {
+            flex-direction: column;
+        }
+
+        .left {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-width: 0;
+
+            .widget {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+        }
+
+        .right {
+            display: flex;
+            flex: 0 0 auto;
+            width: 320px;
+            min-width: 320px;
+            max-width: 320px;
+
+            @include media-breakpoint-down('md') {
+                flex: 1 0 100%;
+                margin-top: 32px;
+                width: 100%;
+                min-width: 0;
+                max-width: none;
+            }
+
+            .fuse-card {
+
+                @include media-breakpoint-down('md') {
+                    width: 100%;
+                    min-width: 0;
+                    max-width: none;
+                }
+            }
+        }
+    }
+
+}
