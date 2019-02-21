@@ -5,27 +5,25 @@ import { fuseAnimations } from '@fuse/animations';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 
 @Component({
-    selector     : 'analytics-dashboard',
-    templateUrl  : './analytics.component.html',
-    styleUrls    : ['./analytics.component.scss'],
+    selector: 'analytics-dashboard',
+    templateUrl: './analytics.component.html',
+    styleUrls: ['./analytics.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations
+    animations: fuseAnimations
 })
-export class AnalyticsDashboardComponent implements OnInit
-{
+export class AnalyticsDashboardComponent implements OnInit {
     widgets: any;
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
-    activeStock : string= "prediction";
+    activeStock = 'prediction';
     /**
      * Constructor
      *
      * @param {AnalyticsDashboardService} _analyticsDashboardService
      */
     constructor(
-        private _analyticsDashboardService: AnalyticsDashboardService,        
-    )
-    {
+        private _analyticsDashboardService: AnalyticsDashboardService,
+    ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
     }
@@ -37,12 +35,11 @@ export class AnalyticsDashboardComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
     }
-    
+
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
@@ -50,8 +47,7 @@ export class AnalyticsDashboardComponent implements OnInit
     /**
      * Register a custom plugin
      */
-    private _registerCustomChartJSPlugin(): void
-    {
+    private _registerCustomChartJSPlugin(): void {
         (<any>window).Chart.plugins.register({
             afterDatasetsDraw: function (chart, easing) {
                 // Only activate the plugin if it's made available
@@ -59,8 +55,7 @@ export class AnalyticsDashboardComponent implements OnInit
                 if (
                     !chart.options.plugins.xLabelsOnTop ||
                     (chart.options.plugins.xLabelsOnTop && chart.options.plugins.xLabelsOnTop.active === false)
-                )
-                {
+                ) {
                     return;
                 }
 
@@ -69,8 +64,7 @@ export class AnalyticsDashboardComponent implements OnInit
 
                 chart.data.datasets.forEach(function (dataset, i) {
                     const meta = chart.getDatasetMeta(i);
-                    if ( !meta.hidden )
-                    {
+                    if (!meta.hidden) {
                         meta.data.forEach(function (element, index) {
 
                             // Draw the text in black, with the specified font
@@ -108,7 +102,7 @@ export class AnalyticsDashboardComponent implements OnInit
         });
     }
 
-    public active_stock(tab){
+    public active_stock(tab) {
         this.activeStock = tab;
     }
 }

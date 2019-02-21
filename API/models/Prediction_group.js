@@ -4,40 +4,26 @@
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Prediction_group_Schema = sequelize.define(
-    "Prediction_group",
-    {
-      Group_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      group_name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      group_image: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      group_description: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      }
+  const Prediction_group_Schema = sequelize.define("Prediction_group", {
+    id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {}
-  );
+    group_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    group_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    group_image: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  });
 
   return Prediction_group_Schema;
 };

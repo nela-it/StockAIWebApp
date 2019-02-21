@@ -1,127 +1,182 @@
 @import "~@fuse/scss/fuse";
 
-#dashboard-analytics {   
+#dashboard-analytics {
     background-color: #F3F7FA;
+
     .main-widget {
         display: flex;
         flex-direction: column;
-        
-        .nav-header{
+
+        .nav-header {
             padding: 32px;
             display: inline-block;
-            mat-card{  
+
+            mat-card {
                 cursor: pointer;
                 max-width: 270px;
                 max-height: 176px;
-                mat-icon{
+
+                mat-icon {
                     //padding: 0px 46px 0px 0px;
                     padding-left: -40px;
-                    color: #8262fa;                      
-                }                               
-                span{
+                    color: #8262fa;
+                }
+
+                span {
                     color: #b1b1b4;
                     display: inline;
+
                     // padding: 10px 10px 10px 10px;
-                    h2{
+                    h2 {
                         color: #8262fa;
                     }
-                }               
-            }
-            .nav-bar{
-                background-color: #8262fa;
-                color:white;
-                cursor: pointer; 
-                margin: 10px;           
-                .active{
-                    background-color: #8262fa;
-                    color: white;  
-                    mat-icon{               
-                        color:white;                      
-                    }  
-                    span{
-                        color:white;
-                        h2{
-                            color:white;
-                        } 
-                    }  
-                    
                 }
             }
-            
+
+            .nav-bar {
+                background-color: white;
+                color: #8262fa;
+                cursor: pointer;
+                margin: 10px;
+
+
+
+                mat-icon {
+                    color: #8262fa;
+                    font-size: 40px;
+                    margin: 10px;
+                }
+
+                .info {
+                    margin-left: 20px;
+                }
+
+                .fontSize {
+                    font-size: x-large;
+                }
+
+                .cardHeight {
+                    height: 100px !important;
+                }
+
+                .bgColor {
+                    color: gray;
+                }
+            }
+
+            .active {
+                background-color: #8262fa;
+                color: white;
+                border-radius: 3px;
+
+                mat-icon {
+                    color: white;
+                }
+
+                .info .bgColor {
+                    color: white;
+                }
+            }
+
         }
     }
 
     .header {
-        background-color: #E8E7F9; color: #8262fa;
+        background-color: #E8E7F9;
+        color: #8262fa;
     }
+
     /*  */
     .content {
         display: flex;
         flex: 1 1 auto;
         padding: 32px;
-        min-width: 0;        
+        min-width: 0;
+
         .product-card {
-            text-align: center; 
-            padding: 10px;                        
+            text-align: center;
+            padding: 10px;
+
             mat-grid-tile {
                 background-color: white;
-                text-align: center;                                
+                text-align: center;
             }
-            mat-grid-tile-header{
+
+            mat-grid-tile-header {
                 background: none;
-                text-align: center; 
-                h2{
+                text-align: center;
+
+                h2 {
                     color: #8262fa;
                     text-align: center;
                 }
-            }                      
-            mat-grid-list{
+            }
+
+            mat-grid-list {
                 color: #8262fa;
                 text-align: center;
             }
-            mat-grid-tile-footer{
+
+            mat-grid-tile-footer {
                 background: none;
                 text-align: center;
             }
-           /*  p{
+
+            /*  p{
                 
             } */
         }
-        .price-tables .price-table{
+
+        .price-tables .price-table.style-2 .period {
+            padding: 0 32px;
+            font-size: 15px;
+            font-weight: normal;
+            color: rgba(0, 0, 0, 0.54);
+            text-align: center;
+        }
+
+        .price-tables .price-table {
             width: 18%;
         }
+
         .price-tables {
-            flex: 1 0 auto;            
+            flex: 1 0 auto;
             //margin-top: -192px;
 
             @include media-breakpoint-down('xs') {
                 margin-top: -128px;
             }
-            .price{
-                .value{
-                    padding:20px;
+
+            .price {
+                .value {
+                    padding: 20px;
                 }
             }
+
             .price-table {
                 margin: 10px;
             }
-            .group-title{
+
+            .group-title {
                 text-align: center;
                 font-size: 16px;
                 color: #8262fa;
             }
-            .terms{
+
+            .terms {
                 color: #b1b1b4;
                 text-align: center;
                 padding: 18px;
             }
-            .explore-button{
+
+            .explore-button {
                 background-color: #8262fa;
                 margin: 8px auto 32px auto;
                 width: 128px;
                 color: white;
             }
         }
+
         /* .example-header-image {
             background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
             background-size: cover;

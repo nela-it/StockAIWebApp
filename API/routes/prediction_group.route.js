@@ -6,40 +6,20 @@ const prediction_groupController = require("../controller/prediction_group.contr
 const checkAuth = require("../middleware/check-auth");
 
 const paramsValidation = {
-  social: {
+  exploreGroups: {
     body: {
-      apiType: Joi.string().required()
-    }
-  },
-  register: {
-    body: {
-      email: Joi.string()
-        .email({
-          minDomainAtoms: 2
-        })
-        .required(),
-      password: Joi.string().required()
-    }
-  },
-  forgotPassword: {
-    body: {
-      email: Joi.string()
-        .email({
-          minDomainAtoms: 2
-        })
-        .required()
-    }
-  },
-  changePassword: {
-    body: {
-      password: Joi.string().required(),
-      userId: Joi.string().required()
+      group_id: Joi.string().required()
     }
   }
 };
 
+router.route("/getGroups").get(checkAuth, prediction_groupController.getGroups);
 router
-  .route("/checkExcelSheet")
-  .get(prediction_groupController.checkExcelSheet);
+  .route("/exploreGroups")
+  .post(
+    checkAuth,
+    validate(paramsValidation.exploreGroups),
+    prediction_groupController.exploreGroups
+  );
 
 module.exports = router;

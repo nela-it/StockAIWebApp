@@ -7,8 +7,7 @@ const expressValidation = require("express-validation");
 const cors = require("cors");
 const APIError = require("./helpers/APIError");
 const config = require("./config/index");
-var path = require("path");
-// const db = require("./config/index").db;
+const service = require("./controller/prediction_group.controller");
 const logger = require("morgan");
 
 if (config.env === "development") {
@@ -24,6 +23,26 @@ app.use(
     extended: true
   })
 );
+
+var chokidar = require("chokidar");
+const XLSX = require("xlsx");
+var watcher = chokidar.watch("./files", {
+  persistent: true
+});
+
+watcher.on("add", function(path) {
+  console.log("File", path, "has been added");
+  if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
+    var workbook = XLSX.readFile(`./${path}`, {
+      cellDates: true,
+      cellText: false
+    });
+    var sheet_name_list = workbook.SheetNames;
+    let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+    console.log("excel sheet name", sheet_name_list[0]);
+    service.saveGroupData(data);
+  }
+});
 
 app.use("/api", routes);
 

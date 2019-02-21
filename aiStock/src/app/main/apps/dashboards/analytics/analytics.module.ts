@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatGridListModule,MatFormFieldModule,MatCardModule, MatIconModule, MatMenuModule, MatSelectModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatGridListModule, MatFormFieldModule, MatCardModule, MatIconModule, MatMenuModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { AgmCoreModule } from '@agm/core';
 import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -10,22 +10,32 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 
 import { AnalyticsDashboardComponent } from 'app/main/apps/dashboards/analytics/analytics.component';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
+import { PredictionListComponent } from './prediction/prediction.component';
+import { PredictionService } from './prediction/prediction.service';
 
 const routes: Routes = [
     {
-        path     : '**',
+        path: '',
         component: AnalyticsDashboardComponent,
-        resolve  : {
+        resolve: {
             data: AnalyticsDashboardService
+        }
+    },
+    {
+        path: 'prediction',
+        component: PredictionListComponent,
+        resolve: {
+            data: PredictionService
         }
     }
 ];
 
 @NgModule({
     declarations: [
-        AnalyticsDashboardComponent
+        AnalyticsDashboardComponent,
+        PredictionListComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -45,11 +55,10 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule
     ],
-    providers   : [
-        AnalyticsDashboardService
+    providers: [
+        AnalyticsDashboardService, PredictionService
     ]
 })
-export class AnalyticsDashboardModule
-{
+export class AnalyticsDashboardModule {
 }
 

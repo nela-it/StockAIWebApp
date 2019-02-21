@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+// tslint:disable-next-line: max-line-length
 import { MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatRippleModule, MatSelectModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
@@ -20,44 +21,44 @@ import { EcommerceOrderService } from 'app/main/apps/e-commerce/order/order.serv
 
 const routes: Routes = [
     {
-        path     : 'dashboard',
+        path: 'dashboard',
         component: EcommerceDashboardComponent,
-        resolve  : {
+        resolve: {
             data: EcommerceDashboardService
         }
     },
     {
-        path     : 'products',
+        path: 'products',
         component: EcommerceProductsComponent,
-        resolve  : {
+        resolve: {
             data: EcommerceProductsService
         }
     },
     {
-        path     : 'products/:id',
+        path: 'products/:id',
         component: EcommerceProductComponent,
-        resolve  : {
+        resolve: {
             data: EcommerceProductService
         }
     },
     {
-        path     : 'products/:id/:handle',
+        path: 'products/:id/:handle',
         component: EcommerceProductComponent,
-        resolve  : {
+        resolve: {
             data: EcommerceProductService
         }
     },
     {
-        path     : 'orders',
+        path: 'orders',
         component: EcommerceOrdersComponent,
-        resolve  : {
+        resolve: {
             data: EcommerceOrdersService
         }
     },
     {
-        path     : 'orders/:id',
+        path: 'orders/:id',
         component: EcommerceOrderComponent,
-        resolve  : {
+        resolve: {
             data: EcommerceOrderService
         }
     }
@@ -71,7 +72,7 @@ const routes: Routes = [
         EcommerceOrdersComponent,
         EcommerceOrderComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
 
         MatButtonModule,
@@ -95,7 +96,7 @@ const routes: Routes = [
         FuseSharedModule,
         FuseWidgetModule,
     ],
-    providers   : [
+    providers: [
         EcommerceDashboardService,
         EcommerceProductsService,
         EcommerceProductService,
@@ -103,6 +104,5 @@ const routes: Routes = [
         EcommerceOrderService
     ]
 })
-export class EcommerceModule
-{
+export class EcommerceModule {
 }

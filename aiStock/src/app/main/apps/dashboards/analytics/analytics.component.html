@@ -17,16 +17,59 @@
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Home
                 </span>
+                <!-- <span class="logo-text h4">
+                    Home
+                </span> -->
             </div>
 
         </div>
         <!-- / APP TITLE -->
     </div>
     <!-- / HEADER -->
+
     <div class="main-widget">
         <div fxLayout="row" class="nav-header">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
+                (click)="active_stock('prediction')" style="height:130px;">
+                <div class="logo">
+                    <span>
+                        <mat-icon>dashboard</mat-icon>
+                    </span>
+                </div>
 
-            <a [routerLink]="['/apps/dashboards/analytics']" class="nav-bar">
+                <div class="info">
+                    <div class="title fontSize">Predication Groups</div>
+                    <div class="address bgColor">Looking for a stock type? Start with these groups</div>
+                </div>
+            </div>
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
+                (click)="active_stock('portfolio')" style="height:130px;">
+                <div class="logo">
+                    <span>
+                        <mat-icon>donut_small</mat-icon>
+                    </span>
+                </div>
+
+                <div class="info">
+                    <div class="title fontSize">Portfolio</div>
+                    <div class="address bgColor">Get a overview of your stocks in a short time</div>
+                </div>
+            </div>
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product'}"
+                (click)="active_stock('product')" style="height:130px;">
+                <div class="logo">
+                    <span>
+                        <mat-icon>error_outline</mat-icon>
+                    </span>
+                </div>
+
+                <div class="info">
+                    <div class="title fontSize">Product Info </div>
+                    <div class="address bgColor">Get to know more about our AI Stock Prediction tool</div>
+                </div>
+            </div>
+
+            <!-- <a [routerLink]="['/apps/dashboards/analytics']" class="nav-bar">
                 <mat-card style="float:left;" [ngClass]="{active: activeStock == 'prediction'}" (click)="active_stock('prediction')">
                     <span>
                         <mat-icon>dashboard</mat-icon>
@@ -56,7 +99,7 @@
                         <h2>Product Info</h2>Get to know more about our AI Stock Prediction tool
                     </span>
                 </mat-card>
-            </a>
+            </a> -->
         </div>
         <!--    <div class="position-relative p-24 mat-blue-600-bg"
              fxLayout="row" fxLayoutAlign="space-between center">
@@ -98,12 +141,13 @@
     <div class="content" fxLayout="column">
 
         <!-- PRICE TABLES -->
-        <div class="price-tables" fxLayout="row wrap" fxLayoutAlign="center center">
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+        <div class="price-tables" *ngIf="activeStock === 'prediction'" [@routerTransitionDown] fxLayout="row wrap"
+            fxLayoutAlign="center center">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Lion Stocks</b></div>
+                <div class="group-title">Lion Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -113,11 +157,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Tiger Stocks</b></div>
+                <div class="group-title">Tiger Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -127,11 +171,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Elephant Stocks</b></div>
+                <div class="group-title">Elephant Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -141,11 +185,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Snake Stocks</b></div>
+                <div class="group-title">Snake Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -155,11 +199,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Cow Stocks</b></div>
+                <div class="group-title">Cow Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -169,11 +213,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Chicken Stocks</b></div>
+                <div class="group-title">Chicken Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -183,11 +227,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Turtle Stocks</b></div>
+                <div class="group-title">Turtle Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -197,11 +241,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Bee Stocks</b></div>
+                <div class="group-title">Bee Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -211,11 +255,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Lion Stocks</b></div>
+                <div class="group-title">Lion Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -225,11 +269,11 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
-            <div class="price-table style-2 mat-elevation-z4" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title"><b>Bee Stocks</b></div>
+                <div class="group-title">Bee Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -239,6 +283,31 @@
                 </div>
                 <button mat-raised-button class="explore-button">Explore</button>
             </div>
+        </div>
+        <div class="fuse-card auto-width" *ngIf="activeStock ==='portfolio'">
+
+            <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxLayout="column" fxLayoutAlign="start start">
+                    <span class="h2">Visitors & Page views</span>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'yesterday'"
+                        [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
+                        Yesterday
+                    </div>
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'today'"
+                        [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
+                        Today
+                    </div>
+                </div>
+            </div>
+
+            <div class="position-relative h-368 pb-16">
+                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]" [labels]="widgets.widget5.labels"
+                    [colors]="widgets.widget5.colors" [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
+                </canvas>
+            </div>
+
         </div>
     </div>
 </div>

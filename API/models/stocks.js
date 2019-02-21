@@ -4,56 +4,59 @@
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const stocks_Schema = sequelize.define(
-    "stocks",
-    {
-      stocks_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      group_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-      },
-      ticker: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      stock_name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      recommended_price: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      suggested_date: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      target_price: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      value_graph: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      timestamp: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      }
+  const stocks_Schema = sequelize.define("stocks", {
+    id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {}
-  );
+    group_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+      allowNull: false
+    },
+    ticker: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    ticker_image: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    stock_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    recommended_price: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    current_price: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    suggested_date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    suggested_date_price: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    target_price: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    target_date: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    version: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  });
 
   return stocks_Schema;
 };
