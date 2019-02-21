@@ -57,7 +57,9 @@
             @include media-breakpoint-down('xs') {
                 margin-top: -128px;
             }
-
+            .price{
+                padding:20px;
+            }
             .price-table {
                 margin: 12px;
             }

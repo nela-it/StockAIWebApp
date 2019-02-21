@@ -11,18 +11,17 @@ import {
     MatSnackBar,
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition,
-  } from '@angular/material';
-declare var IN: any;    
+} from '@angular/material';
+declare var IN: any;
 @Component({
-    selector   : 'register',
+    selector: 'register',
     templateUrl: './register.component.html',
-    styleUrls  : ['./register.component.scss'],
-    animations : fuseAnimations
+    styleUrls: ['./register.component.scss'],
+    animations: fuseAnimations
 })
-export class RegisterComponent implements OnInit, OnDestroy
-{
+export class RegisterComponent implements OnInit, OnDestroy {
     registerForm: FormGroup;
-    public error_msg : string;
+    public error_msg: string;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -30,21 +29,20 @@ export class RegisterComponent implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService,
         private _formBuilder: FormBuilder,
         private authService: AuthService,
-        private _authenticationService : AuthenticationService,
+        private _authenticationService: AuthenticationService,
         private route: ActivatedRoute, private router: Router,
         public snackBar: MatSnackBar
-    )
-    {
+    ) {
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
-                navbar   : {
+                navbar: {
                     hidden: true
                 },
-                toolbar  : {
+                toolbar: {
                     hidden: true
                 },
-                footer   : {
+                footer: {
                     hidden: true
                 },
                 sidepanel: {
@@ -64,15 +62,14 @@ export class RegisterComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.registerForm = this._formBuilder.group({
-            name           : ['', Validators.required],
-            email          : ['', [Validators.required, Validators.email,
-                                    Validators.pattern('[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}')]],
-            password       : ['', [Validators.required,
-                                Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]
-                                ],            
+            name: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email,
+            Validators.pattern('[\\w\\.-]+@[\\w\\.-]+\\.\\w{2,4}')]],
+            password: ['', [Validators.required,
+            Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]
+            ],
         });
 
         // Update the validity of the 'passwordConfirm' field
@@ -87,57 +84,57 @@ export class RegisterComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
-    registerSubmit(){
+    registerSubmit() {
         if (this.registerForm.invalid) {
             return false;
-        } else { 
-            const eptPassword = btoa(this.registerForm.value.password);           
+        } else {
+            const eptPassword = btoa(this.registerForm.value.password);
             const registerData = {
-                'register' : true,
-                'email' : this.registerForm.value.email,
-                'username' : this.registerForm.value.name,
-                'password' : eptPassword
+                'apiType': 'register',
+                'email': this.registerForm.value.email,
+                'username': this.registerForm.value.name,
+                'password': eptPassword
             }
             this._authenticationService.registerUser(registerData).subscribe((result) => {
-                localStorage.setItem('userdata',result.token);
+                console.log("asdasdasd", registerData, result)
+                localStorage.setItem('userdata', result.token);
                 this.snackBar.open('Success', 'You are register successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
                 });
                 this.router.navigate(['/apps/dashboards/analytics']);
-              }, (err) => {                
-                if(err){           
+            }, (err) => {
+                if (err) {
                     this.snackBar.open('Error', err.error.message, {
                         duration: 2000,
                         horizontalPosition: 'center',
                         verticalPosition: 'top'
-                    });                         
+                    });
                 }
             });
-        } 
+        }
     }
     //Login with social 
-    socialSignIn(socialPlatform : string){
+    socialSignIn(socialPlatform: string) {
         let socialPlatformProvider;
-        if(socialPlatform == "facebook"){
-        socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-        }else if(socialPlatform == "google"){
-        socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+        if (socialPlatform == "facebook") {
+            socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+        } else if (socialPlatform == "google") {
+            socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
         } else if (socialPlatform == "linkedin") {
-        socialPlatformProvider = LinkedInLoginProvider.PROVIDER_ID;
+            socialPlatformProvider = LinkedInLoginProvider.PROVIDER_ID;
         }
         this.authService.signIn(socialPlatformProvider).then(
-            (socialData) => {                        
+            (socialData) => {
                 const userData = {
-                    'socialRegister' : true,
-                    'providerData' : {
+                    'apiType': 'socialRegister',
+                    'providerData': {
                         'email': socialData.email,
                         'firstName': socialData.firstName,
                         'id': socialData.id,
@@ -146,25 +143,25 @@ export class RegisterComponent implements OnInit, OnDestroy
                         'provider': socialData.provider
                     }
                 }
-                this._authenticationService.registerUser(userData).subscribe((result) => {                                    
-                    localStorage.setItem('userdata',result.token);
+                this._authenticationService.registerUser(userData).subscribe((result) => {
+                    localStorage.setItem('userdata', result.token);
                     this.snackBar.open('Success', 'You are register successfully', {
                         duration: 2000,
                         horizontalPosition: 'center',
                         verticalPosition: 'top'
                     });
                     this.router.navigate(['/apps/dashboards/analytics']);
-                  }, (err) => {                    
-                    if(err){  
+                }, (err) => {
+                    if (err) {
                         this.snackBar.open('Error', err.error.message, {
                             duration: 2000,
                             horizontalPosition: 'center',
                             verticalPosition: 'top'
-                        });                                                
+                        });
                     }
                 });
-              // Now sign-in with userData                  
-            },(err) => {
+                // Now sign-in with userData                  
+            }, (err) => {
                 console.log(err)
             }
         );
@@ -174,8 +171,8 @@ export class RegisterComponent implements OnInit, OnDestroy
         IN.Event.on(IN, 'auth', r => {
             this.getLinkedinUserData();
         });
- 
- 
+
+
         if (!IN.User.isAuthorized()) {
             /* if not authorised */
             console.log('NOT AUTHORISED');
@@ -191,7 +188,7 @@ export class RegisterComponent implements OnInit, OnDestroy
             this.getLinkedinUserData();
         }
     }
- 
+
     // tslint:disable-next-line:typedef
     getLinkedinUserData() {
         IN.API.Raw('/people/~:(id,first-name,last-name,email-address,headline,picture-url)').result(result => {
@@ -199,38 +196,38 @@ export class RegisterComponent implements OnInit, OnDestroy
             const username = result.firstName + result.lastName;
             const email = result.firstName + '121' + result.lastName + '@gmail.com';
             const userData = {
-                "socialRegister":true,
-                "providerData" : {
-                "email": email,
-                "firstName": result.firstName,
-                "id": result.id,
-                "lastName": result.firstName,
-                "username": username,
-                "provider": "LINKEDIN"
+                "apiType": 'socialRegister',
+                "providerData": {
+                    "email": email,
+                    "firstName": result.firstName,
+                    "id": result.id,
+                    "lastName": result.firstName,
+                    "username": username,
+                    "provider": "LINKEDIN"
                 }
             }
             //console.log(userData);
-            this._authenticationService.registerUser(userData).subscribe((result) => {                
-                localStorage.setItem('userdata',result.token);
+            this._authenticationService.registerUser(userData).subscribe((result) => {
+                localStorage.setItem('userdata', result.token);
                 this.snackBar.open('Success', 'You are register successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
                 });
                 this.router.navigate(['/apps/dashboards/analytics']);
-              }, (err) => {
+            }, (err) => {
                 console.log(err);
-                if(err){
+                if (err) {
                     this.snackBar.open('Error', err.error.message, {
                         duration: 2000,
                         horizontalPosition: 'center',
                         verticalPosition: 'top'
-                    });                        
+                    });
                 }
             });
         }).error(error => {
         });
-    }        
+    }
 }
 
 /**
@@ -241,28 +238,24 @@ export class RegisterComponent implements OnInit, OnDestroy
  */
 export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
 
-    if ( !control.parent || !control )
-    {
+    if (!control.parent || !control) {
         return null;
     }
 
     const password = control.parent.get('password');
     const passwordConfirm = control.parent.get('passwordConfirm');
 
-    if ( !password || !passwordConfirm )
-    {
+    if (!password || !passwordConfirm) {
         return null;
     }
 
-    if ( passwordConfirm.value === '' )
-    {
+    if (passwordConfirm.value === '') {
         return null;
     }
 
-    if ( password.value === passwordConfirm.value )
-    {
+    if (password.value === passwordConfirm.value) {
         return null;
     }
 
-    return {'passwordsNotMatching': true};
+    return { 'passwordsNotMatching': true };
 };

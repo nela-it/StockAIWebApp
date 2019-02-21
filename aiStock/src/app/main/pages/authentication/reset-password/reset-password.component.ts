@@ -2,10 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
-
+import { AuthenticationService } from '../../authentication.service';
+import {
+    MatSnackBar,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition,
+  } from '@angular/material';
+declare var IN: any;
 @Component({
     selector   : 'reset-password',
     templateUrl: './reset-password.component.html',
@@ -15,13 +21,16 @@ import { fuseAnimations } from '@fuse/animations';
 export class ResetPasswordComponent implements OnInit, OnDestroy
 {
     resetPasswordForm: FormGroup;
-
+    public id: string;
     // Private
     private _unsubscribeAll: Subject<any>;
 
     constructor(
         private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private _authenticationService: AuthenticationService,
+        private route: ActivatedRoute, private router: Router,
+        public snackBar: MatSnackBar,
     )
     {
         // Configure the layout
@@ -56,10 +65,9 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.resetPasswordForm = this._formBuilder.group({
-            name           : ['', Validators.required],
-            email          : ['', [Validators.required, Validators.email]],
             password       : ['', Validators.required],
-            passwordConfirm: ['', [Validators.required, confirmPasswordValidator]]
+            passwordConfirm: ['', [Validators.required, confirmPasswordValidator,
+                Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]]
         });
 
         // Update the validity of the 'passwordConfirm' field
@@ -69,6 +77,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
             .subscribe(() => {
                 this.resetPasswordForm.get('passwordConfirm').updateValueAndValidity();
             });
+        this.id = this.route.snapshot.paramMap.get('id');
+        //console.log(this.id)
     }
 
     /**
@@ -79,6 +89,35 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+    }
+    resetSubmit(){
+        console.log('callllll------------');
+        if (this.resetPasswordForm.invalid) {
+            return false;
+        } else {     
+            const eptPassword = btoa(this.resetPasswordForm.value.password);                  
+            const data = {     
+                'userId' : this.id,
+                'password' : eptPassword,
+            }       
+            console.log(data);
+            this._authenticationService.changePassword(data).subscribe((result) => {                                            
+                this.snackBar.open('Success', 'Your Password Has Been Changed Successfully', {
+                    duration: 2000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'top'
+                  });
+                this.router.navigate(['/pages/auth/login']);
+              }, (err) => {                
+                if(err){
+                    this.snackBar.open('Error', err.error.message, {
+                        duration: 2000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top'
+                    });
+                }
+            });
+        }  
     }
 }
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule,MatIconModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
@@ -8,7 +8,7 @@ import { ResetPasswordComponent } from 'app/main/pages/authentication/reset-pass
 
 const routes = [
     {
-        path     : 'auth/reset-password',
+        path     : 'auth/reset-password/:id',
         component: ResetPasswordComponent
     }
 ];
@@ -23,6 +23,7 @@ const routes = [
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
+        MatIconModule,
 
         FuseSharedModule
     ]

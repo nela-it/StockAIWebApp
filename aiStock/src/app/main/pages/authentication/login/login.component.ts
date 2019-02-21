@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
             // console.log("atob-----", btoa("Nihal Koli"));
             // console.log('EncText === ', encpwd.toString());
             const loginData = {
-                'login': true,
+                'apiType': 'login',
                 'username': this.loginForm.value.email,
                 'password': eptPassword // md5.appendStr(this.loginForm.value.password).end()
             };
@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit {
         this.authService.signIn(socialPlatformProvider).then(
             (socialData) => {
                 const userData = {
-                    'socialLogin': true,
+                    'apiType': 'socialLogin',
                     'providerData': {
                         'email': socialData.email,
                         'firstName': socialData.firstName,
@@ -193,7 +193,7 @@ export class LoginComponent implements OnInit {
             const username = result.firstName + result.lastName;
             const email = `${result.firstName}${result.lastName}@gmail.com`;
             const userData = {
-                'socialLogin': true,
+                'apiType': 'socialLogin',
                 'providerData': {
                     'email': email,
                     'firstName': result.firstName,

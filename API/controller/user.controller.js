@@ -15,7 +15,7 @@ const atob = require("atob");
 
 exports.register = (req, res, next) => {
   if (req.body.apiType === "socialRegister") {
-    let params = req.body.providerData;
+    let params = req.body.providerData ? req.body.providerData : {};
     if (params.id && params.provider) {
       userService.check_auth_provider(params, next, (err, data) => {
         if (err) next(err);
@@ -26,7 +26,7 @@ exports.register = (req, res, next) => {
       });
     } else {
       return res.status(400).json({
-        message: "Unauthorised Data"
+        message: "Unauthorized Data"
       });
     }
   }
@@ -42,7 +42,7 @@ exports.register = (req, res, next) => {
       });
     } else {
       return res.status(400).json({
-        message: "Unauthorised Data"
+        message: "Unauthorized Data"
       });
     }
   }
@@ -50,7 +50,7 @@ exports.register = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   if (req.body.apiType === "socialLogin") {
-    let params = req.body.providerData;
+    let params = req.body.providerData ? req.body.providerData : {};
     if (params.id && params.provider) {
       userService.check_auth_provider(
         req.body.providerData,
@@ -65,7 +65,7 @@ exports.login = (req, res, next) => {
       );
     } else {
       return res.status(400).json({
-        message: "Unauthorised Data"
+        message: "Unauthorized Data"
       });
     }
   }
@@ -81,7 +81,7 @@ exports.login = (req, res, next) => {
       });
     } else {
       return res.status(400).json({
-        message: "Unauthorised Data"
+        message: "Unauthorized Data"
       });
     }
   }
@@ -96,7 +96,7 @@ exports.forgotPassword = (req, res, next) => {
     .then(user => {
       if (user) {
         let template = forgotPasswordTemplate(
-          config.frontImage + "ChangePassword/" + user.id
+          config.frontImage + "#/pages/auth/reset-password/" + user.id
         );
         var mailOptions = {
           from: '"AI Stock" <support@aiStock.com>',
