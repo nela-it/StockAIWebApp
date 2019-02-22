@@ -1,5 +1,4 @@
 const db = require("../models/index");
-const jwt = require("jsonwebtoken");
 const config = require("../config");
 const bcryptService = require("../middleware/bcryptService");
 const userService = require("../middleware/user.service");
@@ -9,9 +8,8 @@ const APIError = require("../helpers/APIError");
 const httpStatus = require("http-status");
 const User = db.User;
 const Op = db.Op;
-const Cryptr = require("cryptr");
-const cryptr = new Cryptr("myTotalySecretKey");
 const atob = require("atob");
+const btoa = require("btoa");
 
 exports.register = (req, res, next) => {
   if (req.body.apiType === "socialRegister") {
@@ -87,68 +85,61 @@ exports.login = (req, res, next) => {
   }
 };
 
-exports.forgotPassword = (req, res, next) => {
-  User.findOne({
-    where: {
-      email: req.body.email
-    }
-  })
-    .then(user => {
-      if (user) {
-        let template = forgotPasswordTemplate(
-          config.frontImage + "#/pages/auth/reset-password/" + user.id
-        );
-        var mailOptions = {
-          from: '"AI Stock" <support@aiStock.com>',
-          to: req.body.email,
-          subject: "Forgot Password",
-          html: template
-        };
-        mailService.sendMail(mailOptions, (err, data) => {
-          if (err) throw err;
-          res.status(200).json({
-            message: "mail send successfully"
-          });
-        });
-      } else {
-        return res.status(404).json({
-          message: "Email Not Found"
-        });
-      }
-    })
-    .catch(e => {
-      next(e);
+exports.forgotPassword = async (req, res, next) => {
+  try {
+    let isUser = await User.findOne({
+      where: { email: req.body.email }
     });
+    if (isUser) {
+      let template = forgotPasswordTemplate(
+        config.frontImage + "#/pages/auth/reset-password/" + isUser.id
+      );
+      var mailOptions = {
+        from: '"AI Stock" <support@aiStock.com>',
+        to: req.body.email,
+        subject: "Forgot Password",
+        html: template
+      };
+      mailService.sendMail(mailOptions, (err, data) => {
+        if (err) next(err);
+        isUser.update({ forgotPassword: "true" });
+        res.status(200).json({
+          message: "mail send successfully"
+        });
+      });
+    } else {
+      return res.status(404).json({
+        message: "Email Not Found"
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
 };
 
-exports.changePassword = (req, res, next) => {
-  // let decrypt = cryptr.decrypt(req.body.password);
-  let decrypt = atob(req.body.password);
-  let password = bcryptService.generateHash(decrypt);
-  User.update(
-    {
-      password: password
-    },
-    {
-      where: {
-        id: { [Op.eq]: req.body.userId }
-      }
-    }
-  )
-    .then(user => {
-      if (user) {
+exports.changePassword = async (req, res, next) => {
+  try {
+    let isUser = await User.findOne({ where: { id: req.body.userId } });
+    if (isUser) {
+      if (isUser.dataValues.forgotPassword === "true") {
+        let decrypt = atob(req.body.password);
+        let password = bcryptService.generateHash(decrypt);
+        isUser.update({
+          password: password,
+          forgotPassword: "false"
+        });
         return res.status(200).json({
           message: "Password reset successfully"
         });
       } else {
-        return res.status(404).json({
-          message: "Can't Reset Password"
-        });
+        return res.status(404).json({ message: "Password Is Already Changed" });
       }
-    })
-    .catch(e => {
-      next(e);
-    });
+    } else {
+      return res.status(404).json({ message: "User Not Found" });
+    }
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.getAllUser = (req, res, next) => {

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'analytics-dashboard',
@@ -16,6 +17,8 @@ export class AnalyticsDashboardComponent implements OnInit {
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
     activeStock = 'prediction';
+    predictionGroupData: any;
+    errMsg;
     /**
      * Constructor
      *
@@ -23,6 +26,7 @@ export class AnalyticsDashboardComponent implements OnInit {
      */
     constructor(
         private _analyticsDashboardService: AnalyticsDashboardService,
+        private router: Router
     ) {
         // Register the custom chart.js plugin
         this._registerCustomChartJSPlugin();
@@ -38,6 +42,13 @@ export class AnalyticsDashboardComponent implements OnInit {
     ngOnInit(): void {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
+
+        this._analyticsDashboardService.getGroupList().subscribe(res => {
+            this.predictionGroupData = res.data;
+        }, error => {
+            console.log(error);
+            this.errMsg = error.message;
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -104,6 +115,10 @@ export class AnalyticsDashboardComponent implements OnInit {
 
     public active_stock(tab) {
         this.activeStock = tab;
+    }
+
+    groupDetail(data) {
+        this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id)]);
     }
 }
 

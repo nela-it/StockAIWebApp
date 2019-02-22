@@ -4,36 +4,23 @@
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const real_time_price_Schema = sequelize.define(
-    "real_time_price",
-    {
-      real_time_price_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      stock_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-      },
-      current_price: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      timestamp: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      }
+  const real_time_price_Schema = sequelize.define("real_time_price", {
+    id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {}
-  );
+    stock_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+      allowNull: false
+    },
+    current_price: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  });
 
   return real_time_price_Schema;
 };

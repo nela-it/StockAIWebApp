@@ -2,16 +2,17 @@ const db = require("../models/index");
 const User = db.User;
 const Prediction_group = db.Prediction_group;
 const Stocks = db.Stocks;
+const realTimePrice = db.Real_time_price;
 const Op = db.Op;
 const atob = require("atob");
 const _ = require("underscore");
 Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
 
-exports.saveGroupData = data => {
-  //   console.log("data----", data);
-  //   Prediction_group.sync({ force: true });
-  //   Stocks.sync({ force: true });
+// Stocks.sync({ force: true });
+// realTimePrice.sync({ force: true });
+// Prediction_group.sync({ force: true });
 
+exports.saveGroupData = data => {
   try {
     data.forEach(async (column, i) => {
       setTimeout(async () => {
@@ -31,7 +32,7 @@ exports.saveGroupData = data => {
             updateStocks(column);
           }
         } else {
-          console.log("found");
+          console.log("found", isGroupExists[0].dataValues.id);
           column.prediction_group_id = isGroupExists[0].dataValues.id;
           updateStocks(column);
         }
@@ -55,12 +56,17 @@ exports.saveGroupData = data => {
       target_date: column["Target Date"],
       version: column.Version
     });
-    console.log("Stock Created----");
+    if (isStockCreate) {
+      await realTimePrice.create({
+        stock_id: isStockCreate.dataValues.id,
+        current_price: column.prediction_group_id
+      });
+    }
+    console.log("Stock Created----", isStockCreate.dataValues.id);
   }
 };
 
 exports.getGroups = async (req, res, next) => {
-  console.log("getGroups");
   try {
     let isGroupsFound = await Prediction_group.findAll();
     if (isGroupsFound.length > 0) {
@@ -96,6 +102,7 @@ exports.exploreGroups = async (req, res, next) => {
       });
     }
   } catch (error) {
+    console.log("error -----------", error);
     next(error);
   }
 };

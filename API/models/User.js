@@ -61,6 +61,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
       },
+      forgotPassword: {
+        type: DataTypes.ENUM("true", "false"),
+        defaultValue: "false"
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

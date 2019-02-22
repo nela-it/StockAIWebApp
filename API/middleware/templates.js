@@ -91,11 +91,9 @@ const forgotPasswordTemplate = link => {
                       style="display: inline-block;"
                     >
                       <img
-                        src="http://pngimg.com/uploads/google/google_PNG19624.png"
+                        src="https://www.amazecraze.com/wp-content/uploads/2016/12/Recover-a-Forgotten-Password-using-old-password.png"
                         alt="Logo"
-                        border="0"
-                        width="48"
-                        style="display: block; width: 48px; max-width: 48px; min-width: 48px;"
+                        style="display: block; width: 150px; max-width: 150px; min-width: 150px;"
                       />
                     </a>
                   </td>

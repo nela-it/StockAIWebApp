@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatGridListModule, MatFormFieldModule, MatCardModule, MatIconModule, MatMenuModule, MatSelectModule, MatTabsModule } from '@angular/material';
+// tslint:disable-next-line: max-line-length
+import { MatChipsModule, MatInputModule, MatPaginatorModule, MatRippleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatButtonModule, MatGridListModule, MatFormFieldModule, MatCardModule, MatIconModule, MatMenuModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { AgmCoreModule } from '@agm/core';
 import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -11,7 +12,7 @@ import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { AnalyticsDashboardComponent } from 'app/main/apps/dashboards/analytics/analytics.component';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { PredictionListComponent } from './prediction/prediction.component';
-import { PredictionService } from './prediction/prediction.service';
+import { PredictionListService } from './prediction/prediction.service';
 
 const routes: Routes = [
     {
@@ -22,10 +23,10 @@ const routes: Routes = [
         }
     },
     {
-        path: 'prediction',
+        path: 'prediction/:id',
         component: PredictionListComponent,
         resolve: {
-            data: PredictionService
+            data: PredictionListService
         }
     }
 ];
@@ -37,7 +38,13 @@ const routes: Routes = [
     ],
     imports: [
         RouterModule.forChild(routes),
-
+        MatChipsModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatRippleModule,
+        MatSnackBarModule,
+        MatSortModule,
+        MatTableModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -56,7 +63,7 @@ const routes: Routes = [
         FuseWidgetModule
     ],
     providers: [
-        AnalyticsDashboardService, PredictionService
+        AnalyticsDashboardService, PredictionListService
     ]
 })
 export class AnalyticsDashboardModule {

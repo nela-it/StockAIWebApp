@@ -68,86 +68,17 @@
                     <div class="address bgColor">Get to know more about our AI Stock Prediction tool</div>
                 </div>
             </div>
-
-            <!-- <a [routerLink]="['/apps/dashboards/analytics']" class="nav-bar">
-                <mat-card style="float:left;" [ngClass]="{active: activeStock == 'prediction'}" (click)="active_stock('prediction')">
-                    <span>
-                        <mat-icon>dashboard</mat-icon>
-                    </span>
-                    <span>
-                        <h2>Predication Groups</h2>
-                        <p>Looking for a stock type? Start with this groups</p>
-                    </span>
-                </mat-card>
-            </a>
-            <a class="nav-bar">
-                <mat-card [ngClass]="{active: activeStock == 'portfolio'}" (click)="active_stock('portfolio')">
-                    <span>
-                        <mat-icon>donut_small</mat-icon>
-                    </span>
-                    <span>
-                        <h2>Portfolio</h2>Get a overview of your stocks in a short time
-                    </span>
-                </mat-card>
-            </a>
-            <a class="nav-bar">
-                <mat-card [ngClass]="{active: activeStock == 'product'}" (click)="active_stock('product')">
-                    <span>
-                        <mat-icon>error_outline</mat-icon>
-                    </span>
-                    <span>
-                        <h2>Product Info</h2>Get to know more about our AI Stock Prediction tool
-                    </span>
-                </mat-card>
-            </a> -->
         </div>
-        <!--    <div class="position-relative p-24 mat-blue-600-bg"
-             fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxLayout="column" fxLayoutAlign="start start">
-                <span class="h2">Visitors</span>
-                <span class="h5 secondary-text">Unique visitors by month</span>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                     (click)="widget1SelectedYear = '2015'"
-                     [ngClass]="{'blue-300-bg': widget1SelectedYear === '2015'}">
-                    2015
-                </div>
-                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                     (click)="widget1SelectedYear = '2016'"
-                     [ngClass]="{'blue-300-bg': widget1SelectedYear === '2016'}">
-                    2016
-                </div>
-                <div class="py-8 px-12 border-radius-2 line-height-1 cursor-pointer"
-                     (click)="widget1SelectedYear = '2017'"
-                     [ngClass]="{'blue-300-bg': widget1SelectedYear === '2017'}">
-                    2017
-                </div>
-            </div>
-        </div>
-
-        <div class="position-relative h-256 pb-16 mat-blue-600-bg">
-            <canvas baseChart
-                    [datasets]="widgets.widget1.datasets[widget1SelectedYear]"
-                    [labels]="widgets.widget1.labels"
-                    [colors]="widgets.widget1.colors"
-                    [options]="widgets.widget1.options"
-                    [chartType]="widgets.widget1.chartType">
-            </canvas>
-        </div>
- -->
     </div>
 
     <div class="content" fxLayout="column">
-
-        <!-- PRICE TABLES -->
         <div class="price-tables" *ngIf="activeStock === 'prediction'" [@routerTransitionDown] fxLayout="row wrap"
             fxLayoutAlign="center center">
-            <div class="price-table style-2" fxLayout="column">
+            <div class="price-table style-2" fxLayout="column" *ngFor="let item of predictionGroupData; let i=index">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
                     <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
                 </div>
-                <div class="group-title">Lion Stocks</div>
+                <div class="group-title">{{item.group_name}} Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
@@ -155,133 +86,7 @@
                         accumsan. In dignissim laoreet ipsum eu interdum.
                     </div>
                 </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Tiger Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Elephant Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Snake Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Cow Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Chicken Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Turtle Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Bee Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Lion Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
-            </div>
-            <div class="price-table style-2" fxLayout="column">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
-                </div>
-                <div class="group-title">Bee Stocks</div>
-                <div class="period">Group</div>
-                <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                    <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
-                    </div>
-                </div>
-                <button mat-raised-button class="explore-button">Explore</button>
+                <button mat-raised-button (click)="groupDetail(item)" class="explore-button">Explore</button>
             </div>
         </div>
         <div class="fuse-card auto-width" *ngIf="activeStock ==='portfolio'">

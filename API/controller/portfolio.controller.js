@@ -1,9 +1,80 @@
 const db = require("../models/index");
 const Portfolio = db.Portfolio;
+const Prediction_group = db.Prediction_group;
+const Stocks = db.Stocks;
+const realTimePrice = db.Real_time_price;
 const Op = db.Op;
+realTimePrice.belongsTo(Stocks, { foreignKey: "stock_id" });
+Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
 
-exports.audit = (req, res, next) => {
-  return res.status(400).json({
-    message: "not found"
-  });
+exports.addPortfolio = async (req, res, next) => {
+  try {
+    let isAlreadyPortfolio = await Portfolio.findOne({
+      where: { user_id: req.user.id, real_time_price_id: req.body.stockId }
+    });
+    if (isAlreadyPortfolio) {
+      return res.status(404).json({
+        message: "Stock Is Already Added In Portfolio."
+      });
+    } else {
+      let isStock = await realTimePrice.findOne({
+        where: { stock_id: req.body.stockId }
+      });
+      if (isStock) {
+        let addPortfolio = await Portfolio.create({
+          real_time_price_id: isStock.dataValues.id,
+          user_id: req.user.id
+        });
+        if (addPortfolio) {
+          return res.status(200).json({
+            message: "Stock Added In Portfolio Successfully."
+          });
+        } else {
+          return res.status(404).json({
+            message: "Stock Is Not Added."
+          });
+        }
+      } else {
+        return res.status(404).json({
+          message: "Stock Not Found"
+        });
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getPortfolio = async (req, res, next) => {
+  try {
+    let portfolioArray = [];
+    let isRecords = await Portfolio.findAll({
+      where: { user_id: req.user.id }
+    });
+    if (isRecords) {
+      isRecords.forEach(async (record, i) => {
+        setTimeout(async () => {
+          let portfolioList = await realTimePrice.findOne({
+            where: { id: record.dataValues.real_time_price_id },
+            include: [Stocks]
+          });
+          if (portfolioList) {
+            portfolioArray.push(portfolioList.dataValues);
+          }
+          if (i - isRecords.length == -1) {
+            return res.status(200).json({
+              message: "Portfolio Found",
+              data: portfolioArray
+            });
+          }
+        }, 100 * i);
+      });
+    } else {
+      return res.status(404).json({
+        message: "Portfolio Not Found"
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
 };

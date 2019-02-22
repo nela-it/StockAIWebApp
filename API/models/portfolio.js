@@ -4,36 +4,24 @@
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const portfolio_Schema = sequelize.define(
-    "portfolio",
-    {
-      portfolio_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      real_time_price_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-      },
-      user_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      }
+  const portfolio_Schema = sequelize.define("portfolio", {
+    id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {}
-  );
+    real_time_price_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+      allowNull: false
+    },
+    user_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+      allowNull: false
+    }
+  });
 
   return portfolio_Schema;
 };

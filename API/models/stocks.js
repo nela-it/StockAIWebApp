@@ -32,10 +32,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    current_price: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     suggested_date: {
       type: DataTypes.DATE,
       allowNull: false
