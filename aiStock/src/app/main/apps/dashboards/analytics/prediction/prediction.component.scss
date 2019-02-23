@@ -22,7 +22,89 @@
             }
         }
 
+        .header {
+            background-color: #E8E7F9;
+            color: #8262fa;
+        }
 
+    }
+
+    .main-widget {
+        display: flex;
+        flex-direction: column;
+
+        .nav-header {
+            padding: 32px;
+            display: inline-block;
+
+            mat-card {
+                cursor: pointer;
+                max-width: 270px;
+                max-height: 176px;
+
+                mat-icon {
+                    //padding: 0px 46px 0px 0px;
+                    padding-left: -40px;
+                    color: #8262fa;
+                }
+
+                span {
+                    color: #b1b1b4;
+                    display: inline;
+
+                    // padding: 10px 10px 10px 10px;
+                    h2 {
+                        color: #8262fa;
+                    }
+                }
+            }
+
+            .nav-bar {
+                background-color: white;
+                color: #8262fa;
+                cursor: pointer;
+                margin: 10px;
+
+
+
+                mat-icon {
+                    color: #8262fa;
+                    font-size: 40px;
+                    margin: 10px;
+                }
+
+                .info {
+                    margin-left: 20px;
+                }
+
+                .fontSize {
+                    font-size: x-large;
+                }
+
+                .cardHeight {
+                    height: 100px !important;
+                }
+
+                .bgColor {
+                    color: gray;
+                }
+            }
+
+            .active {
+                background-color: #8262fa;
+                color: white;
+                border-radius: 3px;
+
+                mat-icon {
+                    color: white;
+                }
+
+                .info .bgColor {
+                    color: white;
+                }
+            }
+
+        }
     }
 
     .page-layout.carded {

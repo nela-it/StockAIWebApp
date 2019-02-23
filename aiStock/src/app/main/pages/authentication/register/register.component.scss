@@ -8,6 +8,7 @@
         padding: 10px;
         //margin: 25px;
     }
+
     #register {
         width: 100%;
         background: url('/assets/images/backgrounds/background-image.png') no-repeat;
@@ -38,13 +39,15 @@
                     width: 128px;
                     margin: -10px auto;
                     color: #8262fa;
-                    .a{                       
-                        display: inline-block;    
-                        padding: 5px;                                   
+
+                    .a {
+                        display: inline-block;
+                        padding: 5px;
                     }
+
                     img {
                         width: 40px;
-                        margin-top: -10px;                    
+                        margin-top: -10px;
                     }
                 }
 
@@ -64,20 +67,24 @@
                     mat-checkbox {
                         margin: 0;
                     }
+
                     .icon-text {
-                        color: rgba(0,0,0,.54);
+                        color: rgba(0, 0, 0, .54);
                     }
+
                     .terms {
                         margin: 0px 0 16px 0px;
                         color: #b1b1b4;
                         margin-top: 16px;
-                        .terms-conditions{
+
+                        .terms-conditions {
                             font-size: 12px;
                         }
+
                         a {
                             font-size: 12px;
                             margin-left: 4px;
-                            color: #8262fa; 
+                            color: #8262fa;
                         }
                     }
 
@@ -87,7 +94,8 @@
                         display: block;
                         border-radius: 20px;
                         background-color: #8262fa;
-                        color: white;                        
+                        color: white;
+
                         @include media-breakpoint('xs') {
                             width: 90%;
                         }
@@ -98,12 +106,14 @@
                     margin: 12px auto 18px auto;
                     font-weight: 500;
                     display: inline-block;
+
                     .text {
                         color: #b1b1b4;
                         margin-right: 8px;
                     }
-                    .link{
-                        color: #8262fa; 
+
+                    .link {
+                        color: #8262fa;
                     }
                 }
 
@@ -122,7 +132,8 @@
                         padding: 0 8px;
                         z-index: 9999;
 
-                        &:before, &:after {
+                        &:before,
+                        &:after {
                             content: '';
                             display: block;
                             width: 30px;
@@ -140,8 +151,10 @@
                         }
                     }
                 }
-                .social-icon{
-                    padding: 10px;                    
+
+                .social-icon {
+                    padding: 10px;
+
                     img {
                         padding: 10px;
                         width: 50px;
@@ -149,6 +162,7 @@
                         cursor: pointer;
                     }
                 }
+
                 button {
 
                     &.google,

@@ -113,7 +113,7 @@ export class AnalyticsDashboardComponent implements OnInit {
         });
     }
 
-    public active_stock(tab) {
+    active_stock(tab) {
         this.activeStock = tab;
     }
 

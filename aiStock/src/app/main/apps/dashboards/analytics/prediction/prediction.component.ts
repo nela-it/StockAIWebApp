@@ -21,6 +21,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PredictionListComponent implements OnInit, OnDestroy {
     pageSize;
     groupId;
+    activeStockTab = 'listStocks';
     dataSource: FilesDataSource | null;
     displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'action'];
 
@@ -74,6 +75,10 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                 }
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
+    }
+
+    activeStock(tab) {
+        this.activeStockTab = tab;
     }
 
     /**

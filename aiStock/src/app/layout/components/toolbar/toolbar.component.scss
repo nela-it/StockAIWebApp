@@ -24,25 +24,29 @@
             width: 38px;
         }
     } */
-    .logo {                   
+    .logo {
         margin: 0px auto;
-        color: #8262fa;                   
+        color: #8262fa;
         width: 100%;
-        .a{                       
-            display: inline-block;    
-            padding: 5px;  
-            color: white;                                     
+
+        .a {
+            display: inline-block;
+            padding: 5px;
+            color: white;
         }
+
         img {
-            width: 32px;                               
+            width: 32px;
         }
-        .icon-text{
+
+        .icon-text {
             color: white;
             font-size: 20px;
             margin-top: 0px;
         }
-        
+
     }
+
     .user-button,
     fuse-search-bar,
     .language-button,
@@ -62,9 +66,12 @@
         min-width: 64px;
         height: 64px;
     }
-    .badgecolor{
-        color: #b1b1b4; ;
+
+    .badgecolor {
+        color: #b1b1b4;
+        ;
     }
+
     .toolbar-separator {
         height: 64px;
         width: 1px;
@@ -73,5 +80,9 @@
         @include media-breakpoint-down('xs') {
             height: 64px;
         }
+    }
+
+    .serachBar {
+        margin-left: 38%;
     }
 }

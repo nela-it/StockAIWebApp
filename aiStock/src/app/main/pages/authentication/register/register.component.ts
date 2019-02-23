@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../authentication.service'
 import { FacebookLoginProvider, GoogleLoginProvider, LinkedInLoginProvider } from "angularx-social-login";
 import {
     MatSnackBar,
+    MatDialog,
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition,
 } from '@angular/material';
@@ -31,7 +32,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private _authenticationService: AuthenticationService,
         private route: ActivatedRoute, private router: Router,
-        public snackBar: MatSnackBar
+        public snackBar: MatSnackBar,
+        public dialog: MatDialog
     ) {
         // Configure the layout
         this._fuseConfigService.config = {
@@ -228,6 +230,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }).error(error => {
         });
     }
+
+    openDialog() {
+        const dialogRef = this.dialog.open(TeamAndConditions);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 }
 
 /**
@@ -259,3 +269,9 @@ export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl):
 
     return { 'passwordsNotMatching': true };
 };
+
+@Component({
+    selector: 'TeamAndConditions',
+    templateUrl: 'TeamAndConditions.html',
+})
+export class TeamAndConditions { }
