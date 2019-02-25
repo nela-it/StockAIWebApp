@@ -17,9 +17,7 @@
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Home
                 </span>
-                <!-- <span class="logo-text h4">
-                    Home
-                </span> -->
+                <!-- <span class="logo-text h4" style="float:right;">Home</span> -->
             </div>
 
         </div>
@@ -30,7 +28,7 @@
     <div class="main-widget">
         <div fxLayout="row" class="nav-header">
             <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
-                (click)="active_stock('prediction')" style="height:130px;">
+                (click)="active_stock('prediction')">
                 <div class="logo">
                     <span>
                         <mat-icon>dashboard</mat-icon>
@@ -43,7 +41,7 @@
                 </div>
             </div>
             <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
-                (click)="active_stock('portfolio')" style="height:130px;">
+                (click)="active_stock('portfolio')">
                 <div class="logo">
                     <span>
                         <mat-icon>donut_small</mat-icon>
@@ -56,7 +54,7 @@
                 </div>
             </div>
             <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product'}"
-                (click)="active_stock('product')" style="height:130px;">
+                (click)="active_stock('product')">
                 <div class="logo">
                     <span>
                         <mat-icon>error_outline</mat-icon>

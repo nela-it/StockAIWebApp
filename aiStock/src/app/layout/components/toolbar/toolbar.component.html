@@ -39,15 +39,15 @@
             <div class="toolbar-separator"></div>
 
             <div fxLayout="row" fxLayoutAlign="center center">
-                <mat-icon class="m-16 badgecolor" fxHide.xs matBadge="4" matBadgeColor="accent">email</mat-icon>
-                <mat-icon class="m-16 badgecolor" fxHide.xs matBadge="6" matBadgeColor="accent">notifications</mat-icon>
+                <mat-icon class="m-16 badgecolor" fxHide.xs matBadge="">email</mat-icon>
+                <mat-icon class="m-16 badgecolor" fxHide.xs matBadge="" matBadgeColor="accent">notifications</mat-icon>
             </div>
             <div class="toolbar-separator"></div>
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <!-- <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg"> -->
-                    <span class="username mr-12" fxHide fxShow.gt-sm>Charlie Adams</span>
-                    <!-- <span class="username mr-12" fxHide fxShow.gt-sm>{{username}}</span> -->
+                    <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg">
+                    <!-- <span class="username mr-12" fxHide fxShow.gt-sm>Charlie Adams</span> -->
+                    <span class="username mr-12" fxHide fxShow.gt-sm>{{username}}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
             </button>

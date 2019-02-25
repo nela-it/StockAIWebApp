@@ -97,7 +97,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // this.username = localStorage.getItem('username');
+        this.username = localStorage.getItem('username');
 
         this.badgeColor = { 'color': '#8262fa' }
         // Subscribe to the config changes

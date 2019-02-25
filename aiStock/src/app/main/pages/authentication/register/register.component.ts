@@ -103,8 +103,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 'password': eptPassword
             }
             this._authenticationService.registerUser(registerData).subscribe((result) => {
-                console.log("asdasdasd", registerData, result)
                 localStorage.setItem('userdata', result.token);
+                localStorage.setItem('username', result.username);
+
                 this.snackBar.open('Success', 'You are register successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
@@ -147,6 +148,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 }
                 this._authenticationService.registerUser(userData).subscribe((result) => {
                     localStorage.setItem('userdata', result.token);
+                    localStorage.setItem('username', result.username);
                     this.snackBar.open('Success', 'You are register successfully', {
                         duration: 2000,
                         horizontalPosition: 'center',
@@ -211,6 +213,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
             //console.log(userData);
             this._authenticationService.registerUser(userData).subscribe((result) => {
                 localStorage.setItem('userdata', result.token);
+                localStorage.setItem('username', result.username);
+
                 this.snackBar.open('Success', 'You are register successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',

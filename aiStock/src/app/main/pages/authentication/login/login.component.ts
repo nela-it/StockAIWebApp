@@ -100,6 +100,8 @@ export class LoginComponent implements OnInit {
             };
             this._authenticationService.loginCheck(loginData).subscribe((result) => {
                 localStorage.setItem('userdata', result.token);
+                localStorage.setItem('username', result.username);
+
                 this.snackBar.open('Success', 'You are login successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
@@ -139,9 +141,10 @@ export class LoginComponent implements OnInit {
                         'provider': socialData.provider
                     }
                 };
-                console.log(socialData);
                 this._authenticationService.loginCheck(userData).subscribe((result) => {
                     localStorage.setItem('userdata', result.token);
+                    localStorage.setItem('username', result.username);
+
                     this.snackBar.open('Success', 'You are login successfully', {
                         duration: 2000,
                         horizontalPosition: 'center',
@@ -207,6 +210,8 @@ export class LoginComponent implements OnInit {
             // tslint:disable-next-line:no-shadowed-variable
             this._authenticationService.loginCheck(userData).subscribe((result) => {
                 localStorage.setItem('userdata', result.token);
+                localStorage.setItem('username', result.username);
+
                 this.snackBar.open('Success', 'You are login successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
