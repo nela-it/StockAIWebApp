@@ -10,6 +10,7 @@ const User = db.User;
 const Op = db.Op;
 const atob = require("atob");
 const btoa = require("btoa");
+// User.sync({ force: true });
 
 exports.register = (req, res, next) => {
   if (req.body.apiType === "socialRegister") {
@@ -19,7 +20,8 @@ exports.register = (req, res, next) => {
         if (err) next(err);
         return res.status(data.status).json({
           message: data.message,
-          token: data.token
+          token: data.token,
+          username: data.username
         });
       });
     } else {
@@ -35,7 +37,8 @@ exports.register = (req, res, next) => {
         if (err) next(err);
         return res.status(data.status).json({
           message: data.message,
-          token: data.token
+          token: data.token,
+          username: data.username
         });
       });
     } else {
@@ -57,7 +60,8 @@ exports.login = (req, res, next) => {
           if (err) next(err);
           return res.status(data.status).json({
             message: data.message,
-            token: data.token
+            token: data.token,
+            username: data.username
           });
         }
       );
@@ -74,7 +78,8 @@ exports.login = (req, res, next) => {
         if (err) next(err);
         return res.status(data.status).json({
           message: data.message,
-          token: data.token
+          token: data.token,
+          username: data.username
         });
       });
     } else {
