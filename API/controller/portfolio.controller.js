@@ -4,8 +4,7 @@ const Prediction_group = db.Prediction_group;
 const Stocks = db.Stocks;
 const realTimePrice = db.Real_time_price;
 const Op = db.Op;
-realTimePrice.belongsTo(Stocks, { foreignKey: "stock_id" });
-Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
+// Portfolio.sync({ force: true });
 
 exports.addPortfolio = async (req, res, next) => {
   try {
@@ -46,12 +45,14 @@ exports.addPortfolio = async (req, res, next) => {
 };
 
 exports.getPortfolio = async (req, res, next) => {
+  realTimePrice.belongsTo(Stocks, { foreignKey: "stock_id" });
+  Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
   try {
     let portfolioArray = [];
     let isRecords = await Portfolio.findAll({
       where: { user_id: req.user.id }
     });
-    if (isRecords) {
+    if (isRecords.length > 0) {
       isRecords.forEach(async (record, i) => {
         setTimeout(async () => {
           let portfolioList = await realTimePrice.findOne({

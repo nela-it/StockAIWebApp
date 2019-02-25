@@ -29,6 +29,7 @@ exports.check_auth_provider = (params, next, cb) => {
       let data = {
         status: 200,
         token: token,
+        username: params.username,
         message: "Success"
       };
       cb(null, data);
@@ -52,6 +53,7 @@ exports.check_auth_provider = (params, next, cb) => {
             let data = {
               status: 200,
               token: token,
+              username: params.username,
               message: "Success"
             };
             cb(null, data);
@@ -59,6 +61,7 @@ exports.check_auth_provider = (params, next, cb) => {
             let data = {
               status: 404,
               token: null,
+              username: null,
               message: "Attempt Failed"
             };
             cb(null, data);
@@ -96,13 +99,15 @@ exports.login = (params, next, cb) => {
           let data = {
             status: 200,
             token: token,
-            message: "Success"
+            message: "Success",
+            username: user.dataValues.username
           };
           cb(null, data);
         } else {
           let data = {
             status: 404,
             token: null,
+            username: null,
             message: "Entered Password is Wrong"
           };
           cb(null, data);
@@ -111,6 +116,7 @@ exports.login = (params, next, cb) => {
         let data = {
           status: 404,
           token: null,
+          username: null,
           message: "Email Not Found"
         };
         cb(null, data);
@@ -133,6 +139,7 @@ exports.register = (params, next, cb) => {
           let data = {
             status: 404,
             token: null,
+            username: null,
             message: "email Already Exists."
           };
           cb(null, data);
@@ -140,6 +147,7 @@ exports.register = (params, next, cb) => {
           let data = {
             status: 404,
             token: null,
+            username: null,
             message: "Username Already Exists."
           };
           cb(null, data);
@@ -167,6 +175,7 @@ exports.register = (params, next, cb) => {
               let data = {
                 status: 200,
                 token: token,
+                username: result.dataValues.username,
                 message: "User Registered"
               };
               cb(null, data);
@@ -174,6 +183,7 @@ exports.register = (params, next, cb) => {
               let data = {
                 status: 404,
                 token: token,
+                username: null,
                 message: "User Not Registered"
               };
               cb(null, data);
