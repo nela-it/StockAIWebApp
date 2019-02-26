@@ -72,7 +72,7 @@ export function provideConfig() {
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        RouterModule.forRoot(appRoutes, { enableTracing: true, useHash: true }),
+        RouterModule.forRoot(appRoutes, { useHash: true }),
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
             delay: 0,

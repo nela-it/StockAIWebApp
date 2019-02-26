@@ -17,8 +17,6 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Email ID*</mat-label>
                         <input matInput placeholder="Email" formControlName="email">
-                        <mat-icon class="icon-text" matSuffix>email</mat-icon>
-
                         <mat-error *ngIf="loginForm.get('email').hasError('required')">
                             Email is required
                         </mat-error>
@@ -30,19 +28,13 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Password*</mat-label>
                         <input type="password" matInput placeholder="Password" formControlName="password">
-                        <mat-icon matSuffix class="icon-text">vpn_key</mat-icon>
-                        <!-- <mat-hint>Enter at least 8 character length , Lowercase letter,
-                        uppercase letter, Number , and special character</mat-hint>             -->
                         <mat-error *ngIf="loginForm.get('password').hasError('required')">
                             Password is required
                         </mat-error>
-                        <!--                     <mat-error *ngIf="loginForm.get('password').hasError('pattern')">                      
-                        Please enter at least 8 character length , Lowercase letter,
-                        uppercase letter, Number , and special character
-                    </mat-error> -->
                     </mat-form-field>
                     <div fxLayoutAlign="center center" style="color: red;" *ngIf="error_msg">{{error_msg}}</div>
-                    <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+                    <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                        fxLayoutAlign="space-between center">
                         <mat-checkbox class="remember-me" aria-label="Remember Me">
                             Keep me signed in
                         </mat-checkbox>
@@ -62,20 +54,15 @@
                 <div class="separator">
                     <span class="text">Or With Login</span>
                 </div>
-
-                <!-- <button mat-raised-button > -->
                 <div class="social-icon" fxLayout="row" fxLayoutAlign="center center">
-                    <button type="button" (click)="socialLogIn('facebook')"><img height="50px" width="50px" src="assets/images/social-image/facebook.jpg"></button>
+                    <button type="button" (click)="socialLogIn('facebook')"><img height="50px" width="50px"
+                            src="assets/images/social-image/facebook.jpg"></button>
                     <img height="50px" width="50px" src="assets/images/social-image/twitter.jpg">
-                    <button type="button" (click)="socialLogIn('google')"><img height="50px" width="50px" src="assets/images/social-image/youtube.jpg"></button>
-                    <button type="button" (click)="linkedinlogin()"><img height="50px" width="50px" src="assets/images/social-image/linkedin.jpg"></button>
+                    <button type="button" (click)="socialLogIn('google')"><img height="50px" width="50px"
+                            src="assets/images/social-image/youtube.jpg"></button>
+                    <button type="button" (click)="linkedinlogin()"><img height="50px" width="50px"
+                            src="assets/images/social-image/linkedin.jpg"></button>
                 </div>
-                <!-- </button> -->
-
-                <!-- <button mat-raised-button class="facebook">
-                Log 
-            </button> -->
-
                 <div class="register" fxLayout="row" fxLayoutAlign="center center">
                     <span class="text">Don't have an account?</span>
                     <a class="link" [routerLink]="'/pages/auth/register'">Register Now</a>

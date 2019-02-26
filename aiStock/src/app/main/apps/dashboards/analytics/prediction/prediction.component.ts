@@ -20,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PredictionListComponent implements OnInit, OnDestroy {
     pageSize;
+    data: any;
     groupId;
     activeStockTab = 'listStocks';
     dataSource: FilesDataSource | null;
@@ -58,11 +59,15 @@ export class PredictionListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // this.data = this._predictionListService.getPred();
+        //console.log(this.data)
         this.route.params.subscribe(params => {
             this.groupId = params['id'];
+            this._predictionListService.id = this.groupId;
         });
-        // console.log(this._predictionListService, this.paginator, this.sort);
+
         this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
+        console.log(this.filter);
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -154,7 +159,6 @@ export class FilesDataSource extends DataSource<any>
         ];
 
         return merge(...displayDataChanges).pipe(map(() => {
-
             let data = this._predictionListService.predictions.slice();
 
             data = this.filterData(data);

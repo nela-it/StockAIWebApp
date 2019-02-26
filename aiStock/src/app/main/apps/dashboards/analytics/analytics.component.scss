@@ -2,7 +2,10 @@
 
 #dashboard-analytics {
     background-color: #F3F7FA;
-
+   /*  .sub-nav{
+        float: right;
+        text-align: center;
+    } */
     .main-widget {
         display: flex;
         flex-direction: column;
@@ -164,9 +167,13 @@
             }
 
             .explore-button {
-                background-color: #8262fa;
+                background-color: white;
                 margin: 8px auto 32px auto;
                 width: 128px;
+                color: #7F63F4;
+            }
+            .explore-button:hover{
+                background-color: #7F63F4;
                 color: white;
             }
         }

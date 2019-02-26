@@ -4,9 +4,9 @@
 
         <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
 
-            <button mat-icon-button class="navbar-toggle-button" fxHide.gt-md>
+            <!-- <button mat-icon-button class="navbar-toggle-button" fxHide.gt-md>
                 <mat-icon class="secondary-text">menu</mat-icon>
-            </button>
+            </button> -->
 
             <div class="toolbar-separator" *ngIf="!hiddenNavbar && !rightNavbar" fxHide.gt-md></div>
 
@@ -16,15 +16,17 @@
                 </div>
             </div>
 
-            <div class="px-8 px-mat-16" fxLayoutAlign="start center" style="background-color:#8262fa;height: 64px; text-align: center;width:200px">
+            <div class="px-8 px-mat-16" fxLayoutAlign="start center" style="background-color:#8262fa; padding-right: 8px; height: 64px; vertical-align: center;width:250px">
                 <div class="logo">
-                    <span class="a"><img src="assets/images/logos/logo1.png"></span>
-                    <span class="a">
+                    <span class="a"><img src="assets/images/logos/logo.png">
+                        <span style="vertical-align: middle;">
+                            <mat-icon class="icon-text">settings</mat-icon>
+                        </span>
+                    </span>
+                    <!--  <span class="a">
                         <h2>AIStock</h2>
-                    </span>
-                    <span class="a" style="vertical-align: middle;">
-                        <mat-icon class="icon-text">settings</mat-icon>
-                    </span>
+                    </span> -->
+
                 </div>
                 <div class="serachBar">
                     <fuse-search-bar (input)="search($event)"></fuse-search-bar>
@@ -58,12 +60,6 @@
                     <mat-icon>account_circle</mat-icon>
                     <span>My Profile</span>
                 </button>
-
-                <button mat-menu-item class="">
-                    <mat-icon>mail</mat-icon>
-                    <span>Inbox</span>
-                </button>
-
                 <button mat-menu-item class="" (click)="logout()">
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Logout</span>

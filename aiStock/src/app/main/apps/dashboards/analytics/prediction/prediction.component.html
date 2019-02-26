@@ -1,36 +1,87 @@
 <div id="predictions" class="page-layout carded fullwidth inner-scroll">
 
     <!-- TOP BACKGROUND -->
-    <div class="top-bg mat-accent-bg"></div>
+    <!-- <div class="top-bg mat-accent-bg"></div> -->
     <!-- / TOP BACKGROUND -->
 
     <!-- CENTER -->
+    <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center" style="height:71%;">
+
+        <!-- <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                shopping_basket
+            </mat-icon>
+            <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Predictions</span>
+        </div> -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md>
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <!-- <mat-icon class="logo-icon mr-16"
+                          [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
+                </mat-icon> -->
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Home
+                </span>
+
+                <!-- <span class="logo-text h4">
+                    Home
+                </span> -->
+            </div>
+        </div>
+        <!-- <div fxLayout="row">
+            <span>Home -</span>
+            <span style="color: #b1b1b4; display: inline;" *ngIf="activeStock === 'prediction'"> Prediction Group</span>            
+        </div> -->
+        <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+            <label for="search" class="mr-8">
+                <mat-icon class="secondary-text">search</mat-icon>
+            </label>
+            <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+                <input id="search" matInput #filter placeholder="Search">
+            </mat-form-field>
+        </div> -->
+    </div>
+    <div class="main-widget">
+        <div fxLayout="row" class="nav-header">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
+                [ngClass]="{active: activeStockTab == 'listStocks'}" (click)="activeStock('listStocks')"
+                style="height:120px;">
+                <div class="logo">
+                    <span>
+                        <mat-icon>sort</mat-icon>
+                    </span>
+                </div>
+
+                <div class="info">
+                    <div class="title fontSize">List of Stocks</div>
+                    <div class="address bgColor">Choose a stock from the selected prediction groups</div>
+                </div>
+            </div>
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
+                [ngClass]="{active: activeStockTab == 'criteria'}" (click)="activeStock('criteria')"
+                style="height:120px;">
+                <div class="logo">
+                    <span>
+                        <mat-icon>view_comfy</mat-icon>
+                    </span>
+                </div>
+
+                <div class="info">
+                    <div class="title fontSize">Grouping Criteria</div>
+                    <div class="address bgColor">Get to know how we categorize stock into groups</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="center">
 
         <!-- HEADER -->
-        <div class="header mat-accent-bg" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
-            fxLayoutAlign.gt-xs="space-between center">
 
-            <!-- APP TITLE -->
-            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-                    shopping_basket
-                </mat-icon>
-                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Predictions</span>
-            </div>
-            <!-- / APP TITLE -->
-
-            <!-- SEARCH -->
-            <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-                <label for="search" class="mr-8">
-                    <mat-icon class="secondary-text">search</mat-icon>
-                </label>
-                <mat-form-field floatLabel="never" fxFlex="1 0 auto">
-                    <input id="search" matInput #filter placeholder="Search">
-                </mat-form-field>
-            </div>
-            <!-- / SEARCH -->
-        </div>
         <!-- / HEADER -->
 
         <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
@@ -44,13 +95,13 @@
         <!-- CONTENT CARD -->
         <div class="content-card mat-white-bg">
 
-            <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort [@animateStagger]="{value:'50'}"
-                fusePerfectScrollbar>
+            <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort
+                [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
                 <!-- ID Column -->
                 <ng-container matColumnDef="ticker">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Ticker</mat-header-cell>
                     <mat-cell *matCellDef="let prediction">
-                        <p class="text-truncate">{{prediction.id}}</p>
+                        <p class="text-truncate">{{prediction.ticker}}</p>
                     </mat-cell>
                 </ng-container>
 
@@ -58,7 +109,7 @@
                 <ng-container matColumnDef="stockName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Stock Name</mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
-                        <p class="text-truncate">{{prediction.reference}}</p>
+                        <p class="text-truncate">{{prediction.stock_name}}</p>
                     </mat-cell>
                 </ng-container>
 
@@ -67,28 +118,29 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Recommended Price</mat-header-cell>
                     <mat-cell *matCellDef="let prediction">
                         <p class="text-truncate">
-                            {{prediction.customer.firstName}}
-                            {{prediction.customer.lastName}}
+                            {{prediction.recommended_price | currency:'USD':'symbol'}}
                         </p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Total Price Column -->
                 <ng-container matColumnDef="currentPrice">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Current Price</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Current Price
+                    </mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-md>
                         <p class="total-price text-truncate">
-                            {{prediction.total | currency:'USD':'symbol'}}
+                            {{prediction.suggested_date_price | currency:'USD':'symbol'}}
                         </p>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Payment Column -->
                 <ng-container matColumnDef="suggestedDate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Suggested Date</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Suggested Date
+                    </mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <p class="text-truncate">
-                            {{prediction.payment.method}}
+                            {{prediction.suggested_date | date:'dd MMMM y'}}
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -97,8 +149,8 @@
                 <ng-container matColumnDef="tragetPrice">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Traget Price</mat-header-cell>
                     <mat-cell *matCellDef="let prediction">
-                        <p class="status text-truncate h6 p-4" [ngClass]="prediction.status[0].color">
-                            {{prediction.status[0].name}}
+                        <p class="status text-truncate h6 p-4">
+                            {{prediction.target_price| currency:'USD':'symbol'}}
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -108,7 +160,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Action</mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <p class="text-truncate">
-                            {{prediction.date}}
+                            <button class="submit-button" mat-stroked-button>Add to portfolio</button>
                         </p>
                     </mat-cell>
                 </ng-container>

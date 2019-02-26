@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { getGroupsDetails } from 'appConfig/appconfig';
+import { P } from '@angular/core/src/render3';
+import { reject, resolve } from 'q';
 
 @Injectable()
 export class PredictionListService implements Resolve<any>
 {
     predictions: any[];
+    id: string;
     onPredictionsChanged: BehaviorSubject<any>;
     httpOptions
     /**
@@ -24,6 +28,7 @@ export class PredictionListService implements Resolve<any>
             })
         };
         // Set the defaults
+        console.log(this.id)
         this.onPredictionsChanged = new BehaviorSubject({});
     }
 
@@ -38,7 +43,8 @@ export class PredictionListService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getPredictions()
+                this.getPredictions(this.id),
+                this.getPred()
             ]).then(
                 () => {
                     resolve();
@@ -53,20 +59,9 @@ export class PredictionListService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getPredictions(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this._httpClient.get('api/e-commerce-orders')
-                .subscribe((response: any) => {
-                    this.predictions = response;
-                    this.onPredictionsChanged.next(this.predictions);
-                    resolve(response);
-                }, reject);
-        });
-    }
-
     // getPredictions(): Promise<any> {
     //     return new Promise((resolve, reject) => {
-    //         this._httpClient.post(getGroupsDetails, { 'group_id': btoa('1') }, this.httpOptions)
+    //         this._httpClient.get('api/e-commerce-orders')
     //             .subscribe((response: any) => {
     //                 this.predictions = response;
     //                 this.onPredictionsChanged.next(this.predictions);
@@ -74,6 +69,30 @@ export class PredictionListService implements Resolve<any>
     //             }, reject);
     //     });
     // }
+
+    getPredictions(id: string): Promise<any> {
+        // console.log("idddddddddddddddddddddddddddddd:---", id)
+
+        return new Promise((resolve, reject) => {
+            this._httpClient.post(getGroupsDetails, { 'group_id': localStorage.getItem('groupId') }, this.httpOptions)
+                .subscribe((response: any) => {
+                    this.predictions = response.data;
+                    this.onPredictionsChanged.next(this.predictions);
+                    resolve(response);
+                }, reject);
+        });
+    }
+    getPred(): Observable<any> {
+        // return new Promise((resolve, reject) => {
+        return this._httpClient.post(getGroupsDetails, { 'group_id': btoa('1') }, this.httpOptions)
+
+        // .subscribe((response: any) => {
+        // this.predictions = response;
+        // this.onPredictionsChanged.next(this.predictions);
+        // resolve(response);
+        // }, reject);
+        // });
+    }
 }
 
 

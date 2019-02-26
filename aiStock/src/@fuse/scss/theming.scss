@@ -1,40 +1,41 @@
 @import '~@angular/material/theming';
 
 @mixin _mat-badge-size($size) {
-    &.mat-badge-overlap {
-        &.mat-badge-before {
-            .mat-badge-content {
-                left: -$size / 2;
-            }
-        }
 
-        [dir='rtl'] &.mat-badge-before {
-            .mat-badge-content {
-                left: auto;
-                right: -$size / 2;
-            }
-        }
-
-        &.mat-badge-after {
-            .mat-badge-content {
-                //default css
-                //right: -$size / 2;
-                // custom css
-                right: -5px;
-                width: 12px;
-                height: 12px;
-                top: -5px;
-                background-color: #8262fa;
-            }
-        }
-
-        [dir='rtl'] &.mat-badge-after {
-            .mat-badge-content {
-                right: auto;
-                left: -$size / 2;
-            }
-        }
+  &.mat-badge-overlap {
+    &.mat-badge-before {
+      .mat-badge-content {
+        left: -$size / 2;
+      }
     }
+
+    [dir='rtl'] &.mat-badge-before {
+      .mat-badge-content {
+        left: auto;
+        right: -$size / 2;
+      }
+    }
+
+    &.mat-badge-after {
+      .mat-badge-content {
+        //default css
+        //right: -$size / 2; 
+        // custom css
+        right: -5px;
+        width: 12px;
+        height: 12px;
+        top: -5px;
+        background-color: #8262fa;
+      }
+    }
+
+    [dir='rtl'] &.mat-badge-after {
+      .mat-badge-content {
+        right: auto;
+        left: -$size / 2;
+      }
+    }
+  }
 }
 
 // Custom color maps

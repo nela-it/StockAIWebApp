@@ -17,11 +17,16 @@
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Home
                 </span>
-                <!-- <span class="logo-text h4" style="float:right;">Home</span> -->
             </div>
 
         </div>
         <!-- / APP TITLE -->
+        <div fxLayout="row">
+            <span>Home -</span>
+            <span style="color: #b1b1b4; display: inline;" *ngIf="activeStock === 'prediction'"> Prediction Group</span>
+            <span style="color: #b1b1b4;" *ngIf="activeStock === 'portfolio'"> Portfolio </span>
+            <span style="color: #b1b1b4;" *ngIf="activeStock === 'product'"> Product Info</span>
+        </div>
     </div>
     <!-- / HEADER -->
 
@@ -84,7 +89,7 @@
                         accumsan. In dignissim laoreet ipsum eu interdum.
                     </div>
                 </div>
-                <button mat-raised-button (click)="groupDetail(item)" class="explore-button">Explore</button>
+                <button mat-stroked-button (click)="groupDetail(item)" class="explore-button">Explore</button>
             </div>
         </div>
         <div class="fuse-card auto-width" *ngIf="activeStock ==='portfolio'">

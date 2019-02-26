@@ -118,6 +118,7 @@ export class AnalyticsDashboardComponent implements OnInit {
     }
 
     groupDetail(data) {
+        localStorage.setItem('groupId', btoa(data.id));
         this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id)]);
     }
 }

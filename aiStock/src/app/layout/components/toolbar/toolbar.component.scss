@@ -32,17 +32,23 @@
         .a {
             display: inline-block;
             padding: 5px;
-            color: white;
+            color: white;   
         }
 
         img {
-            width: 32px;
+            width: 125px;
+            height: 36px;
+            max-width: none; 
+           
+            vertical-align: center; 
+            border: none; 
         }
 
         .icon-text {
             color: white;
             font-size: 20px;
             margin-top: 0px;
+            padding: 10px 0px 10px 70px;
         }
 
     }
@@ -52,7 +58,7 @@
     .language-button,
     .chat-panel-toggle-button,
     .quick-panel-toggle-button {
-        min-width: 64px;
+        min-width: 100px;
         height: 64px;
 
         @include media-breakpoint-down('xs') {
@@ -84,6 +90,6 @@
     }
 
     .serachBar {
-        margin-left: 38%;
+        margin-left: 20%;
     }
 }
