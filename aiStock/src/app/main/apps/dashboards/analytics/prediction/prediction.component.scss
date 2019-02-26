@@ -132,9 +132,11 @@
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         overflow: auto;
         -webkit-overflow-scrolling: touch;
-        mat-header-cell{
+
+        mat-header-cell {
             color: black;
         }
+
         .mat-header-row {
             min-height: 64px;
         }
@@ -144,9 +146,11 @@
             cursor: pointer;
             height: 84px;
         }
-        .total-price{
+
+        .total-price {
             color: #7F63F4;
         }
+
         .mat-cell {
             min-width: 0;
             display: flex;
@@ -184,23 +188,31 @@
                 vertical-align: middle;
             }
         }
+
         .submit-button {
             //height: 30px;            
             border-radius: 20px;
             background-color: white;
             color: #7F63F4;
+
             @include media-breakpoint('xs') {
                 width: 90%;
             }
         }
-        .submit-button:hover{ 
+
+        .submit-button:hover {
             color: white;
             background-color: #7F63F4;
         }
+
         .active-icon {
             border-radius: 50%;
         }
 
     }
-    
+
+    .iconWidth {
+        margin-left: 10px;
+    }
+
 }

@@ -99,9 +99,7 @@ export class LoginComponent implements OnInit {
                 'password': eptPassword // md5.appendStr(this.loginForm.value.password).end()
             };
             this._authenticationService.loginCheck(loginData).subscribe((result) => {
-                localStorage.setItem('userdata', result.token);
                 localStorage.setItem('username', result.username);
-
                 this.snackBar.open('Success', 'You are login successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
@@ -142,9 +140,7 @@ export class LoginComponent implements OnInit {
                     }
                 };
                 this._authenticationService.loginCheck(userData).subscribe((result) => {
-                    localStorage.setItem('userdata', result.token);
                     localStorage.setItem('username', result.username);
-
                     this.snackBar.open('Success', 'You are login successfully', {
                         duration: 2000,
                         horizontalPosition: 'center',

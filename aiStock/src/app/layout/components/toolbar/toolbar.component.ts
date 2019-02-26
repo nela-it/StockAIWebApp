@@ -122,7 +122,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
     logout() {
-        localStorage.removeItem('userdata');
+        localStorage.removeItem('LoggedInUser');
         this.router.navigate(['/pages/auth/login']);
     }
     // -----------------------------------------------------------------------------------------------------

@@ -13,6 +13,7 @@ import { AnalyticsDashboardComponent } from 'app/main/apps/dashboards/analytics/
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { PredictionListComponent } from './prediction/prediction.component';
 import { PredictionListService } from './prediction/prediction.service';
+import { AuthGuard } from '../../../../auth.guard';
 
 const routes: Routes = [
     {
@@ -25,6 +26,7 @@ const routes: Routes = [
     {
         path: 'prediction/:id',
         component: PredictionListComponent,
+        canActivate: [AuthGuard],
         resolve: {
             data: PredictionListService
         }

@@ -24,7 +24,7 @@ export class PredictionListService implements Resolve<any>
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'authorization': localStorage.getItem('userdata')
+                'authorization': localStorage.getItem('LoggedInUser')
             })
         };
         // Set the defaults

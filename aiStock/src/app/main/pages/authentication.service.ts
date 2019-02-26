@@ -19,6 +19,7 @@ export class AuthenticationService {
     //this.apiUrl = serverUrl + "user/login"; 
     return this.http.post<any>(loginUrl, userData, this.httpOptions).pipe(
       tap((user) => {
+        localStorage.setItem('LoggedInUser', user.token);
         console.log("user data", user)
       }, err => {
         console.log(err);
@@ -29,6 +30,7 @@ export class AuthenticationService {
     //this.apiUrl = serverUrl + "user/register"; 
     return this.http.post<any>(registerUrl, userData, this.httpOptions).pipe(
       tap((user) => {
+        localStorage.setItem('LoggedInUser', user.token);
         console.log("user data", user)
       }, err => {
         console.log(err);
@@ -54,5 +56,11 @@ export class AuthenticationService {
         console.log(err);
       })
     );
+  }
+  getToken() {
+    return localStorage.getItem('LoggedInUser');
+  }
+  isLoggednIn() {
+    return this.getToken() !== null;
   }
 }

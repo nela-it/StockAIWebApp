@@ -21,27 +21,29 @@ import { AppStoreModule } from 'app/store/store.module';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
+import { AuthGuard } from './auth.guard';
+
 const appRoutes: Routes = [
     {
         path: 'apps',
-        loadChildren: './main/apps/apps.module#AppsModule'
+        loadChildren: './main/apps/apps.module#AppsModule',
     },
     {
         path: 'pages',
-        loadChildren: './main/pages/pages.module#PagesModule'
+        loadChildren: './main/pages/pages.module#PagesModule',
     },
-    {
-        path: 'ui',
-        loadChildren: './main/ui/ui.module#UIModule'
-    },
-    {
-        path: 'documentation',
-        loadChildren: './main/documentation/documentation.module#DocumentationModule'
-    },
-    {
-        path: 'angular-material-elements',
-        loadChildren: './main/angular-material-elements/angular-material-elements.module#AngularMaterialElementsModule'
-    },
+    /*  {
+         path: 'ui',
+         loadChildren: './main/ui/ui.module#UIModule'
+     }, */
+    /*  {
+         path: 'documentation',
+         loadChildren: './main/documentation/documentation.module#DocumentationModule'
+     }, */
+    /*  {
+         path: 'angular-material-elements',
+         loadChildren: './main/angular-material-elements/angular-material-elements.module#AngularMaterialElementsModule'
+     }, */
     {
         path: '**',
         redirectTo: 'pages/auth/login'
@@ -97,7 +99,7 @@ export function provideConfig() {
         LayoutModule,
         AppStoreModule
     ],
-    providers: [
+    providers: [AuthGuard,
         {
             provide: AuthServiceConfig,
             useFactory: provideConfig

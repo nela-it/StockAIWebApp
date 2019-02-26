@@ -6,7 +6,7 @@
 
     <!-- CENTER -->
     <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
-        fxLayoutAlign.gt-xs="space-between center" style="height:71%;">
+        fxLayoutAlign.gt-xs="space-between center" style="height:5%;">
 
         <!-- <div class="logo" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
@@ -24,8 +24,12 @@
                 <!-- <mat-icon class="logo-icon mr-16"
                           [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
                 </mat-icon> -->
-                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Home
+                <span class="logo-text h3" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <a [routerLink]="'/apps/dashboards/analytics'"
+                        style="text-decoration: none;color:#b1b1b4;vertical-align:middle;">
+                        <mat-icon style="vertical-align:middle;">keyboard_backspace</mat-icon>Back
+                    </a>
+                    <p style="margin: 30px; vertical-align:middle; display: inline;">{{stockName}} Stocks</p>
                 </span>
 
                 <!-- <span class="logo-text h4">
@@ -48,9 +52,8 @@
     </div>
     <div class="main-widget">
         <div fxLayout="row" class="nav-header">
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
-                [ngClass]="{active: activeStockTab == 'listStocks'}" (click)="activeStock('listStocks')"
-                style="height:120px;">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'listStocks'}"
+                (click)="activeStock('listStocks')" style="height:120px;">
                 <div class="logo">
                     <span>
                         <mat-icon>sort</mat-icon>
@@ -62,9 +65,8 @@
                     <div class="address bgColor">Choose a stock from the selected prediction groups</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
-                [ngClass]="{active: activeStockTab == 'criteria'}" (click)="activeStock('criteria')"
-                style="height:120px;">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'criteria'}"
+                (click)="activeStock('criteria')" style="height:120px;">
                 <div class="logo">
                     <span>
                         <mat-icon>view_comfy</mat-icon>
@@ -95,8 +97,8 @@
         <!-- CONTENT CARD -->
         <div class="content-card mat-white-bg">
 
-            <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort
-                [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+            <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort [@animateStagger]="{value:'50'}"
+                fusePerfectScrollbar>
                 <!-- ID Column -->
                 <ng-container matColumnDef="ticker">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Ticker</mat-header-cell>
@@ -109,7 +111,8 @@
                 <ng-container matColumnDef="stockName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Stock Name</mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
-                        <p class="text-truncate">{{prediction.stock_name}}</p>
+                        <img src="assets/images/company/{{prediction.ticker_image}}.png" height="25px" width="25px">
+                        <p class="text-truncate iconWidth">{{prediction.stock_name}}</p>
                     </mat-cell>
                 </ng-container>
 

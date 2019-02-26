@@ -140,7 +140,7 @@ exports.register = (params, next, cb) => {
             status: 404,
             token: null,
             username: null,
-            message: "email Already Exists."
+            message: "Email Already Exists."
           };
           cb(null, data);
         } else {

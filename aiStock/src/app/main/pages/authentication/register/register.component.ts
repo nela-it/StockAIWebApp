@@ -103,7 +103,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 'password': eptPassword
             }
             this._authenticationService.registerUser(registerData).subscribe((result) => {
-                localStorage.setItem('userdata', result.token);
                 localStorage.setItem('username', result.username);
 
                 this.snackBar.open('Success', 'You are register successfully', {
@@ -147,7 +146,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     }
                 }
                 this._authenticationService.registerUser(userData).subscribe((result) => {
-                    localStorage.setItem('userdata', result.token);
                     localStorage.setItem('username', result.username);
                     this.snackBar.open('Success', 'You are register successfully', {
                         duration: 2000,
@@ -175,8 +173,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         IN.Event.on(IN, 'auth', r => {
             this.getLinkedinUserData();
         });
-
-
         if (!IN.User.isAuthorized()) {
             /* if not authorised */
             console.log('NOT AUTHORISED');
@@ -212,9 +208,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }
             //console.log(userData);
             this._authenticationService.registerUser(userData).subscribe((result) => {
-                localStorage.setItem('userdata', result.token);
                 localStorage.setItem('username', result.username);
-
                 this.snackBar.open('Success', 'You are register successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',

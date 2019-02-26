@@ -1,7 +1,7 @@
 <div id="dashboard-analytics" class="page-layout blank">
     <!-- HEADER -->
     <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
-        fxLayoutAlign.gt-xs="space-between center">
+        fxLayoutAlign.gt-xs="space-between center" style="height:5%;">
 
         <!-- APP TITLE -->
         <div fxLayout="row" fxLayoutAlign="start center">
@@ -32,8 +32,8 @@
 
     <div class="main-widget">
         <div fxLayout="row" class="nav-header">
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
-                (click)="active_stock('prediction')">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
+                [ngClass]="{active: activeStock == 'prediction'}" (click)="active_stock('prediction')">
                 <div class="logo">
                     <span>
                         <mat-icon>dashboard</mat-icon>
@@ -45,8 +45,8 @@
                     <div class="address bgColor">Looking for a stock type? Start with these groups</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
-                (click)="active_stock('portfolio')">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
+                [ngClass]="{active: activeStock == 'portfolio'}" (click)="active_stock('portfolio')">
                 <div class="logo">
                     <span>
                         <mat-icon>donut_small</mat-icon>
@@ -58,8 +58,8 @@
                     <div class="address bgColor">Get a overview of your stocks in a short time</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product'}"
-                (click)="active_stock('product')">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
+                [ngClass]="{active: activeStock == 'product'}" (click)="active_stock('product')">
                 <div class="logo">
                     <span>
                         <mat-icon>error_outline</mat-icon>
@@ -79,7 +79,7 @@
             fxLayoutAlign="center center">
             <div class="price-table style-2" fxLayout="column" *ngFor="let item of predictionGroupData; let i=index">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/logos/logo1.png" height="70px" width="70px"></div>
+                    <div class="value"><img src="assets/images/group/{{item.group_image}}.png" height="70px" width="70px"></div>
                 </div>
                 <div class="group-title">{{item.group_name}} Stocks</div>
                 <div class="period">Group</div>
@@ -99,11 +99,13 @@
                     <span class="h2">Visitors & Page views</span>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'yesterday'"
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                        (click)="widget5SelectedDay = 'yesterday'"
                         [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
                         Yesterday
                     </div>
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'today'"
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                        (click)="widget5SelectedDay = 'today'"
                         [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
                         Today
                     </div>
@@ -111,8 +113,9 @@
             </div>
 
             <div class="position-relative h-368 pb-16">
-                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]" [labels]="widgets.widget5.labels"
-                    [colors]="widgets.widget5.colors" [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
+                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
+                    [labels]="widgets.widget5.labels" [colors]="widgets.widget5.colors"
+                    [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
                 </canvas>
             </div>
 

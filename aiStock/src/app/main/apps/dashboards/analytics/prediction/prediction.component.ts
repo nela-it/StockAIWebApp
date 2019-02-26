@@ -25,7 +25,7 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     activeStockTab = 'listStocks';
     dataSource: FilesDataSource | null;
     displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'action'];
-
+    stockName: string;
     @ViewChild(MatPaginator)
     paginator: MatPaginator;
 
@@ -61,6 +61,7 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // this.data = this._predictionListService.getPred();
         //console.log(this.data)
+        this.stockName = localStorage.getItem('stockData');
         this.route.params.subscribe(params => {
             this.groupId = params['id'];
             this._predictionListService.id = this.groupId;
