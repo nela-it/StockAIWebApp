@@ -2,7 +2,8 @@
 
 #dashboard-analytics {
     background-color: #F3F7FA;
-   /*  .sub-nav{
+
+    /*  .sub-nav{
         float: right;
         text-align: center;
     } */
@@ -18,6 +19,7 @@
                 cursor: pointer;
                 max-width: 270px;
                 max-height: 176px;
+
                 mat-icon {
                     //padding: 0px 46px 0px 0px;
                     padding-left: -40px;
@@ -40,7 +42,8 @@
                 color: #8262fa;
                 cursor: pointer;
                 margin: 10px;
-                height:120px;
+                height: 120px;
+
                 mat-icon {
                     color: #8262fa;
                     font-size: 40px;
@@ -172,7 +175,8 @@
                 width: 128px;
                 color: #7F63F4;
             }
-            .explore-button:hover{
+
+            .explore-button:hover {
                 background-color: #7F63F4;
                 color: white;
             }
@@ -234,6 +238,36 @@
                 }
             }
         } */
+    }
+
+    .footer {
+
+        .note {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        // IE10 fix
+        .logo,
+        .small-note {
+            -ms-flex: 0 1 auto;
+        }
+
+        .sub-note {
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 18px;
+        }
+
+        .small-note {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.54);
+            line-height: 18px;
+            margin-left: 50px;
+            margin-bottom: 30px;
+        }
+
     }
 
 }

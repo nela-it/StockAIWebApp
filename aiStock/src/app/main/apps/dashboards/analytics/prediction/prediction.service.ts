@@ -3,8 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { getGroupsDetails } from 'appConfig/appconfig';
-import { P } from '@angular/core/src/render3';
-import { reject, resolve } from 'q';
 
 @Injectable()
 export class PredictionListService implements Resolve<any>
@@ -28,7 +26,6 @@ export class PredictionListService implements Resolve<any>
             })
         };
         // Set the defaults
-        console.log(this.id)
         this.onPredictionsChanged = new BehaviorSubject({});
     }
 

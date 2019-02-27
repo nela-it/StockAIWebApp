@@ -32,8 +32,8 @@
 
     <div class="main-widget">
         <div fxLayout="row" class="nav-header">
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
-                [ngClass]="{active: activeStock == 'prediction'}" (click)="active_stock('prediction')">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
+                (click)="active_stock('prediction')">
                 <div class="logo">
                     <span>
                         <mat-icon>dashboard</mat-icon>
@@ -45,8 +45,8 @@
                     <div class="address bgColor">Looking for a stock type? Start with these groups</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
-                [ngClass]="{active: activeStock == 'portfolio'}" (click)="active_stock('portfolio')">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
+                (click)="active_stock('portfolio')">
                 <div class="logo">
                     <span>
                         <mat-icon>donut_small</mat-icon>
@@ -58,8 +58,8 @@
                     <div class="address bgColor">Get a overview of your stocks in a short time</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center"
-                [ngClass]="{active: activeStock == 'product'}" (click)="active_stock('product')">
+            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product'}"
+                (click)="active_stock('product')">
                 <div class="logo">
                     <span>
                         <mat-icon>error_outline</mat-icon>
@@ -99,13 +99,11 @@
                     <span class="h2">Visitors & Page views</span>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                        (click)="widget5SelectedDay = 'yesterday'"
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'yesterday'"
                         [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
                         Yesterday
                     </div>
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                        (click)="widget5SelectedDay = 'today'"
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'today'"
                         [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
                         Today
                     </div>
@@ -113,12 +111,24 @@
             </div>
 
             <div class="position-relative h-368 pb-16">
-                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
-                    [labels]="widgets.widget5.labels" [colors]="widgets.widget5.colors"
-                    [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
+                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]" [labels]="widgets.widget5.labels"
+                    [colors]="widgets.widget5.colors" [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
                 </canvas>
             </div>
 
+        </div>
+        <div class="auto-width" *ngIf="activeStock === 'product'">
+            <div class="footer" *ngFor="let item of product; let i=index">
+                <div class="note">{{item.question}}</div>
+                <div class="sub-note">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    {{item.answer}}
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start start">
+                    <div class="small-note">
+                        {{item.description}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

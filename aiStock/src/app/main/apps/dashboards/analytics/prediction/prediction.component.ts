@@ -1,4 +1,3 @@
-import { group } from '@angular/animations';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
@@ -20,7 +19,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PredictionListComponent implements OnInit, OnDestroy {
     pageSize;
-    data: any;
     groupId;
     activeStockTab = 'listStocks';
     dataSource: FilesDataSource | null;
@@ -60,7 +58,6 @@ export class PredictionListComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // this.data = this._predictionListService.getPred();
-        //console.log(this.data)
         this.stockName = localStorage.getItem('stockData');
         this.route.params.subscribe(params => {
             this.groupId = params['id'];
@@ -68,7 +65,7 @@ export class PredictionListComponent implements OnInit, OnDestroy {
         });
 
         this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
-        console.log(this.filter);
+
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -102,7 +99,6 @@ export class FilesDataSource extends DataSource<any>
     // Private
     private _filterChange = new BehaviorSubject('');
     private _filteredDataChange = new BehaviorSubject('');
-
     /**
      * Constructor
      *
@@ -160,6 +156,7 @@ export class FilesDataSource extends DataSource<any>
         ];
 
         return merge(...displayDataChanges).pipe(map(() => {
+
             let data = this._predictionListService.predictions.slice();
 
             data = this.filterData(data);
@@ -196,6 +193,7 @@ export class FilesDataSource extends DataSource<any>
      * @returns {any[]}
      */
     sortData(data): any[] {
+
         if (!this._matSort.active || this._matSort.direction === '') {
             return data;
         }
@@ -209,22 +207,22 @@ export class FilesDataSource extends DataSource<any>
                     [propertyA, propertyB] = [a.ticker, b.ticker];
                     break;
                 case 'stockName':
-                    [propertyA, propertyB] = [a.stockName, b.stockName];
+                    [propertyA, propertyB] = [a.stock_name, b.stock_name];
                     break;
                 case 'recommendedPrice':
-                    [propertyA, propertyB] = [a.recommendedPrice, b.recommendedPrice];
+                    [propertyA, propertyB] = [a.recommended_price, b.recommended_price];
                     break;
                 case 'currentPrice':
-                    [propertyA, propertyB] = [a.currentPrice, b.currentPrice];
+                    [propertyA, propertyB] = [a.suggested_date_price, b.suggested_date_price];
                     break;
                 case 'suggestedDate':
-                    [propertyA, propertyB] = [a.suggestedDate, b.suggestedDate];
+                    [propertyA, propertyB] = [a.suggested_date, b.suggested_date];
                     break;
                 case 'tragetPrice':
-                    [propertyA, propertyB] = [a.tragetPrice, b.tragetPrice];
+                    [propertyA, propertyB] = [a.target_price, b.target_price];
                     break;
                 case 'date':
-                    [propertyA, propertyB] = [a.date, b.date];
+                    [propertyA, propertyB] = [a.target_date, b.target_date];
                     break;
             }
 

@@ -9,3 +9,7 @@ export const resetPasswordUrl: string = serverUrl + 'user/changePassword';
 
 export const predictionGroup: string = serverUrl + 'prediction_group/getGroups';
 export const getGroupsDetails: string = serverUrl + 'prediction_group/exploreGroups';
+
+// Product Data
+
+export const getProductDetails: string = serverUrl + 'product/getProductInfo';

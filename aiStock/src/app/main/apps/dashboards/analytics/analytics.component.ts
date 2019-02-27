@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class AnalyticsDashboardComponent implements OnInit {
     widgets: any;
+    product: any;
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
     activeStock = 'prediction';
@@ -43,8 +44,18 @@ export class AnalyticsDashboardComponent implements OnInit {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
 
+
+        // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.predictionGroupData = res.data;
+        }, error => {
+            console.log(error);
+            this.errMsg = error.message;
+        });
+
+        // Product group data
+        this._analyticsDashboardService.getProduct().subscribe(res => {
+            this.product = res.data;
         }, error => {
             console.log(error);
             this.errMsg = error.message;
@@ -118,7 +129,6 @@ export class AnalyticsDashboardComponent implements OnInit {
     }
 
     groupDetail(data) {
-        console.log(data)
         localStorage.setItem('groupId', btoa(data.id));
         localStorage.setItem('stockData', data.group_name);
         this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id)]);

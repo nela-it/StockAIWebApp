@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { predictionGroup } from 'appConfig/appconfig';
+import { predictionGroup, getProductDetails } from 'appConfig/appconfig';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class AnalyticsDashboardService implements Resolve<any>
 {
     widgets: any[];
+    product: any[];
     predictionGroupData: any[];
     httpOptions
     /**
@@ -65,6 +66,10 @@ export class AnalyticsDashboardService implements Resolve<any>
 
     public getGroupList(): Observable<any> {
         return this._httpClient.get(predictionGroup, this.httpOptions);
+    }
+
+    public getProduct(): Observable<any> {
+        return this._httpClient.get(getProductDetails, this.httpOptions);
     }
 
 }
