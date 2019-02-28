@@ -1,20 +1,15 @@
 <div id="dashboard-analytics" class="page-layout blank">
     <!-- HEADER -->
-    <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
-        fxLayoutAlign.gt-xs="space-between center" style="height:5%;">
+    <div class="header p-16 p-sm-18" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center">
 
         <!-- APP TITLE -->
         <div fxLayout="row" fxLayoutAlign="start center">
-
-            <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md>
-                <mat-icon>menu</mat-icon>
-            </button>
-
             <div class="logo" fxLayout="row" fxLayoutAlign="start center">
                 <!-- <mat-icon class="logo-icon mr-16"
                           [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
                 </mat-icon> -->
-                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                <span fxHide.xs class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Home
                 </span>
             </div>
@@ -23,16 +18,20 @@
         <!-- / APP TITLE -->
         <div fxLayout="row">
             <span>Home -</span>
-            <span style="color: #b1b1b4; display: inline;" *ngIf="activeStock === 'prediction'"> Prediction Group</span>
-            <span style="color: #b1b1b4;" *ngIf="activeStock === 'portfolio'"> Portfolio </span>
-            <span style="color: #b1b1b4;" *ngIf="activeStock === 'product'"> Product Info</span>
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+                *ngIf="activeStock === 'prediction'"> Prediction Group</span>
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+                *ngIf="activeStock === 'portfolio'"> Portfolio </span>
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+                *ngIf="activeStock === 'product'"> Product Info</span>
         </div>
     </div>
     <!-- / HEADER -->
 
     <div class="main-widget">
-        <div fxLayout="row" class="nav-header">
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" class="nav-header">
+            <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
+                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
                 (click)="active_stock('prediction')">
                 <div class="logo">
                     <span>
@@ -45,7 +44,8 @@
                     <div class="address bgColor">Looking for a stock type? Start with these groups</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
+            <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
+                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
                 (click)="active_stock('portfolio')">
                 <div class="logo">
                     <span>
@@ -58,7 +58,8 @@
                     <div class="address bgColor">Get a overview of your stocks in a short time</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product'}"
+            <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
+                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product'}"
                 (click)="active_stock('product')">
                 <div class="logo">
                     <span>
@@ -68,7 +69,7 @@
 
                 <div class="info">
                     <div class="title fontSize">Product Info </div>
-                    <div class="address bgColor">Get to know more about our AI Stock Prediction tool</div>
+                    <div class="address bgColor">Get to know more about our AIStock Prediction tool</div>
                 </div>
             </div>
         </div>
@@ -79,7 +80,8 @@
             fxLayoutAlign="center center">
             <div class="price-table style-2" fxLayout="column" *ngFor="let item of predictionGroupData; let i=index">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/group/{{item.group_image}}.png" height="70px" width="70px"></div>
+                    <div class="value"><img src="assets/images/group/{{item.group_image}}.png" height="70px"
+                            width="70px"></div>
                 </div>
                 <div class="group-title">{{item.group_name}} Stocks</div>
                 <div class="period">Group</div>
@@ -99,11 +101,13 @@
                     <span class="h2">Visitors & Page views</span>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center">
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'yesterday'"
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                        (click)="widget5SelectedDay = 'yesterday'"
                         [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
                         Yesterday
                     </div>
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer" (click)="widget5SelectedDay = 'today'"
+                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                        (click)="widget5SelectedDay = 'today'"
                         [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
                         Today
                     </div>
@@ -111,8 +115,9 @@
             </div>
 
             <div class="position-relative h-368 pb-16">
-                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]" [labels]="widgets.widget5.labels"
-                    [colors]="widgets.widget5.colors" [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
+                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
+                    [labels]="widgets.widget5.labels" [colors]="widgets.widget5.colors"
+                    [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
                 </canvas>
             </div>
 

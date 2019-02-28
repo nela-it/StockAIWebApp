@@ -3,7 +3,9 @@ const User = db.User;
 const Prediction_group = db.Prediction_group;
 const Stocks = db.Stocks;
 const realTimePrice = db.Real_time_price;
+const Portfolio = db.Portfolio;
 const Op = db.Op;
+const checkPortfolio = require("./portfolio.controller").checkPortfolio;
 const atob = require("atob");
 const _ = require("underscore");
 Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
@@ -92,9 +94,32 @@ exports.exploreGroups = async (req, res, next) => {
       include: [Prediction_group]
     });
     if (isStockFound.length > 0) {
-      return res.status(200).json({
-        message: "Stocks Found",
-        data: isStockFound
+      checkPortfolio(req, async (err, getPortfolio) => {
+        if (getPortfolio.length > 0) {
+          isStockFound.forEach(async stock => {
+            getPortfolio.forEach(async portfolio => {
+              if (stock.dataValues.id === portfolio.stock_id) {
+                stock.dataValues.addedToPortfolio = true;
+              } else {
+                if (stock.dataValues.addedToPortfolio !== true) {
+                  stock.dataValues.addedToPortfolio = false;
+                }
+              }
+            });
+          });
+          return res.status(200).json({
+            message: "Stocks Found",
+            data: isStockFound
+          });
+        } else {
+          isStockFound.forEach(async (stock, i) => {
+            stock.dataValues.addedToPortfolio = false;
+          });
+          return await res.status(200).json({
+            message: "Stocks Found",
+            data: isStockFound
+          });
+        }
       });
     } else {
       return res.status(404).json({

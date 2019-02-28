@@ -14,8 +14,15 @@
         position: relative;
         background: inherit;
         color: inherit;
+        @include media-breakpoint-down('sm') {
+            height: 64px;
+        }
     }
-
+    .logo-content{
+        @include media-breakpoint-down('xs') {
+            width: 200px !important;
+        } 
+    }
     /* .logo {
         display: flex;
         align-items: center;
@@ -38,8 +45,7 @@
         img {
             width: 125px;
             height: 36px;
-            max-width: none; 
-           
+            max-width: none;            
             vertical-align: center; 
             border: none; 
         }
@@ -49,6 +55,9 @@
             font-size: 20px;
             margin-top: 0px;
             padding: 10px 0px 10px 70px;
+            @include media-breakpoint-down('sm') {
+                padding: 10px 0px 10px 20px;
+            } 
         }
 
     }

@@ -11,12 +11,15 @@ export class AnalyticsDashboardService implements Resolve<any>
     widgets: any[];
     product: any[];
     predictionGroupData: any[];
+    groupName: string;
+    groupId: string;
     httpOptions
     /**
      * Constructor
      *
      * @param {HttpClient} _httpClient
      */
+
     constructor(
         private _httpClient: HttpClient
     ) {

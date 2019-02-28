@@ -1,16 +1,21 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject } from 'rxjs';
+import { merge, Observable, BehaviorSubject, fromEvent, Subject, from } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FuseUtils } from '@fuse/utils';
-
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators';
 import { PredictionListService } from './prediction.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { AnalyticsDashboardService } from '../analytics.service';
+import {
+    MatSnackBar,
+    MatSnackBarHorizontalPosition,
+    MatSnackBarVerticalPosition,
+} from '@angular/material';
 @Component({
     selector: 'prediction-list',
     templateUrl: './prediction.component.html',
@@ -42,8 +47,11 @@ export class PredictionListComponent implements OnInit, OnDestroy {
      * @param {PredictionListService} _predictionListService
      */
     constructor(
-        private _predictionListService: PredictionListService,
-        private route: ActivatedRoute
+        public _predictionListService: PredictionListService,
+        private route: ActivatedRoute,
+        public _analyticsDashboardService: AnalyticsDashboardService,
+        private router: Router,
+        public snackBar: MatSnackBar,
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -57,15 +65,16 @@ export class PredictionListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // this.data = this._predictionListService.getPred();
-        this.stockName = localStorage.getItem('stockData');
+        console.log(this._predictionListService.groupName);
+        this.stockName = this._analyticsDashboardService.groupName;
+        //console.log(this._analyticsDashboardService.groupId)
         this.route.params.subscribe(params => {
             this.groupId = params['id'];
-            this._predictionListService.id = this.groupId;
         });
+        console.log('sssssssssss:' + this._predictionListService.groupId, 'gggggggggggggggg: ' + this.groupId)
+        //this._predictionListService.groupId = this.groupId;
 
         this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
-
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -83,7 +92,32 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     activeStock(tab) {
         this.activeStockTab = tab;
     }
-
+    openStockDetail() {
+        this.router.navigate(['/apps/dashboards/analytics/stockDetail']);
+    }
+    addToPortfolioSubmit(stockId: string) {
+        if (stockId) {
+            const stockid = {
+                'stockId': stockId.toString()
+            }
+            this._predictionListService.addToPortfolio(stockid).subscribe((result) => {
+                this.snackBar.open('Success', 'Your porfolio successfully added.', {
+                    duration: 2000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'top'
+                });
+            }, (err) => {
+                console.log(err);
+                if (err) {
+                    this.snackBar.open('Error', err.error.message, {
+                        duration: 2000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top'
+                    });
+                }
+            });
+        }
+    }
     /**
   * On destroy
   */

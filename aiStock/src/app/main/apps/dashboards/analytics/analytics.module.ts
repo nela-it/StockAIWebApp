@@ -14,6 +14,7 @@ import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/an
 import { PredictionListComponent } from './prediction/prediction.component';
 import { PredictionListService } from './prediction/prediction.service';
 import { AuthGuard } from '../../../../auth.guard';
+import { StockDetailComponent } from './stock-detail/stock-detail.component';
 
 const routes: Routes = [
     {
@@ -30,13 +31,24 @@ const routes: Routes = [
         resolve: {
             data: PredictionListService
         }
-    }
+    },
+    {
+        path: 'stockDetail',
+        component: StockDetailComponent,
+        canActivate: [AuthGuard],
+        /* resolve: {
+            data: PredictionListService
+        } */
+    },
+
 ];
 
 @NgModule({
     declarations: [
         AnalyticsDashboardComponent,
-        PredictionListComponent
+        PredictionListComponent,
+        StockDetailComponent,
+
     ],
     imports: [
         RouterModule.forChild(routes),

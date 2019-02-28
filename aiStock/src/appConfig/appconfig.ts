@@ -13,3 +13,5 @@ export const getGroupsDetails: string = serverUrl + 'prediction_group/exploreGro
 // Product Data
 
 export const getProductDetails: string = serverUrl + 'product/getProductInfo';
+// Portfolio 
+export const addPortfolio: string = serverUrl + 'portfolio/addPortfolio';

@@ -4,7 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { Router } from '@angular/router';
-
+import { PredictionListService } from './prediction/prediction.service';
 @Component({
     selector: 'analytics-dashboard',
     templateUrl: './analytics.component.html',
@@ -20,13 +20,15 @@ export class AnalyticsDashboardComponent implements OnInit {
     activeStock = 'prediction';
     predictionGroupData: any;
     errMsg;
+    message: string;
     /**
      * Constructor
      *
      * @param {AnalyticsDashboardService} _analyticsDashboardService
      */
     constructor(
-        private _analyticsDashboardService: AnalyticsDashboardService,
+        public _analyticsDashboardService: AnalyticsDashboardService,
+        public _predictionListService: PredictionListService,
         private router: Router
     ) {
         // Register the custom chart.js plugin
@@ -129,8 +131,11 @@ export class AnalyticsDashboardComponent implements OnInit {
     }
 
     groupDetail(data) {
-        localStorage.setItem('groupId', btoa(data.id));
-        localStorage.setItem('stockData', data.group_name);
+
+        this._predictionListService.groupId = btoa(data.id);
+        //console.log(this._analyticsDashboardService.groupId = data.id);
+        this._analyticsDashboardService.groupName = data.group_name;
+        this._predictionListService.groupName = data.group_name;
         this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id)]);
     }
 }

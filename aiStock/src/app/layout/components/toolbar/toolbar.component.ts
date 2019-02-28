@@ -122,8 +122,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
     logout() {
-        localStorage.removeItem('LoggedInUser');
+        localStorage.clear();
         this.router.navigate(['/pages/auth/login']);
+
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

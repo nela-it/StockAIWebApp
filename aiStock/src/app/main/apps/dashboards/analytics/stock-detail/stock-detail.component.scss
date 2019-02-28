@@ -1,0 +1,138 @@
+@import "src/@fuse/scss/fuse";
+
+:host {
+    #predictions {
+
+        >.center {
+
+            >.header {
+
+                .search-input-wrapper {
+                    max-width: 480px;
+                }
+
+                @include media-breakpoint-down(xs) {
+                    margin: 24px 0;
+                    height: 128px !important;
+                    min-height: 128px !important;
+                    max-height: 128px !important;
+                }
+            }
+        }
+
+        .header {
+            background-color: #E8E7F9;
+            color: #8262fa;
+        }
+
+    }
+    .main-widget {
+        display: flex;
+        flex-direction: column;
+
+        .nav-header {
+            padding: 20px;
+            display: inline-block;
+
+            mat-card {
+                cursor: pointer;
+                max-width: 270px;
+                max-height: 176px;
+
+                mat-icon {
+                    //padding: 0px 46px 0px 0px;
+                    padding-left: -40px;
+                    color: #8262fa;
+                }
+
+                span {
+                    color: #b1b1b4;
+                    display: inline;
+
+                    // padding: 10px 10px 10px 10px;
+                    h2 {
+                        color: #8262fa;
+                    }
+                }
+            }
+
+            .nav-bar {
+                background-color:burlywood;
+                color: black;
+                cursor: pointer;
+                margin: 10px;
+               /*  mat-icon {
+                    color: #8262fa;
+                    font-size: 40px;
+                    margin: 10px;
+                } */
+                .code{
+                    margin-top: 15px;
+                    .issuer {
+                        //margin-ri: 30px;
+                        margin-right: 30px;
+                        //padding-right: 66px;
+                        margin-top: 15px;
+                        margin-left: 25px;
+                        .logo {
+                            width: 60px;
+                            padding: 0 8px;
+                           // border-right: 1px solid rgba(255, 255, 255, 0.7);
+                        }
+
+                        .info {
+                           // padding: 16px;
+                            mat-icon {
+                                //color: #8262fa;
+                                font-size: 24px;
+                                //margin: 10px;
+                            }
+                        }
+                    }
+                    span{
+                        margin: 15px;
+
+                    }
+                    .stock-detail{
+                        margin: 15px; 
+                        //display: inline;
+                        .data{
+                            display: inline;
+                        }
+                    }
+                }
+                .info {
+                    margin-left: 20px;
+                }
+
+                .fontSize {
+                    font-size: x-large;
+                }
+
+                .cardHeight {
+                    height: 100px !important;
+                }
+
+                .bgColor {
+                    color: gray;
+                }
+            }
+
+            .active {
+                background-color: #8262fa;
+                color: white;
+                border-radius: 3px;
+
+                mat-icon {
+                    color: white;
+                }
+
+                .info .bgColor {
+                    color: white;
+                }
+            }
+
+        }
+    }
+
+}

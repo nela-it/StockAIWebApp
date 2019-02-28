@@ -2,11 +2,6 @@
 
 #dashboard-analytics {
     background-color: #F3F7FA;
-
-    /*  .sub-nav{
-        float: right;
-        text-align: center;
-    } */
     .main-widget {
         display: flex;
         flex-direction: column;
@@ -87,6 +82,7 @@
     .header {
         background-color: #E8E7F9;
         color: #8262fa;
+        // height: 5%;
     }
 
     /*  */
@@ -143,9 +139,9 @@
             flex: 1 0 auto;
             //margin-top: -192px;
 
-            @include media-breakpoint-down('xs') {
+            /* @include media-breakpoint-down('xs') {
                 margin-top: -128px;
-            }
+            } */
 
             .price {
                 .value {

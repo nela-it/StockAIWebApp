@@ -5,8 +5,8 @@
     <!-- / TOP BACKGROUND -->
 
     <!-- CENTER -->
-    <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
-        fxLayoutAlign.gt-xs="space-between center" style="height:5%;">
+    <div class="header p-16 p-sm-18" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center">
 
         <!-- <div class="logo" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
@@ -15,11 +15,6 @@
             <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Predictions</span>
         </div> -->
         <div fxLayout="row" fxLayoutAlign="start center">
-
-            <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md>
-                <mat-icon>menu</mat-icon>
-            </button>
-
             <div class="logo" fxLayout="row" fxLayoutAlign="start center">
                 <!-- <mat-icon class="logo-icon mr-16"
                           [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
@@ -37,10 +32,11 @@
                 </span> -->
             </div>
         </div>
-        <!-- <div fxLayout="row">
+        <div fxHide.xs fxLayout="row">
             <span>Home -</span>
-            <span style="color: #b1b1b4; display: inline;" *ngIf="activeStock === 'prediction'"> Prediction Group</span>            
-        </div> -->
+            <span style="color: #b1b1b4; display: inline; margin-left: 15px;"> Prediction Groups - </span>
+            <span style="color: #b1b1b4; display: inline; margin-left: 15px;">{{stockName}} Stocks</span>
+        </div>
         <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
             <label for="search" class="mr-8">
                 <mat-icon class="secondary-text">search</mat-icon>
@@ -52,7 +48,8 @@
     </div>
     <div class="main-widget">
         <div fxLayout="row" class="nav-header">
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'listStocks'}"
+            <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
+                fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'listStocks'}"
                 (click)="activeStock('listStocks')" style="height:120px;">
                 <div class="logo">
                     <span>
@@ -65,7 +62,8 @@
                     <div class="address bgColor">Choose a stock from the selected prediction groups</div>
                 </div>
             </div>
-            <div class="nav-bar" fxFlex="25%" fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'criteria'}"
+            <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
+                fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'criteria'}"
                 (click)="activeStock('criteria')" style="height:120px;">
                 <div class="logo">
                     <span>
@@ -97,8 +95,8 @@
         <!-- CONTENT CARD -->
         <div class="content-card mat-white-bg">
 
-            <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort [@animateStagger]="{value:'50'}"
-                fusePerfectScrollbar>
+            <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort
+                [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
                 <!-- ID Column -->
                 <ng-container matColumnDef="ticker">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Ticker</mat-header-cell>
@@ -110,10 +108,12 @@
                 <!-- Reference Column -->
                 <ng-container matColumnDef="stockName">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Stock Name</mat-header-cell>
+
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <img src="assets/images/company/{{prediction.ticker_image}}.png" height="25px" width="25px">
-                        <p class="text-truncate iconWidth">{{prediction.stock_name}}</p>
+                        <p class="text-truncate iconWidth" (click)="openStockDetail()">{{prediction.stock_name}}</p>
                     </mat-cell>
+
                 </ng-container>
 
                 <!-- Name Column -->
@@ -163,7 +163,10 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Action</mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <p class="text-truncate">
-                            <button class="submit-button" mat-stroked-button>Add to portfolio</button>
+                            <button class="submit-button" mat-stroked-button
+                                (click)="addToPortfolioSubmit(prediction.id)">Add to
+                                portfolio</button>
+                            <!-- <button class="submit-button" mat-stroked-button>Added</button> -->
                         </p>
                     </mat-cell>
                 </ng-container>
