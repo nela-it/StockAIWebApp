@@ -25,15 +25,15 @@ const routes: Routes = [
         }
     },
     {
-        path: 'prediction/:id',
+        path: 'prediction/:id/:stockname',
         component: PredictionListComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         resolve: {
             data: PredictionListService
         }
     },
     {
-        path: 'stockDetail',
+        path: 'stockDetail/:stockId/:groupId/:stockname',
         component: StockDetailComponent,
         canActivate: [AuthGuard],
         /* resolve: {

@@ -57,9 +57,8 @@
             }
 
             .nav-bar {
-                background-color:burlywood;
+                //background-color:burlywood;
                 color: black;
-                cursor: pointer;
                 margin: 10px;
                /*  mat-icon {
                     color: #8262fa;
@@ -69,6 +68,7 @@
                 .code{
                     margin-top: 15px;
                     .issuer {
+                        float: left;
                         //margin-ri: 30px;
                         margin-right: 30px;
                         //padding-right: 66px;
@@ -87,17 +87,33 @@
                                 font-size: 24px;
                                 //margin: 10px;
                             }
-                        }
+                        }   
+                        /* span{
+                            margin: 15px;
+                            float: left;
+                        }   */                   
                     }
-                    span{
-                        margin: 15px;
+                    .stock-info{
+                        float: right;
+                        //background-color: red;                        
+                        margin-top: 15px;
+                        margin-left: 100px;
+                        .row-data{
+                            padding: 0px 50px 0px 10px;
+                            display: inline-block;
 
-                    }
-                    .stock-detail{
-                        margin: 15px; 
-                        //display: inline;
-                        .data{
-                            display: inline;
+                            .logo{
+                        
+                            }
+                            h3{
+                                text-align: left;
+                                margin: 0
+                            }
+                            p{
+                                text-align: left;
+                                margin: 0;
+                                color:#b1b1b4;
+                            }
                         }
                     }
                 }

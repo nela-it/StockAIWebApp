@@ -136,7 +136,8 @@ export class AnalyticsDashboardComponent implements OnInit {
         //console.log(this._analyticsDashboardService.groupId = data.id);
         this._analyticsDashboardService.groupName = data.group_name;
         this._predictionListService.groupName = data.group_name;
-        this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id)]);
+        this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id), data.group_name]);
+        //{ queryParams: { 'id': btoa(data.id), 'stockname': data.group_name } }
     }
 }
 

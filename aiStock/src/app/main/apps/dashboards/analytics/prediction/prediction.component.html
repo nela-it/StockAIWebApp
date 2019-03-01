@@ -111,7 +111,8 @@
 
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <img src="assets/images/company/{{prediction.ticker_image}}.png" height="25px" width="25px">
-                        <p class="text-truncate iconWidth" (click)="openStockDetail()">{{prediction.stock_name}}</p>
+                        <p class="text-truncate iconWidth" (click)="openStockDetail(prediction.id)">
+                            {{prediction.stock_name}}</p>
                     </mat-cell>
 
                 </ng-container>
@@ -163,10 +164,12 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Action</mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <p class="text-truncate">
-                            <button class="submit-button" mat-stroked-button
-                                (click)="addToPortfolioSubmit(prediction.id)">Add to
+                            <button *ngIf="prediction.addedToPortfolio == false " class="submit-button"
+                                mat-stroked-button (click)="addToPortfolioSubmit(prediction.id)">Add to
                                 portfolio</button>
-                            <!-- <button class="submit-button" mat-stroked-button>Added</button> -->
+                            <button style="color: white;
+                            background-color: #7F63F4;" *ngIf="prediction.addedToPortfolio == true "
+                                class="submit-button" mat-stroked-button disabled>Already Added</button>
                         </p>
                     </mat-cell>
                 </ng-container>

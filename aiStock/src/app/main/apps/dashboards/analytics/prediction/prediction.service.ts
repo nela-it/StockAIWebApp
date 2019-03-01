@@ -12,6 +12,7 @@ export class PredictionListService implements Resolve<any>
     id: string;
     groupId: string;
     groupName: string;
+    addedFlag: boolean;
     onPredictionsChanged: BehaviorSubject<any>;
     httpOptions
     /**
