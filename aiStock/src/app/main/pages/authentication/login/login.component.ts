@@ -84,7 +84,6 @@ export class LoginComponent implements OnInit {
         });
     }
     loginSubmit() {
-        console.log('callllll------------');
         if (this.loginForm.invalid) {
             return false;
         } else {
@@ -96,7 +95,7 @@ export class LoginComponent implements OnInit {
             const loginData = {
                 'apiType': 'login',
                 'username': this.loginForm.value.email,
-                'password': eptPassword // md5.appendStr(this.loginForm.value.password).end()
+                'password': eptPassword
             };
             this._authenticationService.loginCheck(loginData).subscribe((result) => {
                 localStorage.setItem('username', result.username);

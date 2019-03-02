@@ -29,8 +29,7 @@ exports.register = (req, res, next) => {
         message: "Unauthorized Data"
       });
     }
-  }
-  if (req.body.apiType === "register") {
+  } else if (req.body.apiType === "register") {
     let params = req.body;
     if (params.email && params.username && params.password) {
       userService.register(req.body, next, (err, data) => {
@@ -46,6 +45,10 @@ exports.register = (req, res, next) => {
         message: "Unauthorized Data"
       });
     }
+  } else {
+    return res.status(400).json({
+      message: "Unauthorized apiType"
+    });
   }
 };
 
@@ -70,8 +73,7 @@ exports.login = (req, res, next) => {
         message: "Unauthorized Data"
       });
     }
-  }
-  if (req.body.apiType === "login") {
+  } else if (req.body.apiType === "login") {
     let params = req.body;
     if (params.username && params.password) {
       userService.login(req.body, next, (err, data) => {
@@ -87,6 +89,10 @@ exports.login = (req, res, next) => {
         message: "Unauthorized Data"
       });
     }
+  } else {
+    return res.status(400).json({
+      message: "Unauthorized apiType"
+    });
   }
 };
 

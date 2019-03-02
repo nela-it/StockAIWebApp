@@ -136,12 +136,7 @@
         }
 
         .price-tables {
-            flex: 1 0 auto;
-            //margin-top: -192px;
-
-            /* @include media-breakpoint-down('xs') {
-                margin-top: -128px;
-            } */
+            flex: 1 0 auto;            
 
             .price {
                 .value {
@@ -177,63 +172,7 @@
                 color: white;
             }
         }
-
-        /* .example-header-image {
-            background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-            background-size: cover;
-        }
-        .submit-button{
-            background-color: white;
-            color: #8262fa; 
-            border: 5em;  
-            border-color: #8262fa;
-           // border: none;
-            outline:5em;
-        }
-        .submit-button:hover{
-            background-color: #8262fa;
-            color: white;   
-        }
-        @include media-breakpoint-down('md') {
-            flex-direction: column;
-        }
-
-        .left {
-            display: flex;
-            flex-direction: column;
-            flex: 1 1 auto;
-            min-width: 0;
-
-            .widget {
-                flex: 1 1 auto;
-                min-width: 0;
-            }
-        }
-
-        .right {
-            display: flex;
-            flex: 0 0 auto;
-            width: 320px;
-            min-width: 320px;
-            max-width: 320px;
-
-            @include media-breakpoint-down('md') {
-                flex: 1 0 100%;
-                margin-top: 32px;
-                width: 100%;
-                min-width: 0;
-                max-width: none;
-            }
-
-            .fuse-card {
-
-                @include media-breakpoint-down('md') {
-                    width: 100%;
-                    min-width: 0;
-                    max-width: none;
-                }
-            }
-        } */
+        
     }
 
     .footer {

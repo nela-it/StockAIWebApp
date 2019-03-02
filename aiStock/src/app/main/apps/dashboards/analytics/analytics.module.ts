@@ -15,7 +15,7 @@ import { PredictionListComponent } from './prediction/prediction.component';
 import { PredictionListService } from './prediction/prediction.service';
 import { AuthGuard } from '../../../../auth.guard';
 import { StockDetailComponent } from './stock-detail/stock-detail.component';
-
+import { StockDetailService } from './stock-detail/stock-detail.service';
 const routes: Routes = [
     {
         path: '',
@@ -36,9 +36,9 @@ const routes: Routes = [
         path: 'stockDetail/:stockId/:groupId/:stockname',
         component: StockDetailComponent,
         canActivate: [AuthGuard],
-        /* resolve: {
-            data: PredictionListService
-        } */
+        resolve: {
+            data: StockDetailService
+        }
     },
 
 ];
@@ -77,7 +77,7 @@ const routes: Routes = [
         FuseWidgetModule
     ],
     providers: [
-        AnalyticsDashboardService, PredictionListService
+        AnalyticsDashboardService, PredictionListService, StockDetailService
     ]
 })
 export class AnalyticsDashboardModule {

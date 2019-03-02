@@ -1,4 +1,4 @@
-<div id="predictions" class="page-layout carded fullwidth inner-scroll">
+<div id="predictions" class=" fullwidth inner-scroll">
   <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
     fxLayoutAlign.gt-xs="space-between center" style="height:5%;">
 
@@ -47,95 +47,134 @@
   </div>
   <div class="main-widget">
     <div fxLayout="row" class="nav-header">
-      <div class="nav-bar" fxFlex="70%" fxLayoutAlign="start " style="height:220px;">
+      <div class="nav-bar" fxLayoutWrap fxFlex="70%" fxLayoutAlign="start " style="height:230px;">
         <div class="code">
-          <!--  <span>
+          <!--  <div style="float:left">
             NASDAQ: AMZN
-          </span> -->
-          <!--  <div class="stock-detail">
-            <span>
-              <img src="assets/images/company/amzn.png" width="50px" height="50px">
-            </span>
-            <span class="data">
-              <h1>54.21</h1>
-              <p>+$34.21 | 2.4%</p>
-            </span>
+          </div>
+          <div style="float:right">
+            New York, United States
           </div> -->
           <div class="issuer" fxLayout="row" fxLayoutAlign="start center">
+            <!--  <div style="float:left">
+              NASDAQ: AMZN
+            </div> -->
             <div class="logo">
               <img src="assets/images/company/amzn.png" width="75px" height="75px">
             </div>
+
             <div class="info">
               <div class="title">
-                <h1 style="font-size:24px;"><b>54.21</b>
+                <div style="font-size:32px; color:#6B6E7D">
+                  <b>54.21</b>
                   <mat-icon>arrow_upwards</mat-icon>
-                </h1>
-
+                </div>
               </div>
               <div class="address">
-                <h2 style="font-size:18px;">+$34.21 | 2.4%</h2>
+                <h2 style="font-size:18px;"><label style="color:#2CCEFC">+$34.21</label> | <label
+                    style="color:#F79319">2.4%</label></h2>
               </div>
             </div>
           </div>
-          <div class="stock-info" fxLayout="row">
-            <div class="row-data">
-              <div class="logo">
-                <span>
-                  <mat-icon>date_range</mat-icon>
-                </span>
+          <!-- <div style="float:right">
+                New York, United States
+              </div> -->
+          <div class='row'>
+            <div class='column'>
+              <div class='info-column'>
+                <div class="logo">
+                  <span>
+                    <mat-icon style="color:#EFBF26">hourglass_empty</mat-icon>
+                  </span>
+                </div>
+                <div class="info">
+                  <div>14.03.2018</div>
+                  <div class="title">Earnings Date</div>
+                </div>
               </div>
-              <h3>14.03.2018</h3>
-              <p>Earnings Date</p>
             </div>
-            <div class="row-data">
-              <div class="logo">
-                <span>
-                  <mat-icon>now_widgets </mat-icon>
-                </span>
+            <div class='column'>
+              <div class='info-column'>
+                <div class="logo">
+                  <span>
+                    <mat-icon style="color:#54A6FA">now_widgets </mat-icon>
+                  </span>
+                </div>
+                <div class="info">
+                  <div>$2355.23</div>
+                  <div class="title">Recommended Price</div>
+                </div>
               </div>
-              <h3>$2355.23</h3>
-              <p>Recommended Price</p>
             </div>
-            <div class="row-data">
-              <div class="logo">
-                <span>
-                  <mat-icon>loyalty</mat-icon>
-                </span>
+            <div class='column'>
+              <div class='info-column'>
+                <div class="logo">
+                  <span>
+                    <mat-icon style="color:#32CDFD">loyalty</mat-icon>
+                  </span>
+                </div>
+                <div class="info">
+                  <div>$2042.71</div>
+                  <div class="title">Current Price</div>
+                </div>
               </div>
-              <h3>$2042.71</h3>
-              <p>Current Price</p>
             </div>
           </div>
-          <div class="stock-info" fxLayout="row">
-            <div class="row-data">
-              <div class="a">
-                <span>
-                  <mat-icon>today</mat-icon>
-                </span>
+          <div class='row'>
+            <div class='column'>
+              <div class='info-column'>
+                <div class="a">
+                  <span>
+                    <mat-icon style="color:#32CCFF">today</mat-icon>
+                  </span>
+                </div>
+                <div class="info">
+                  <div>08.03.2018</div>
+                  <div class="title">Suggested Date</div>
+                </div>
               </div>
-              <div>
-                <h3>08.03.2018</h3>
-                <p>Suggested Date</p>
+            </div>
+            <div class='column'>
+              <div class='info-column'>
+                <div class="logo">
+                  <span>
+                    <mat-icon style="color:#DA5AC9">track_changes</mat-icon>
+                  </span>
+                </div>
+                <div class="info">
+                  <div>$2176.49</div>
+                  <div class="title">Target Price</div>
+                </div>
               </div>
+            </div>
+            <div class='column'>
+              <div class='info-column'>
+                <div class="logo">
+                  <span>
+                    <mat-icon style="color:#EFB023">view_module</mat-icon>
+                  </span>
+                </div>
+                <div class="info">
+                  <div>Lion Stocks</div>
+                  <div class="title">Pregiction Group</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class='column'>
+              <div class='info-column'>
+                <div class="logo">
+                  <span>
+                    <mat-icon style="color:#69DB52">show_chart</mat-icon>
+                  </span>
+                </div>
+                <div class="info">
+                  <div class="title">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec
+                    augue tincidunt accumsan. In dignissim laoreet ipsum eu interdum.</div>
 
-            </div>
-            <div class="row-data">
-              <div class="logo">
-                <span>
-                  <mat-icon>track_changes</mat-icon>
-                </span>
+                </div>
               </div>
-              <h3>$2176.49</h3>
-              <p>Target Price</p>
-            </div>
-            <div class="row-data">
-              <div class="logo">
-                <span>
-                  <mat-icon>view_module</mat-icon>
-                </span>
-              </div>
-              <h3>Lion Stocks</h3>
-              <p>Pregiction Group</p>
             </div>
           </div>
         </div>
@@ -144,22 +183,118 @@
           <div class="address bgColor">Choose a stock from the selected prediction groups</div>
         </div> -->
       </div>
-      <div class="nav-bar" fxFlex="30%" fxLayoutAlign="start center" style="height:220px;">
-        <div class="logo">
-          <span>
-            <mat-icon>view_comfy</mat-icon>
-          </span>
-        </div>
-
-        <div class="info">
-          <div class="title fontSize">Grouping Criteria</div>
-          <div class="address bgColor">Get to know how we categorize stock into groups</div>
+      <div class="nav-bar" fxFlex="30%" fxLayoutAlign="center center" style="height:230px; background-color: #7C61EE;">
+        <div class="notes">
+          <div class="title fontSize"><b>Useful Notes</b></div>
+          <div class="address bgColor">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec
+            augue tincidunt accumsan. In dignissim laoreet ipsum eu interdum.
+          </div>
+          <div style="padding-left:15px;">
+            <label style="margin-left:40px;"><b>$2042.71</b></label>
+            <button style="margin-left:40px;" class="add-button" mat-flat-button>Add to portfolio</button>
+          </div>
         </div>
       </div>
 
     </div>
   </div>
-  <div class="center">
+  <div style="margin-left:25px;">
+    <h2>Algorithm</h2>
+  </div>
+  <div class="algorithm" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1.5%" fxLayoutAlign="center">
+    <mat-card class="card-picture">
+      <div class="number">
+        <div class="logo">
+          <b style=" color: #FF9D44;">
+            01
+          </b>
+        </div>
+        <div class="info">
+          <div>Step One</div>
+          <div class="title">Process</div>
+        </div>
+      </div>
+      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+      <div style="margin-top:10px;">This completes task one.</div>
+    </mat-card>
+    <mat-card class="card-picture">
+      <div class="number">
+        <div class="logo">
+          <b style=" color: #45E792;">02
+          </b>
+        </div>
+        <div class="info">
+          <div>Step Two</div>
+          <div class="title">Process</div>
+        </div>
+      </div>
+      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+      <div style="margin-top:10px;">This completes task two.</div>
+    </mat-card>
+    <mat-card class="card-picture">
+      <div class="number">
+        <div class="logo">
+          <b style=" color: #00AFF0;">
+            03
+          </b>
+        </div>
+        <div class="info">
+          <div>Step Three</div>
+          <div class="title">Process</div>
+        </div>
+      </div>
+      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+      <div style="margin-top:10px;">This completes task three.</div>
+    </mat-card>
+    <mat-card class="card-picture">
+      <div class="number">
+        <div class="logo">
+          <b style=" color: #FFDD67;">
+            04
+          </b>
+        </div>
+        <div class="info">
+          <div>Step Four</div>
+          <div class="title">Process</div>
+        </div>
+      </div>
+      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+      <div style="margin-top:10px;">This completes task four.</div>
+    </mat-card>
+    <mat-card class="card-picture">
+      <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
+        <span fxFlex="80%"></span>
 
+      </mat-card-title>
+      <img mat-card-image>
+    </mat-card>
+  </div>
+
+  <div class="chart">
+    <div class="fuse-card auto-width">
+      <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <span class="h2">Amazon Vs NASDAQ</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+            (click)="widget5SelectedDay = 'yesterday'" [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
+            Yesterday
+          </div>
+          <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+            (click)="widget5SelectedDay = 'today'" [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
+            Today
+          </div>
+        </div>
+      </div>
+
+      <div class="position-relative h-368 pb-16">
+        <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]" [labels]="widgets.widget5.labels"
+          [colors]="widgets.widget5.colors" [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
+        </canvas>
+      </div>
+
+    </div>
   </div>
 </div>

@@ -3,7 +3,7 @@
 :host {
 
     #predictions {
-
+        background-color: #F3F7FA;
         >.center {
 
             >.header {
@@ -63,9 +63,6 @@
                 color: #8262fa;
                 cursor: pointer;
                 margin: 10px;
-
-
-
                 mat-icon {
                     color: #8262fa;
                     font-size: 40px;
