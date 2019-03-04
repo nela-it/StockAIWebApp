@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { predictionGroup, getProductDetails } from 'appConfig/appconfig';
+import { predictionGroup, getProductDetails, getPortfolio } from 'appConfig/appconfig';
 import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 
 @Injectable()
 export class AnalyticsDashboardService implements Resolve<any>
 {
     widgets: any[];
     product: any[];
+    portfolio: any[];
     predictionGroupData: any[];
     groupName: string;
     groupId: string;
+    onPortfolioChanged: BehaviorSubject<any>;
     httpOptions
     /**
      * Constructor
@@ -42,7 +44,8 @@ export class AnalyticsDashboardService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getWidgets()
+                this.getWidgets(),
+                this.getPortfolio()
             ]).then(
                 () => {
                     resolve();
@@ -66,7 +69,18 @@ export class AnalyticsDashboardService implements Resolve<any>
                 }, reject);
         });
     }
+    getPortfolio(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this._httpClient.get(getPortfolio, this.httpOptions)
+                .subscribe((response: any) => {
 
+                    this.portfolio = response.data;
+                    console.log(this.portfolio)
+                    this.onPortfolioChanged.next(this.portfolio);
+                    resolve(response);
+                }, reject);
+        });
+    }
     public getGroupList(): Observable<any> {
         return this._httpClient.get(predictionGroup, this.httpOptions);
     }

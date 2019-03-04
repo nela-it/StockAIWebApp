@@ -35,11 +35,8 @@
             padding: 20px;
             display: inline-block;
 
-            mat-card {
-                cursor: pointer;
-                max-width: 270px;
-                max-height: 176px;
-
+            mat-card {                
+                max-width: 270px;               
                 mat-icon {
                     //padding: 0px 46px 0px 0px;
                     padding-left: -40px;
@@ -56,7 +53,10 @@
                     }
                 }
             }
-
+            .mat-card{
+                transition: none !important;
+                box-shadow: none !important;
+            }
             .nav-bar {               
                 color: black;
                 margin: 10px;
@@ -64,12 +64,13 @@
                
                 .code{
                     margin-top: 15px;
+                   // display:inline;
                     .issuer {
                         float: left;                                                                        
                         margin-top: 15px;
                         margin-left: 25px;
                         .logo {
-                            width: 60px;
+                            //width: 60px;
                             padding: 0 8px;                           
                         }
 
@@ -77,10 +78,17 @@
                             mat-icon {                                
                                 font-size: 24px;                                
                             }
-                        }                                          
+                        }  
+                        @include media-breakpoint-down(xs) {
+                            float: none;     
+                        }    
+                        @include media-breakpoint-down(sm) {
+                            float: none;     
+                        }                                      
                     }
+
                     .row {                        
-                        margin-left: 100px;                        
+                       // margin-left: 100px;                        
                         display: flex;
                         flex-direction: row;
                         flex-wrap: wrap;                            
@@ -91,23 +99,20 @@
                         flex-basis: 100%;
                         flex: 1;
                     }                    
-                    .info-column {
-                        padding: 20px;
+                    .info-column {                        
                         display: flex;
                         width: auto;
                         background-color: white;
-                        height: 60px;
                         align-items: center;
                         .title{
                             color: #b1b1b4;
                         }
+                    }
+                    .info{
+                        margin: 10px;
                     }                
                     
-                }                
-                .info {
-                    margin-left: 20px;
-
-                }
+                }                                
 
                 .fontSize {
                     font-size: 20px;
@@ -162,6 +167,10 @@
     .algorithm {
        /*  display: flex;
         flex-direction: column; */
+        .mat-card{
+            transition: none !important;
+            box-shadow: none !important;
+        }
         .card-picture {
             width: 18%;
             //margin-bottom: 2%;
@@ -191,14 +200,20 @@
             
         }
     }
-    .chart{
-            //display: flex !important;
+    .chart{            
         margin: 25px;
-       /*  flex-direction: row;
-    box-sizing: border-box;
-    display: flex;
-    max-height: 100%;
-    place-content: stretch center;
-    align-items: stretch; */
+        .fuse-card{
+            transition: none !important;
+            box-shadow: none !important;
+            .text-color {
+                color: #b1b1b4;
+            }
+            .value{
+                color: #6F7376;
+                font-size: 20px;
+            }
+            
+        }
+
     }
 }

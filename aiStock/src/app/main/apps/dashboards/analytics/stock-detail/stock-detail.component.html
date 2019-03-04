@@ -10,9 +10,9 @@
     </div> -->
     <div fxLayout="row" fxLayoutAlign="start center">
 
-      <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md>
+      <!--  <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md>
         <mat-icon>menu</mat-icon>
-      </button>
+      </button> -->
 
       <div class="logo" fxLayout="row" fxLayoutAlign="start center">
         <!-- <mat-icon class="logo-icon mr-16"
@@ -47,7 +47,7 @@
   </div>
   <div class="main-widget">
     <div fxLayout="row" class="nav-header">
-      <div class="nav-bar" fxLayoutWrap fxFlex="70%" fxLayoutAlign="start " style="height:230px;">
+      <mat-card class="nav-bar" fxLayoutWrap fxFlex="70%" fxLayoutAlign="start">
         <div class="code">
           <!--  <div style="float:left">
             NASDAQ: AMZN
@@ -182,20 +182,20 @@
           <div class="title fontSize">List of Stocks</div>
           <div class="address bgColor">Choose a stock from the selected prediction groups</div>
         </div> -->
-      </div>
-      <div class="nav-bar" fxFlex="30%" fxLayoutAlign="center center" style="height:230px; background-color: #7C61EE;">
+      </mat-card>
+      <mat-card class="nav-bar" fxFlex="30%" fxLayoutAlign="center center" style="background-color: #7C61EE;">
         <div class="notes">
           <div class="title fontSize"><b>Useful Notes</b></div>
           <div class="address bgColor">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec
-            augue tincidunt accumsan. In dignissim laoreet ipsum eu interdum.
+            augue tincidunt accumsan. In dignissim laoreet ipsum.
           </div>
           <div style="padding-left:15px;">
-            <label style="margin-left:40px;"><b>$2042.71</b></label>
+            <label><b>$2042.71</b></label>
             <button style="margin-left:40px;" class="add-button" mat-flat-button>Add to portfolio</button>
           </div>
         </div>
-      </div>
+      </mat-card>
 
     </div>
   </div>
@@ -276,7 +276,17 @@
       <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="column" fxLayoutAlign="start start">
           <span class="h2">Amazon Vs NASDAQ</span>
+          <label style="color: #b1b1b4">
+            <mat-icon style="color: #8262fa">minimize</mat-icon> Amazon
+            <mat-icon style="color: #b1b1b4">minimize</mat-icon> NASDAQ
+          </label>
         </div>
+
+        <div class="text-color">Alpha Value<div class="value">0.2814</div>
+        </div>
+        <div class="text-color">Beta Value<div class="value">0.6825</div>
+        </div>
+
         <div fxLayout="row" fxLayoutAlign="start center">
           <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
             (click)="widget5SelectedDay = 'yesterday'" [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
@@ -285,6 +295,15 @@
           <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
             (click)="widget5SelectedDay = 'today'" [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
             Today
+          </div>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-select placeholder="Last 30 days ">
+                <mat-option> abc </mat-option>
+                <mat-option> abc </mat-option>
+              </mat-select>
+            </mat-form-field>
+
           </div>
         </div>
       </div>

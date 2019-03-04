@@ -174,7 +174,17 @@
         }
         
     }
-
+    .fuse-card{
+        transition: none !important;
+        box-shadow: none !important;
+        .text-color {
+            color: #b1b1b4;
+        }
+        .value{
+            color: #6F7376;
+            font-size: 20px;
+        }
+    }
     .footer {
 
         .note {

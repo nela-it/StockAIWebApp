@@ -94,33 +94,154 @@
                 <button mat-stroked-button (click)="groupDetail(item)" class="explore-button">Explore</button>
             </div>
         </div>
-        <div class="fuse-card auto-width" *ngIf="activeStock ==='portfolio'">
-
-            <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
-                <div fxLayout="column" fxLayoutAlign="start start">
-                    <span class="h2">Visitors & Page views</span>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center">
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                        (click)="widget5SelectedDay = 'yesterday'"
-                        [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
-                        Yesterday
+        <div *ngIf="activeStock ==='portfolio'">
+            <div class="fuse-card auto-width">
+                <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                        <span class="h2">Summary</span>
+                        <label style="color: #b1b1b4">
+                            <mat-icon style="color: #8262fa">minimize</mat-icon> Portfolio
+                            <mat-icon style="color: #b1b1b4">minimize</mat-icon> Benchmark Portfolio
+                        </label>
                     </div>
-                    <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
-                        (click)="widget5SelectedDay = 'today'"
-                        [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
-                        Today
+                    <div class="text-color">No. of Stocks<div class="value">2000</div>
+                    </div>
+                    <div class="text-color">% of Charge<div class="value">1.7%</div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                            (click)="widget5SelectedDay = 'yesterday'"
+                            [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
+                            Yesterday
+                        </div>
+                        <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                            (click)="widget5SelectedDay = 'today'"
+                            [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
+                            Today
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="position-relative h-368 pb-16">
-                <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
-                    [labels]="widgets.widget5.labels" [colors]="widgets.widget5.colors"
-                    [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
-                </canvas>
-            </div>
+                <div class="position-relative h-368 pb-16">
+                    <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
+                        [labels]="widgets.widget5.labels" [colors]="widgets.widget5.colors"
+                        [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
+                    </canvas>
+                </div>
 
+            </div>
+            <div class="center">
+
+                <!-- HEADER -->
+
+                <!-- / HEADER -->
+
+                <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+                        <label for="search" class="mr-8">
+                            <mat-icon class="secondary-text">search</mat-icon>
+                        </label>
+                        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+                            <input id="search" matInput #filter placeholder="Search">
+                        </mat-form-field>
+                    </div> -->
+                <!-- CONTENT CARD -->
+                <div class="content-card mat-white-bg">
+
+                    <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort
+                        [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="ticker">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Ticker</mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio">
+                                <p class="text-truncate">{{portfolio.ticker}}</p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Reference Column -->
+                        <ng-container matColumnDef="stockName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Stock Name
+                            </mat-header-cell>
+
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
+                                <img src="assets/images/company/{{portfolio.ticker_image}}.png" height="25px"
+                                    width="25px">
+                                <p class="text-truncate iconWidth" (click)="openStockDetail(portfolio.id)">
+                                    {{portfolio.stock_name}}</p>
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="recommendedPrice">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Recommended Price</mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio">
+                                <p class="text-truncate">
+                                    {{portfolio.recommended_price | currency:'USD':'symbol'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Total Price Column -->
+                        <ng-container matColumnDef="currentPrice">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Current Price
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
+                                <p class="total-price text-truncate">
+                                    {{portfolio.suggested_date_price | currency:'USD':'symbol'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Payment Column -->
+                        <ng-container matColumnDef="suggestedDate">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Suggested Date
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
+                                <p class="text-truncate">
+                                    {{portfolio.suggested_date | date:'dd MMMM y'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="tragetPrice">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Traget Price</mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio">
+                                <p class="status text-truncate h6 p-4">
+                                    {{portfolio.target_price| currency:'USD':'symbol'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="action">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Action
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
+                                <p class="text-truncate">11
+                                    <!-- <button *ngIf="portfolio.addedToPortfolio == false " class="submit-button"
+                                            mat-stroked-button (click)="addToPortfolioSubmit(portfolio.id)">Add to
+                                            portfolio</button>
+                                        <button style="color: white;
+                                        background-color: #7F63F4;" *ngIf="portfolio.addedToPortfolio == true "
+                                            class="submit-button" mat-stroked-button disabled>Already Added</button> -->
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+
+                        <mat-row *matRowDef="let portfolio; columns: displayedColumns;">
+                        </mat-row>
+                    </mat-table>
+
+                    <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+                        [pageSizeOptions]="[5, 10, dataSource.filteredData.length]">
+                    </mat-paginator>
+
+                </div>
+                <!-- / CONTENT CARD -->
+            </div>
         </div>
         <div class="auto-width" *ngIf="activeStock === 'product'">
             <div class="footer" *ngFor="let item of product; let i=index">
