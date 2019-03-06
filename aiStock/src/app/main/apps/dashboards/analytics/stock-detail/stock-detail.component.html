@@ -21,7 +21,7 @@
         <span class="logo-text h3" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
           <a [routerLink]="['/apps/dashboards/analytics/prediction',groupId,stockName]"
             style="text-decoration: none;color:#b1b1b4;vertical-align:middle;">
-            <mat-icon style="vertical-align:middle;">keyboard_backspace</mat-icon>Back
+            <mat-icon style="vertical-align:middle;">keyboard_backspace</mat-icon><span>&nbsp;</span> Back
           </a>
           <p style="margin: 30px; vertical-align:middle; display: inline;">{{stockName}} Stocks</p>
         </span>
@@ -32,8 +32,8 @@
       </div>
     </div>
     <div fxLayout="row">
-      <span>Home -</span>
-      <span style="color: #b1b1b4; display: inline; margin-left: 15px;"> Prediction Groups - </span>
+      <span>Home<span>&nbsp;</span> -</span>
+      <span style="color: #b1b1b4; display: inline; margin-left: 15px;"> Prediction Groups <span>&nbsp;</span> -</span>
       <span style="color: #b1b1b4; display: inline; margin-left: 15px;">{{stockName}} Stocks</span>
     </div>
     <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
@@ -49,10 +49,10 @@
     <div fxLayout="row" class="nav-header">
       <mat-card class="nav-bar" fxLayoutWrap fxFlex="70%" fxLayoutAlign="start">
         <div class="code">
-          <div style="float:left">
+          <div style="float:left;margin-top: -20px;">
             NASDAQ: AMZN
           </div>
-          <div style="float:right">
+          <div style="float:right;    margin-top: -20px;">
             New York, United States
           </div>
           <div class="issuer" fxLayout="row" fxLayoutAlign="start center">

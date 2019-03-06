@@ -16,6 +16,7 @@ import { PredictionListService } from './prediction/prediction.service';
 import { AuthGuard } from '../../../../auth.guard';
 import { StockDetailComponent } from './stock-detail/stock-detail.component';
 import { StockDetailService } from './stock-detail/stock-detail.service';
+
 const routes: Routes = [
     {
         path: '',
@@ -40,6 +41,14 @@ const routes: Routes = [
             data: StockDetailService
         }
     },
+    /* {
+        path: 'portfolio',
+        component: PortfolioComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+            data: PortfolioService
+        }
+    }, */
 
 ];
 
@@ -48,7 +57,6 @@ const routes: Routes = [
         AnalyticsDashboardComponent,
         PredictionListComponent,
         StockDetailComponent,
-
     ],
     imports: [
         RouterModule.forChild(routes),

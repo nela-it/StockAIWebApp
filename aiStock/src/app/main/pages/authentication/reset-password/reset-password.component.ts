@@ -10,16 +10,15 @@ import {
     MatSnackBar,
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition,
-  } from '@angular/material';
+} from '@angular/material';
 declare var IN: any;
 @Component({
-    selector   : 'reset-password',
+    selector: 'reset-password',
     templateUrl: './reset-password.component.html',
-    styleUrls  : ['./reset-password.component.scss'],
-    animations : fuseAnimations
+    styleUrls: ['./reset-password.component.scss'],
+    animations: fuseAnimations
 })
-export class ResetPasswordComponent implements OnInit, OnDestroy
-{
+export class ResetPasswordComponent implements OnInit, OnDestroy {
     resetPasswordForm: FormGroup;
     public id: string;
     // Private
@@ -31,18 +30,17 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
         private _authenticationService: AuthenticationService,
         private route: ActivatedRoute, private router: Router,
         public snackBar: MatSnackBar,
-    )
-    {
+    ) {
         // Configure the layout
         this._fuseConfigService.config = {
             layout: {
-                navbar   : {
+                navbar: {
                     hidden: true
                 },
-                toolbar  : {
+                toolbar: {
                     hidden: true
                 },
-                footer   : {
+                footer: {
                     hidden: true
                 },
                 sidepanel: {
@@ -62,12 +60,11 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.resetPasswordForm = this._formBuilder.group({
-            password       : ['', Validators.required],
+            password: ['', Validators.required],
             passwordConfirm: ['', [Validators.required, confirmPasswordValidator,
-                Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]]
+            Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]]
         });
 
         // Update the validity of the 'passwordConfirm' field
@@ -84,32 +81,31 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
-    resetSubmit(){
-        console.log('callllll------------');
+    resetSubmit() {
+
         if (this.resetPasswordForm.invalid) {
             return false;
-        } else {     
-            const eptPassword = btoa(this.resetPasswordForm.value.password);                  
-            const data = {     
-                'userId' : this.id,
-                'password' : eptPassword,
-            }       
+        } else {
+            const eptPassword = btoa(this.resetPasswordForm.value.password);
+            const data = {
+                'userId': this.id,
+                'password': eptPassword,
+            }
             console.log(data);
-            this._authenticationService.changePassword(data).subscribe((result) => {                                            
+            this._authenticationService.changePassword(data).subscribe((result) => {
                 this.snackBar.open('Success', 'Your Password Has Been Changed Successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
-                  });
+                });
                 this.router.navigate(['/pages/auth/login']);
-              }, (err) => {                
-                if(err){
+            }, (err) => {
+                if (err) {
                     this.snackBar.open('Error', err.error.message, {
                         duration: 2000,
                         horizontalPosition: 'center',
@@ -117,7 +113,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
                     });
                 }
             });
-        }  
+        }
     }
 }
 
@@ -129,28 +125,24 @@ export class ResetPasswordComponent implements OnInit, OnDestroy
  */
 export const confirmPasswordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
 
-    if ( !control.parent || !control )
-    {
+    if (!control.parent || !control) {
         return null;
     }
 
     const password = control.parent.get('password');
     const passwordConfirm = control.parent.get('passwordConfirm');
 
-    if ( !password || !passwordConfirm )
-    {
+    if (!password || !passwordConfirm) {
         return null;
     }
 
-    if ( passwordConfirm.value === '' )
-    {
+    if (passwordConfirm.value === '') {
         return null;
     }
 
-    if ( password.value === passwordConfirm.value )
-    {
+    if (password.value === passwordConfirm.value) {
         return null;
     }
 
-    return {'passwordsNotMatching': true};
+    return { 'passwordsNotMatching': true };
 };

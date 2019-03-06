@@ -47,6 +47,7 @@ export class PredictionListService implements Resolve<any>
 
             Promise.all([
                 this.getPredictions(route.params.id)
+                //this.addToPortfolio()
             ]).then(
                 () => {
                     resolve();
@@ -67,7 +68,7 @@ export class PredictionListService implements Resolve<any>
             this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions)
                 .subscribe((response: any) => {
                     this.predictions = response.data;
-                    console.log(this.predictions)
+                    //console.log(this.predictions)
                     this.onPredictionsChanged.next(this.predictions);
                     resolve(response);
                 }, reject);

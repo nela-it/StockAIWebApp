@@ -16,6 +16,11 @@ import {
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition,
 } from '@angular/material';
+
+export interface Food {
+    value: string;
+    viewValue: string;
+}
 @Component({
     selector: 'prediction-list',
     templateUrl: './prediction.component.html',
@@ -29,6 +34,11 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     dataSource: FilesDataSource | null;
     displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'action'];
     stockName: string;
+    foods: Food[] = [
+        { value: 'steak-0', viewValue: 'Steak' },
+        { value: 'pizza-1', viewValue: 'Pizza' },
+        { value: 'tacos-2', viewValue: 'Tacos' }
+    ];
     @ViewChild(MatPaginator)
     paginator: MatPaginator;
 
@@ -65,12 +75,25 @@ export class PredictionListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        console.log('oninit')
+
         this.route.params.subscribe(params => {
             this.groupId = params['id'];
             this.stockName = params['stockname'];
         });
+        /*  console.log(this._predictionListService.predictions)
+         for (var i = 0; i < this._predictionListService.predictions.length; i++) {
+             console.log(this._predictionListService.predictions[i]['addedToPortfolio']);
+             if (this._predictionListService.predictions[i]['addedToPortfolio'] == true) {
+                 this._predictionListService.addedFlag = true;
+                 console.log(this._predictionListService.addedFlag)
+             } else {
+                 this._predictionListService.addedFlag = false;
+                 console.log(this._predictionListService.addedFlag)
+             }
+         } */
         this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
-        console.log(this.dataSource)
+        //console.log(this.dataSource)
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -97,12 +120,15 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                 'stockId': stockId.toString()
             }
             this._predictionListService.addToPortfolio(stockid).subscribe((result) => {
+                console.log(result)
                 this._predictionListService.addedFlag = true;
                 this.snackBar.open('Success', 'Your porfolio successfully added.', {
                     duration: 2000,
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
                 });
+                this.ngOnInit()
+                // window.location.reload();
             }, (err) => {
                 console.log(err);
                 if (err) {

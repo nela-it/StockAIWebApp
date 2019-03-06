@@ -124,11 +124,13 @@
     }
 
     .predictions-table {
+       
         flex: 1 1 auto;
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         overflow: auto;
         -webkit-overflow-scrolling: touch;
-
+        transition: none !important;
+        box-shadow: none !important;
         mat-header-cell {
             color: black;
         }
@@ -211,5 +213,12 @@
         margin-left: 10px;
         cursor: pointer;
     }
+    ::ng-deep .mat-form-field-underline {
+        display: none;
+    }     
+      
+    /* ::ng-deep .mat-select-placeholder {
+        color: white !important;
+     } */
 
 }

@@ -44,6 +44,7 @@
                     <div class="address bgColor">Looking for a stock type? Start with these groups</div>
                 </div>
             </div>
+            <!-- [routerLink]="['/apps/dashboards/analytics/portfolio']" -->
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
                 fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
                 (click)="active_stock('portfolio')">
@@ -59,7 +60,7 @@
                 </div>
             </div>
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
-                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product'}"
+                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product' }"
                 (click)="active_stock('product')">
                 <div class="logo">
                     <span>
@@ -95,8 +96,8 @@
             </div>
         </div>
         <!-- *ngIf="activeStock ==='portfolio'" -->
-        <div>
-            <div class="fuse-card auto-width">
+        <div [hidden]="activeStock!=='portfolio'">
+            <div class=" fuse-card auto-width">
                 <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">
                         <span class="h2">Summary</span>
@@ -148,14 +149,14 @@
 
             </div>
             <div style="padding-top: 20px; padding-bottom: 20px;font-size:20px;"> Stocks from Prediction Groups
-                <div style="margin-top: -20px; float:right;">
+                <!-- <div style="margin-top: -20px; float:right;">
                     <mat-form-field appearance="outline">
                         <mat-select placeholder="All stock groups ">
                             <mat-option> abc </mat-option>
                             <mat-option> abc </mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
+                </div> -->
             </div>
 
             <div class="center">
@@ -271,7 +272,7 @@
                 <!-- / CONTENT CARD -->
             </div>
         </div>
-        <div class="auto-width" *ngIf="activeStock === 'product'">
+        <div class="auto-width" *ngIf="activeStock === 'product' ">
             <mat-card class="footer" *ngFor="let item of product; let i=index">
                 <div class="note">{{item.question}}</div>
                 <div class="sub-note">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

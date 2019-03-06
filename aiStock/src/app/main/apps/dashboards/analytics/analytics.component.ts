@@ -32,14 +32,15 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
     dataSource: FilesDataSource | null;
     displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'action'];
     stockName: string;
+    portfolio: boolean;
     @ViewChild(MatPaginator)
-    paginator: MatPaginator;
+    public paginator: MatPaginator;
 
     @ViewChild('filter')
     filter: ElementRef;
 
     @ViewChild(MatSort)
-    sort: MatSort;
+    public sort: MatSort;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -83,7 +84,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
             console.log(error);
             this.errMsg = error.message;
         });
-        console.log(this.paginator)
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
         console.log(this.dataSource)
 
@@ -99,12 +99,15 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
                 }
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
-
-
     }
+
     ngAfterViewInit() {
-        console.log(this.sort); // MatSort{}
-        console.log(this.paginator)
+        /* console.log(this.sort); // MatSort{}
+        console.log(this.paginator) */
+        console.log(this.dataSource)
+        /*  this.dataSource.paginator = this.paginator;
+         this.dataSource.sort = this.paginator; */
+
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
@@ -170,6 +173,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
 
     active_stock(tab) {
         this.activeStock = tab;
+        if (this.activeStock === 'portfolio') {
+            this.portfolio = true;
+        }
     }
 
     groupDetail(data) {
@@ -197,7 +203,7 @@ export class FilesDataSource extends DataSource<any>
     /**
      * Constructor
      *
-     * @param {AnalyticsDashboardService} _analyticsDashboardService
+     * @param {AnalyticsDashboardService} _analyticsDashboardService    
      * @param {MatPaginator} _matPaginator
      * @param {MatSort} _matSort
      */
