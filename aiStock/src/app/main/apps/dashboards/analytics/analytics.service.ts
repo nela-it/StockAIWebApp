@@ -8,9 +8,10 @@ import { BehaviorSubject, Observable, from } from 'rxjs';
 @Injectable()
 export class AnalyticsDashboardService implements Resolve<any>
 {
+    column: any[];
     widgets: any[];
     product: any[];
-    portfolio: any[];
+    portfolio: any[] = [];
     predictionGroupData: any[];
     groupName: string;
     groupId: string;
@@ -31,6 +32,7 @@ export class AnalyticsDashboardService implements Resolve<any>
                 'authorization': localStorage.getItem('LoggedInUser')
             })
         };
+        this.onPortfolioChanged = new BehaviorSubject({});
     }
 
     /**
@@ -74,8 +76,10 @@ export class AnalyticsDashboardService implements Resolve<any>
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
 
-                    this.portfolio = response.data;
-                    console.log(this.portfolio)
+                    this.column = response.data;
+                    for (var i = 0; i < this.column.length; i++) {
+                        this.portfolio.push(this.column[i]['stock']);
+                    }
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);
                 }, reject);

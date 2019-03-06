@@ -70,6 +70,7 @@ export class PredictionListComponent implements OnInit, OnDestroy {
             this.stockName = params['stockname'];
         });
         this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
+        console.log(this.dataSource)
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),

@@ -44,7 +44,9 @@
                     </mat-form-field>
                     <div fxLayoutAlign="center center" style="color: red;" *ngIf="error_msg">{{error_msg}}</div>
                     <div class="terms" fxLayout="row" fxLayoutAlign="left center">
-                        <mat-checkbox class="terms-conditions" name="terms" aria-label="I read and accept" required>
+
+                        <mat-checkbox formControlName="terms" class="terms-conditions" name="terms"
+                            aria-label="I read and accept" required>
                             <span>By Signing Up I agree with</span>
                         </mat-checkbox>
                         <a style="cursor: pointer;" (click)="openDialog()">Terms & Conditions</a>

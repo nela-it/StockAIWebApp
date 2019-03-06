@@ -73,7 +73,8 @@
                     }
 
                     .terms {
-                        margin: 0px 0 16px 0px;
+                        margin-top: 10px;
+                       // margin: 0px 0 16px 0px;
                         color: #AFB0B2;
                         //place-content: none;
                         .terms-conditions {
@@ -84,6 +85,9 @@
                             font-size: 12px;
                             margin-left: 4px;
                             color: #8262fa;
+                        }
+                        @include media-breakpoint('xs') {
+                            margin-top: 20px;
                         }
                     }
 
@@ -162,7 +166,7 @@
                     }
                 }
 
-                button {
+                /* button {
 
                     &.google,
                     &.facebook {
@@ -170,11 +174,7 @@
                         text-transform: none;
                         color: #FFFFFF;
                         font-size: 13px;
-                    }
-
-                    @include media-breakpoint('xs') {
-                        width: 80%;
-                    }
+                    }                    
 
                     &.google {
                         background-color: #D73D32;
@@ -184,7 +184,7 @@
                     &.facebook {
                         background-color: rgb(63, 92, 154);
                     }
-                }
+                } */
             }
         }
     }

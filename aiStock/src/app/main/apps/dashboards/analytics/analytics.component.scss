@@ -185,10 +185,99 @@
             font-size: 20px;
         }
     }
+    .center{
+        .predictions-table {
+            flex: 1 1 auto;
+            border-bottom: 1px solid rgba(0, 0, 0, .12);
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+    
+            mat-header-cell {
+                color: black;
+            }
+    
+            .mat-header-row {
+                min-height: 64px;
+            }
+    
+            .prediction {
+                position: relative;
+                cursor: pointer;
+                height: 84px;
+            }
+    
+            .total-price {
+                color: #7F63F4;
+            }
+    
+            .mat-cell {
+                min-width: 0;
+                display: flex;
+                align-items: center;
+            }
+    
+            .mat-column-id {
+                flex: 0 1 84px;
+            }
+    
+            .mat-column-image {
+                flex: 0 1 84px;
+    
+                .product-image {
+                    width: 52px;
+                    height: 52px;
+                    border: 1px solid rgba(0, 0, 0, .12);
+                }
+            }
+    
+            .mat-column-buttons {
+                flex: 0 1 80px;
+            }
+    
+            .quantity-indicator {
+                display: inline-block;
+                vertical-align: middle;
+                width: 8px;
+                height: 8px;
+                border-radius: 4px;
+                margin-right: 8px;
+    
+                &+span {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+    
+            .submit-button {
+                //height: 30px;            
+                border-radius: 20px;
+                background-color: white;
+                color: #7F63F4;
+    
+                @include media-breakpoint('xs') {
+                    width: 90%;
+                }
+            }
+    
+            .submit-button:hover {
+                color: white;
+                background-color: #7F63F4;
+            }
+    
+            .active-icon {
+                border-radius: 50%;
+            }
+    
+        }
+    }
     .footer {
-
+        transition: none !important;
+        box-shadow: none !important;
+        padding-top: 25px;
+        padding-left: 30px;
+        //font-family: 'CircularStd Book';
         .note {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 400;
             margin-bottom: 5px;
         }
@@ -200,7 +289,7 @@
         }
 
         .sub-note {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 400;
             margin-bottom: 18px;
         }
@@ -209,8 +298,7 @@
             font-size: 13px;
             color: rgba(0, 0, 0, 0.54);
             line-height: 18px;
-            margin-left: 50px;
-            margin-bottom: 30px;
+            margin-left: 50px;             
         }
 
     }

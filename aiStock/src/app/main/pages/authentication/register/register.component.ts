@@ -72,6 +72,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             password: ['', [Validators.required,
             Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]
             ],
+            terms: ['', Validators.required]
         });
 
         // Update the validity of the 'passwordConfirm' field

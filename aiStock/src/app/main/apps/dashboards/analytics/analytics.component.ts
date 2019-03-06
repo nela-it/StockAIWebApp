@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { DataSource } from '@angular/cdk/collections';
@@ -18,7 +18,7 @@ import { FuseUtils } from '@fuse/utils';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
+export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     widgets: any;
     product: any;
     widget1SelectedYear = '2016';
@@ -29,7 +29,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     message: string;
     pageSize;
     groupId;
-    activeStockTab = 'listStocks';
     dataSource: FilesDataSource | null;
     displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'action'];
     stockName: string;
@@ -69,8 +68,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
-
-
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.predictionGroupData = res.data;
@@ -86,8 +83,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
             console.log(error);
             this.errMsg = error.message;
         });
-
+        console.log(this.paginator)
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
+        console.log(this.dataSource)
+
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -100,8 +99,13 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 }
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
-    }
 
+
+    }
+    ngAfterViewInit() {
+        console.log(this.sort); // MatSort{}
+        console.log(this.paginator)
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
@@ -171,11 +175,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     groupDetail(data) {
 
         this._predictionListService.groupId = btoa(data.id);
-        //console.log(this._analyticsDashboardService.groupId = data.id);
         this._analyticsDashboardService.groupName = data.group_name;
         this._predictionListService.groupName = data.group_name;
         this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id), data.group_name]);
-        //{ queryParams: { 'id': btoa(data.id), 'stockname': data.group_name } }
     }
     /**
  * On destroy

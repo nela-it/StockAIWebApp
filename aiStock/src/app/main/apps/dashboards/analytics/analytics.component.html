@@ -94,7 +94,8 @@
                 <button mat-stroked-button (click)="groupDetail(item)" class="explore-button">Explore</button>
             </div>
         </div>
-        <div *ngIf="activeStock ==='portfolio'">
+        <!-- *ngIf="activeStock ==='portfolio'" -->
+        <div>
             <div class="fuse-card auto-width">
                 <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">
@@ -108,7 +109,23 @@
                     </div>
                     <div class="text-color">% of Charge<div class="value">1.7%</div>
                     </div>
-                    <div fxLayout="row" fxLayoutAlign="start center">
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-select placeholder="All Stock Groups">
+                                <mat-option> abc </mat-option>
+                                <mat-option> abc </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field appearance="outline">
+                            <mat-select placeholder="Last 30 days ">
+                                <mat-option> abc </mat-option>
+                                <mat-option> abc </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div fxLayout="row" fxLayoutAlign="start center">
                         <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
                             (click)="widget5SelectedDay = 'yesterday'"
                             [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
@@ -119,7 +136,7 @@
                             [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
                             Today
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="position-relative h-368 pb-16">
@@ -130,6 +147,17 @@
                 </div>
 
             </div>
+            <div style="padding-top: 20px; padding-bottom: 20px;font-size:20px;"> Stocks from Prediction Groups
+                <div style="margin-top: -20px; float:right;">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="All stock groups ">
+                            <mat-option> abc </mat-option>
+                            <mat-option> abc </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
             <div class="center">
 
                 <!-- HEADER -->
@@ -244,7 +272,7 @@
             </div>
         </div>
         <div class="auto-width" *ngIf="activeStock === 'product'">
-            <div class="footer" *ngFor="let item of product; let i=index">
+            <mat-card class="footer" *ngFor="let item of product; let i=index">
                 <div class="note">{{item.question}}</div>
                 <div class="sub-note">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     {{item.answer}}
@@ -254,7 +282,7 @@
                         {{item.description}}
                     </div>
                 </div>
-            </div>
+            </mat-card>
         </div>
     </div>
 </div>
