@@ -10,6 +10,11 @@ const routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'dashboards/profile',
+        loadChildren: './dashboards/profile/profile.module#ProfileModule',
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'dashboards/project',
         loadChildren: './dashboards/project/project.module#ProjectDashboardModule'
     },

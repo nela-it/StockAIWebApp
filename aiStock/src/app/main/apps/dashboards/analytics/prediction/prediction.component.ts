@@ -75,25 +75,11 @@ export class PredictionListComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        console.log('oninit')
-
         this.route.params.subscribe(params => {
             this.groupId = params['id'];
             this.stockName = params['stockname'];
         });
-        /*  console.log(this._predictionListService.predictions)
-         for (var i = 0; i < this._predictionListService.predictions.length; i++) {
-             console.log(this._predictionListService.predictions[i]['addedToPortfolio']);
-             if (this._predictionListService.predictions[i]['addedToPortfolio'] == true) {
-                 this._predictionListService.addedFlag = true;
-                 console.log(this._predictionListService.addedFlag)
-             } else {
-                 this._predictionListService.addedFlag = false;
-                 console.log(this._predictionListService.addedFlag)
-             }
-         } */
         this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
-        //console.log(this.dataSource)
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
@@ -120,7 +106,6 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                 'stockId': stockId.toString()
             }
             this._predictionListService.addToPortfolio(stockid).subscribe((result) => {
-                console.log(result)
                 this._predictionListService.addedFlag = true;
                 this.snackBar.open('Success', 'Your porfolio successfully added.', {
                     duration: 2000,

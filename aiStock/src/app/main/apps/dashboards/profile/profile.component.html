@@ -1,0 +1,69 @@
+<div id="profile" class="page-layout simple tabbed">
+    <!-- HEADER -->
+    <div class="header1 p-16 p-sm-18" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between center">
+
+        <!-- APP TITLE -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                <!-- <mat-icon class="logo-icon mr-16"
+                          [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
+                </mat-icon> -->
+                <span [routerLink]="'/apps/dashboards/analytics'" class="logo-text h1"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Home
+                </span>
+            </div>
+
+        </div>
+        <!-- / APP TITLE -->
+        <div fxHide.xs fxLayout="row">
+            <span>Home &nbsp;-</span>
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;">Profile</span>
+
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- HEADER -->
+    <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="space-between end">
+
+        <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start center">
+            <img class="profile-image avatar huge" src="assets/images/avatars/Velazquez.jpg"
+                [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+            <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{username}}
+            </div>
+        </div>
+
+        <!-- <div class="actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+            <button mat-raised-button color="accent" aria-label="Follow">Follow</button>
+            <button mat-raised-button color="primary" aria-label="Send Message">Send Message</button>
+        </div>
+ -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <mat-tab-group dynamicHeight="true">
+
+            <!-- <mat-tab label="Timeline">
+                <profile-timeline></profile-timeline>
+            </mat-tab> -->
+
+            <mat-tab label="About">
+                <profile-about></profile-about>
+            </mat-tab>
+
+            <mat-tab label="Subscription Plan Detail">
+                <profile-photos-videos></profile-photos-videos>
+            </mat-tab>
+
+        </mat-tab-group>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

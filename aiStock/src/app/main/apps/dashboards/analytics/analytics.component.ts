@@ -85,7 +85,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
             this.errMsg = error.message;
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
-        console.log(this.dataSource)
 
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(

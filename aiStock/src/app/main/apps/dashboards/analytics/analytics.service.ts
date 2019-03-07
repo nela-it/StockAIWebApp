@@ -15,6 +15,7 @@ export class AnalyticsDashboardService implements Resolve<any>
     predictionGroupData: any[];
     groupName: string;
     groupId: string;
+    errmsg: string;
     onPortfolioChanged: BehaviorSubject<any>;
     httpOptions
     /**
@@ -82,7 +83,11 @@ export class AnalyticsDashboardService implements Resolve<any>
                     }
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);
-                }, reject);
+                }, err => {
+                    resolve([])
+                    this.errmsg = err.error.message;
+
+                });
         });
     }
     public getGroupList(): Observable<any> {

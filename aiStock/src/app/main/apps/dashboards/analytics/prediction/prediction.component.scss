@@ -122,15 +122,17 @@
         flex: 1 1 auto;
         max-width: 100%;
     }
-
+    #search{
+        width: 200px;
+    }
     .predictions-table {
-       
+        transition: none !important;
+        box-shadow: none !important;
         flex: 1 1 auto;
         border-bottom: 1px solid rgba(0, 0, 0, .12);
         overflow: auto;
         -webkit-overflow-scrolling: touch;
-        transition: none !important;
-        box-shadow: none !important;
+       
         mat-header-cell {
             color: black;
         }
@@ -213,12 +215,59 @@
         margin-left: 10px;
         cursor: pointer;
     }
+    //filter css 
+    .filter-bar{
+        height:56px;
+        color: white; 
+        background-color:#8262fa; 
+        display: flex;
+        /* ::ng-deep .mat-select-placeholder {
+            color: white !important;
+        } */
+    }
+    .subfilter-bar{
+        margin-top: 20px;
+        height:56px; 
+        color: white; 
+        background-color:#8262fa; 
+        display: flex;
+        mat-select{
+            font-size: 10px !important;
+        }
+
+        .mat-form-field-label-wrapper{
+            display: none;
+        }
+        .myFilter {
+            //background-color: yellow; /* Added this to check it was working*/            
+            color:red;
+            font-size:14px;
+          }
+    }
+    
     ::ng-deep .mat-form-field-underline {
         display: none;
-    }     
+    }
       
-    /* ::ng-deep .mat-select-placeholder {
+    ::ng-deep .mat-select-placeholder {
         color: white !important;
-     } */
+        font-size: 14px !important;
+    }
 
+    ::ng-deep .mat-select-trigger {
+        font-size: 14px !important;
+    }
+
+    ::ng-deep .mat-form-field-label-wrapper .mat-form-field-label {
+        display:none !important;
+    }
+
+    ::ng-deep .mat-select-trigger .mat-select-arrow-wrapper .mat-select-arrow {
+        color:white !important;
+    }
+
+    ::ng-deep .mat-input-placeholder {
+        color: white !important;
+        font-size: 14px !important;
+    }
 }

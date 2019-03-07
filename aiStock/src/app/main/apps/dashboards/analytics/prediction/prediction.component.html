@@ -84,7 +84,7 @@
 
         <!-- / HEADER -->
 
-        <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <!--  <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
             <label for="search" class="mr-8">
                 <mat-icon class="secondary-text">search</mat-icon>
             </label>
@@ -92,40 +92,78 @@
                 <input id="search" matInput #filter placeholder="Search">
             </mat-form-field>
         </div> -->
+        <div fxLayoutAlign="start center" class="filter-bar">
+            <mat-form-field style=" margin-left:20px;" floatLabel="never">
+                <mat-select placeholder="Market Cap">
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style=" margin-left:20px;" floatLabel="never">
+                <mat-select placeholder="Share Volume">
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style=" margin-left:20px;" floatLabel="never">
+
+                <mat-select placeholder="Trending">
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style=" margin-left:20px;" floatLabel="never">
+                <mat-select placeholder="Tools">
+                    <mat-option *ngFor="let food of foods" [value]="food.value">
+                        {{food.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style="float:right;margin-left:auto;color:white;" fxFlex="1 0 auto">
+                <input id="search" matInput #filter placeholder="Search">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <div fxLayoutAlign="start center" class="subfilter-bar">
+            <div style="">
+                <mat-form-field class="myFilter" style=" margin-left:20px;" floatLabel="never">
+                    <mat-select placeholder="All">
+                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                            {{food.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style=" margin-left:20px;" floatLabel="never">
+                    <mat-select placeholder="Country">
+                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                            {{food.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style=" margin-left:20px;" floatLabel="never">
+                    <mat-select placeholder="Exchange">
+                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                            {{food.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field style=" margin-left:20px;" floatLabel="never">
+                    <mat-select placeholder="USD">
+                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                            {{food.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
         <!-- CONTENT CARD -->
         <div class="content-card mat-white-bg">
-            <!-- <div fxLayoutAlign="start center"
-                style="height:50px; color: white; background-color:#8262fa; display: flex;">
-                <mat-form-field style=" margin-left:20px;">
-                    <mat-select placeholder="Market Cap">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field style=" margin-left:20px;">
-                    <mat-select placeholder="Share Volume">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field style=" margin-left:20px;">
 
-                    <mat-select placeholder="Trending">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field style=" margin-left:20px;">
-                    <mat-select placeholder="Tools">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
             <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort
                 [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
                 <!-- ID Column -->

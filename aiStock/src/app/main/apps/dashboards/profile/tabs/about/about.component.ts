@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { fuseAnimations } from '@fuse/animations';
-import { ProfileService } from 'app/main/pages/profile/profile.service';
+import { ProfileService } from '../../profile.service';
 
 @Component({
     selector: 'profile-about',

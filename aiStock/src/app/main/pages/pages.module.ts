@@ -54,7 +54,7 @@ import { KnowledgeBaseModule } from 'app/main/pages/knowledge-base/knowledge-bas
         PricingModule,
 
         // Profile
-        ProfileModule,
+        // ProfileModule,
 
         // Search
         SearchModule,
@@ -66,7 +66,6 @@ import { KnowledgeBaseModule } from 'app/main/pages/knowledge-base/knowledge-bas
         KnowledgeBaseModule
     ]
 })
-export class PagesModule
-{
+export class PagesModule {
 
 }
