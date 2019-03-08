@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/collections';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject, from } from 'rxjs';
@@ -34,6 +34,8 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     dataSource: FilesDataSource | null;
     displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'action'];
     stockName: string;
+    activeFilterTab = 'all';
+    paginateTab = "next";
     foods: Food[] = [
         { value: 'steak-0', viewValue: 'Steak' },
         { value: 'pizza-1', viewValue: 'Pizza' },
@@ -62,6 +64,7 @@ export class PredictionListComponent implements OnInit, OnDestroy {
         public _analyticsDashboardService: AnalyticsDashboardService,
         private router: Router,
         public snackBar: MatSnackBar,
+        private changeDetectorRefs: ChangeDetectorRef
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -79,6 +82,11 @@ export class PredictionListComponent implements OnInit, OnDestroy {
             this.groupId = params['id'];
             this.stockName = params['stockname'];
         });
+        this.getPortfolioData();
+
+    }
+    getPortfolioData() {
+        // alert('hiii');
         this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
         fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
@@ -92,8 +100,8 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                 }
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
+        this.changeDetectorRefs.detectChanges();
     }
-
     activeStock(tab) {
         this.activeStockTab = tab;
     }
@@ -112,7 +120,7 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
                 });
-                this.ngOnInit()
+                this.getPortfolioData()
                 // window.location.reload();
             }, (err) => {
                 console.log(err);
@@ -125,6 +133,9 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                 }
             });
         }
+    }
+    active_filter(tab) {
+        this.activeFilterTab = tab;
     }
     /**
   * On destroy

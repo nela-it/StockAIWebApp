@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         type: DataTypes.BIGINT,
+        foreignKey: true,
         allowNull: false
       },
       transaction_id: {

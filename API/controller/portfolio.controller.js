@@ -45,34 +45,30 @@ exports.addPortfolio = async (req, res, next) => {
 };
 
 exports.getPortfolio = async (req, res, next) => {
+  Portfolio.belongsTo(realTimePrice, { foreignKey: "real_time_price_id" });
   realTimePrice.belongsTo(Stocks, { foreignKey: "stock_id" });
   Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
   try {
-    let portfolioArray = [];
     let isRecords = await Portfolio.findAll({
-      where: { user_id: req.user.id }
+      where: { user_id: req.user.id },
+      include: [
+        {
+          model: realTimePrice,
+          include: {
+            model: Stocks
+          }
+        }
+      ]
     });
     if (isRecords.length > 0) {
-      isRecords.forEach(async (record, i) => {
-        setTimeout(async () => {
-          let portfolioList = await realTimePrice.findOne({
-            where: { id: record.dataValues.real_time_price_id },
-            include: [Stocks]
-          });
-          if (portfolioList) {
-            portfolioArray.push(portfolioList.dataValues);
-          }
-          if (i - isRecords.length == -1) {
-            return res.status(200).json({
-              message: "Portfolio Found",
-              data: portfolioArray
-            });
-          }
-        }, 100 * i);
+      return res.status(200).json({
+        message: "Portfolio Found",
+        data: isRecords
       });
     } else {
       return res.status(404).json({
-        message: "Portfolio Not Found"
+        message: "Portfolio Not Found",
+        data: []
       });
     }
   } catch (error) {
@@ -101,7 +97,7 @@ exports.checkPortfolio = async (params, cb) => {
           if (i - isRecords.length == -1) {
             cb(null, portfolioArray);
           }
-        }, 100 * i);
+        }, 20 * i);
       });
     } else {
       cb(null, portfolioArray);

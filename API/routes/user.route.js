@@ -60,6 +60,8 @@ router
     userController.changePassword
   );
 
+router.route("/userInfo").get(checkAuth, userController.userInfo);
+
 router.route("/getAllUsers").get(checkAuth, userController.getAllUser);
 
 module.exports = router;

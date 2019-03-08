@@ -18,12 +18,12 @@
         <!-- / APP TITLE -->
         <div fxLayout="row">
             <span>Home -</span>
-            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;" *ngIf="activeStock === 'prediction'">
-                Prediction Group</span>
-            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;" *ngIf="activeStock === 'portfolio'">
-                Portfolio </span>
-            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;" *ngIf="activeStock === 'product'">
-                Product Info</span>
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+                *ngIf="activeStock === 'prediction'"> Prediction Group</span>
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+                *ngIf="activeStock === 'portfolio'"> Portfolio </span>
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+                *ngIf="activeStock === 'product'"> Product Info</span>
         </div>
     </div>
     <!-- / HEADER -->
@@ -31,7 +31,8 @@
     <div class="main-widget">
         <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" class="nav-header">
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
-                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}" (click)="active_stock('prediction')">
+                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
+                (click)="active_stock('prediction')">
                 <div class="logo">
                     <span>
                         <mat-icon>dashboard</mat-icon>
@@ -45,7 +46,8 @@
             </div>
             <!-- [routerLink]="['/apps/dashboards/analytics/portfolio']" -->
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
-                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}" (click)="active_stock('portfolio')">
+                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'portfolio'}"
+                (click)="active_stock('portfolio')">
                 <div class="logo">
                     <span>
                         <mat-icon>donut_small</mat-icon>
@@ -58,7 +60,8 @@
                 </div>
             </div>
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
-                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product' }" (click)="active_stock('product')">
+                fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'product' }"
+                (click)="active_stock('product')">
                 <div class="logo">
                     <span>
                         <mat-icon>error_outline</mat-icon>
@@ -78,7 +81,8 @@
             fxLayoutAlign="center center">
             <div class="price-table style-2" fxLayout="column" *ngFor="let item of predictionGroupData; let i=index">
                 <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/group/{{item.group_image}}.png" height="70px" width="70px"></div>
+                    <div class="value"><img src="assets/images/group/{{item.group_image}}.png" height="70px"
+                            width="70px"></div>
                 </div>
                 <div class="group-title">{{item.group_name}} Stocks</div>
                 <div class="period">Group</div>
@@ -137,8 +141,9 @@
                 </div>
 
                 <div class="position-relative h-368 pb-16">
-                    <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]" [labels]="widgets.widget5.labels"
-                        [colors]="widgets.widget5.colors" [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
+                    <canvas baseChart [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
+                        [labels]="widgets.widget5.labels" [colors]="widgets.widget5.colors"
+                        [options]="widgets.widget5.options" [chartType]="widgets.widget5.chartType">
                     </canvas>
                 </div>
 
@@ -171,8 +176,8 @@
                 <!-- CONTENT CARD -->
                 <div class="content-card mat-white-bg">
 
-                    <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort [@animateStagger]="{value:'50'}"
-                        fusePerfectScrollbar>
+                    <mat-table class="predictions-table" #table [dataSource]=" dataSource" matSort
+                        [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
                         <!-- ID Column -->
                         <ng-container matColumnDef="ticker">
                             <mat-header-cell *matHeaderCellDef mat-sort-header>Ticker</mat-header-cell>
@@ -187,7 +192,8 @@
                             </mat-header-cell>
 
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
-                                <img src="assets/images/company/{{portfolio.ticker_image}}.png" height="25px" width="25px">
+                                <img src="assets/images/company/{{portfolio.ticker_image}}.png" height="25px"
+                                    width="25px">
                                 <p class="text-truncate iconWidth" (click)="openStockDetail(portfolio.id)">
                                     {{portfolio.stock_name}}</p>
                             </mat-cell>

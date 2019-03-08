@@ -7,6 +7,7 @@ const forgotPasswordTemplate = require("../middleware/templates");
 const APIError = require("../helpers/APIError");
 const httpStatus = require("http-status");
 const User = db.User;
+const Payment = db.Payment;
 const Op = db.Op;
 const atob = require("atob");
 const btoa = require("btoa");
@@ -144,6 +145,44 @@ exports.changePassword = async (req, res, next) => {
         });
       } else {
         return res.status(404).json({ message: "Password Is Already Changed" });
+      }
+    } else {
+      return res.status(404).json({ message: "User Not Found" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.userInfo = async (req, res, next) => {
+  try {
+    let isUser = await User.findOne({ where: { id: req.user.id } });
+    if (isUser) {
+      let isPayment = await Payment.findOne({
+        where: { user_id: req.user.id }
+      });
+      if (isPayment) {
+        return res.status(200).json({
+          message: "User Found",
+          data: {
+            username: isUser.dataValues.username,
+            email: isUser.dataValues.email,
+            address: isUser.dataValues.address,
+            contact_no: isUser.dataValues.contact_no
+          },
+          payment_detail: isPayment
+        });
+      } else {
+        return res.status(200).json({
+          message: "User Found",
+          data: {
+            username: isUser.dataValues.username,
+            email: isUser.dataValues.email,
+            address: isUser.dataValues.address,
+            contact_no: isUser.dataValues.contact_no
+          },
+          payment_detail: {}
+        });
       }
     } else {
       return res.status(404).json({ message: "User Not Found" });
