@@ -5,7 +5,9 @@
     #predictions {
         background-color: #F3F7FA;
         >.center {
-
+            .content-card{
+                overflow: initial !important;
+            }
             >.header {
 
                 .search-input-wrapper {
@@ -104,7 +106,7 @@
     }
 
     .page-layout.carded {
-        display: grid !important;
+        display: inline-table !important;
         flex-direction: column !important;
         /* flex: 1 0 auto; */
         width: 100% !important;

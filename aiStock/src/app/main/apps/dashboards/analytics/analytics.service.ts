@@ -79,18 +79,21 @@ export class AnalyticsDashboardService implements Resolve<any>
         return new Promise((resolve, reject) => {
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
-
                     this.column = response.data;
                     console.log(this.column)
                     for (var i = 0; i < this.column.length; i++) {
-                        //this.portfolio.push(this.column[i]['real_time_price']);
                         this.realTimeData.push(this.column[i]['real_time_price']);
-                        for (var j = 0; j < this.realTimeData[i].stock.length; j++) {
-                            // console.log("data:::::::::" + this.realTimeData[j]);
-                            this.portfolio.push(this.realTimeData[j]);
-
+                        console.log(i + 1, this.column.length)
+                        if (i + 1 == this.column.length) {
+                            for (var j = 0; j < this.realTimeData.length; j++) {
+                                console.log("data:::::::::" + this.realTimeData[j]);
+                                this.portfolio.push(this.realTimeData[j].stock);
+                            }
                         }
                     }
+                    console.log(this.realTimeData)
+
+                    console.log(this.portfolio)
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);
                 }, err => {

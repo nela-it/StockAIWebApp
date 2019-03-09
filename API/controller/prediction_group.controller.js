@@ -31,14 +31,14 @@ exports.saveGroupData = data => {
           if (isGroupCreated) {
             console.log("group created-------", isGroupCreated.dataValues.id);
             column.prediction_group_id = isGroupCreated.dataValues.id;
-            updateStocks(column);
+            await updateStocks(column);
           }
         } else {
           console.log("found", isGroupExists[0].dataValues.id);
           column.prediction_group_id = isGroupExists[0].dataValues.id;
-          updateStocks(column);
+          await updateStocks(column);
         }
-      }, 100 * i);
+      }, 200 * i);
     });
   } catch (error) {
     console.log("error----", error);
@@ -98,7 +98,10 @@ exports.exploreGroups = async (req, res, next) => {
         if (getPortfolio.length > 0) {
           isStockFound.forEach(async stock => {
             getPortfolio.forEach(async portfolio => {
-              if (stock.dataValues.id === portfolio.stock_id) {
+              if (
+                stock.dataValues.id ===
+                portfolio.dataValues.real_time_price.dataValues.stock_id
+              ) {
                 stock.dataValues.addedToPortfolio = true;
               } else {
                 if (stock.dataValues.addedToPortfolio !== true) {
@@ -107,7 +110,7 @@ exports.exploreGroups = async (req, res, next) => {
               }
             });
           });
-          return res.status(200).json({
+          return await res.status(200).json({
             message: "Stocks Found",
             data: isStockFound
           });
@@ -122,7 +125,7 @@ exports.exploreGroups = async (req, res, next) => {
         }
       });
     } else {
-      return res.status(404).json({
+      return await res.status(404).json({
         message: "Stocks Not Found"
       });
     }

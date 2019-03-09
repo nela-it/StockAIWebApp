@@ -23,6 +23,7 @@ declare var IN: any;
 export class RegisterComponent implements OnInit, OnDestroy {
     registerForm: FormGroup;
     public error_msg: string;
+    termsFlag: any;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -93,7 +94,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
     registerSubmit() {
+
         if (this.registerForm.invalid) {
+            this.termsFlag = this.registerForm.value.terms;
             return false;
         } else {
             const eptPassword = btoa(this.registerForm.value.password);

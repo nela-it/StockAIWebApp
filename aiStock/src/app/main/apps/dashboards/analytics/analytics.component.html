@@ -244,10 +244,17 @@
 
                         <!-- Date Column -->
                         <ng-container matColumnDef="action">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Action
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Value Graph
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
-                                <p class="text-truncate">11
+                                <div class="h-96 w-100-p">
+                                    <canvas baseChart [datasets]="widgets.widget3.datasets"
+                                        [labels]="widgets.widget3.labels" [colors]="widgets.widget3.colors"
+                                        [options]="widgets.widget3.options" [chartType]="widgets.widget3.chartType">
+                                    </canvas>
+                                </div>
+                                <p class="text-truncate">
+
                                     <!-- <button *ngIf="portfolio.addedToPortfolio == false " class="submit-button"
                                             mat-stroked-button (click)="addToPortfolioSubmit(portfolio.id)">Add to
                                             portfolio</button>
