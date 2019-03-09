@@ -63,7 +63,8 @@
                     <button type="button" (click)="linkedinlogin()"><img height="50px" width="50px"
                             src="assets/images/social-image/linkedin.jpg"></button>
                 </div>
-                <div class="register" fxLayout="row" fxLayoutAlign="center center">
+                <div class="register" fxLayout.sm="column" fxLayout.xs="column" fxLayout="row"
+                    fxLayoutAlign="center center">
                     <span class="text">Don't have an account?</span>
                     <a class="link" [routerLink]="'/pages/auth/register'">Register Now</a>
                 </div>

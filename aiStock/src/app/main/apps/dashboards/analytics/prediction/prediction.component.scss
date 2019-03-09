@@ -347,9 +347,13 @@
             button{
                 height: 56px;
                 border-radius: 0%;
+                background-color:white;
+                color: black ;
+            }  
+            .active{
                 background-color: #8262fa;
                 color: white ;
-            }         
+            }       
             mat-form-field{
                 float: right;
                 background-color: #8262fa;
@@ -357,7 +361,7 @@
                 padding-left: 18px;
                 //font-weight: bold;
             }
-            margin-top:-66px;
+            margin-top:-65px;
            
             ::ng-deep .mat-form-field-underline {
                 display: none;

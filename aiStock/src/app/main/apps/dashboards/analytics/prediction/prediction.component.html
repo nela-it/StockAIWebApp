@@ -47,7 +47,7 @@
         </div> -->
     </div>
     <div class="main-widget">
-        <div fxLayout="row" class="nav-header">
+        <div fxLayout="row" fxLayout.xs="column" class="nav-header">
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
                 fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'listStocks'}"
                 (click)="activeStock('listStocks')" style="height:120px;">
@@ -159,9 +159,13 @@
                 </mat-form-field>
             </div>
             <div class="right-subfilter">
-                <div><button mat-flat-button>Next 100 <mat-icon>arrow_forward</mat-icon></button></div>
-                <div><button mat-flat-button>View All</button></div>
-                <mat-form-field floatLabel="never">
+                <div><button (click)="paginate('next')" [ngClass]="{active: paginateTab == 'next' }"
+                        mat-flat-button>Next 100 <mat-icon style="font-size:18px; vertical-align:center">
+                            arrow_forward</mat-icon>
+                    </button></div>
+                <div><button (click)="paginate('view')" [ngClass]="{active: paginateTab == 'view' }" mat-flat-button
+                        style="padding-left:30px; padding-right:30px">View All</button></div>
+                <mat-form-field floatLabel="never" style="height: 56px;">
                     <mat-select placeholder="USD">
                         <mat-option *ngFor="let food of foods" [value]="food.value">
                             {{food.viewValue}}
@@ -242,11 +246,11 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Action</mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <p class="text-truncate">
-                            <button *ngIf="prediction.addedToPortfolio == false" class="submit-button"
+                            <button *ngIf="_predictionListService.addedFlag === false" class="submit-button"
                                 mat-stroked-button (click)="addToPortfolioSubmit(prediction.id)">Add to
                                 portfolio</button>
                             <button style="color: white;
-                            background-color: #7F63F4;" *ngIf="prediction.addedToPortfolio == true"
+                            background-color: #7F63F4;" *ngIf="_predictionListService.addedFlag === true"
                                 class="submit-button" mat-stroked-button disabled>Already Added</button>
                         </p>
                     </mat-cell>

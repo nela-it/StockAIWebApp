@@ -12,7 +12,7 @@ export class PredictionListService implements Resolve<any>
     id: string;
     groupId: string;
     groupName: string;
-    addedFlag: boolean;
+    addedFlag: boolean = false;
     onPredictionsChanged: BehaviorSubject<any>;
     httpOptions
     /**

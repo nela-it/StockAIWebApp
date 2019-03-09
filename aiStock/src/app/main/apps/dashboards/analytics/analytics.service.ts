@@ -12,6 +12,7 @@ export class AnalyticsDashboardService implements Resolve<any>
     widgets: any[];
     product: any[];
     portfolio: any[] = [];
+    realTimeData: any[] = [];
     predictionGroupData: any[];
     groupName: string;
     groupId: string;
@@ -27,6 +28,7 @@ export class AnalyticsDashboardService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient
     ) {
+        //localStorage.getItem('LoggedInUser')
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -73,13 +75,21 @@ export class AnalyticsDashboardService implements Resolve<any>
         });
     }
     getPortfolio(): Promise<any> {
+        // http://192.168.0.9:3001/api/portfolio/getPortfolio
         return new Promise((resolve, reject) => {
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
 
                     this.column = response.data;
+                    console.log(this.column)
                     for (var i = 0; i < this.column.length; i++) {
-                        this.portfolio.push(this.column[i]['stock']);
+                        //this.portfolio.push(this.column[i]['real_time_price']);
+                        this.realTimeData.push(this.column[i]['real_time_price']);
+                        for (var j = 0; j < this.realTimeData[i].stock.length; j++) {
+                            // console.log("data:::::::::" + this.realTimeData[j]);
+                            this.portfolio.push(this.realTimeData[j]);
+
+                        }
                     }
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);

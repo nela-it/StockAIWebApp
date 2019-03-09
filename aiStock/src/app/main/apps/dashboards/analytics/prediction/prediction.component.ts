@@ -115,6 +115,8 @@ export class PredictionListComponent implements OnInit, OnDestroy {
             }
             this._predictionListService.addToPortfolio(stockid).subscribe((result) => {
                 this._predictionListService.addedFlag = true;
+                console.log(this._predictionListService.addedFlag);
+                console.log(this._predictionListService.predictions)
                 this.snackBar.open('Success', 'Your porfolio successfully added.', {
                     duration: 2000,
                     horizontalPosition: 'center',
@@ -136,6 +138,9 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     }
     active_filter(tab) {
         this.activeFilterTab = tab;
+    }
+    paginate(tab) {
+        this.paginateTab = tab;
     }
     /**
   * On destroy
