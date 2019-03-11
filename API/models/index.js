@@ -67,5 +67,9 @@ db.Real_time_price = require("../models/real_time_price_table")(
   Sequelize
 );
 db.Stocks = require("../models/stocks")(sequelize, Sequelize);
+db.Algorithm_detail = require("../models/algorithm_detail")(
+  sequelize,
+  Sequelize
+);
 
 module.exports = db;

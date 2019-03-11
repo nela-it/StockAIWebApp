@@ -18,7 +18,7 @@ import { FuseUtils } from '@fuse/utils';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     widgets: any;
     product: any;
     widget1SelectedYear = '2016';
@@ -100,14 +100,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
             });
     }
 
-    ngAfterViewInit() {
-        /* console.log(this.sort); // MatSort{}
-        console.log(this.paginator) */
-        console.log(this.dataSource)
-        /*  this.dataSource.paginator = this.paginator;
-         this.dataSource.sort = this.paginator; */
-
-    }
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------

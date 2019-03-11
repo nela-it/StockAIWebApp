@@ -114,15 +114,20 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                 'stockId': stockId.toString()
             }
             this._predictionListService.addToPortfolio(stockid).subscribe((result) => {
-                this._predictionListService.addedFlag = true;
-                console.log(this._predictionListService.addedFlag);
-                console.log(this._predictionListService.predictions)
+
                 this.snackBar.open('Success', 'Your porfolio successfully added.', {
                     duration: 2000,
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
                 });
-                this.getPortfolioData()
+                this._predictionListService.toGetPredictions(this.groupId).subscribe((result) => {
+                    this._predictionListService.predictions = result.data;
+                    this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
+                    // window.location.reload();
+                }, (err) => {
+                    console.log(err);
+                });
+                // this.getPortfolioData()
                 // window.location.reload();
             }, (err) => {
                 console.log(err);

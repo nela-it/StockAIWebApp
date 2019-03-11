@@ -4,37 +4,29 @@
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const audit_Schema = sequelize.define("audit", {
+  const algorithm_detail_Schema = sequelize.define("algorithm_detail", {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    table_name: {
-      type: DataTypes.STRING,
+    group_id: {
+      type: DataTypes.INTEGER,
+      foreignKey: true,
       allowNull: false
     },
-    user_id: {
+    step_no: {
       type: DataTypes.BIGINT,
       allowNull: false
     },
-    operation: {
-      type: DataTypes.STRING,
+    step_details: {
+      type: DataTypes.TEXT,
       allowNull: false
-    },
-    contents: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    timestamp: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      default: DataTypes.DATE
     }
   });
 
-  return audit_Schema;
+  return algorithm_detail_Schema;
 };
 
 /**

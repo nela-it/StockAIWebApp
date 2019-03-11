@@ -25,7 +25,7 @@
             #register-form {
                 width: 424px;
                 max-width: 424px;
-                padding: 16px;
+                padding: 38px;
                 background: #FFFFFF;
                 text-align: center;
                 @include mat-elevation(16);
@@ -95,13 +95,14 @@
                     }
 
                     .submit-button {
-                        width: 220px;
+                        width: 243px;
+                        height: 48px;
                         margin: 16px auto;
                         display: block;
-                        border-radius: 20px;
+                        border-radius: 24px;
                         background-color: #8262fa;
                         color: white;
-
+                        font-size: 18px;
                         @include media-breakpoint('xs') {
                             width: 90%;
                         }
@@ -109,7 +110,7 @@
                 }
 
                 .register {
-                    margin: 12px auto 18px auto;
+                    margin-top: 16px;
                     font-weight: 500;
                     display: inline-block;
 

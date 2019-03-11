@@ -190,7 +190,6 @@ exports.register = (params, next, cb) => {
             }
           })
           .catch(e => {
-            // console.log(e);
             // return Promise.reject(
             //   new APIError(
             //     "Something Went Wrong",

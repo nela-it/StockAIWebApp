@@ -6,9 +6,6 @@
         <!-- APP TITLE -->
         <div fxLayout="row" fxLayoutAlign="start center">
             <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-                <!-- <mat-icon class="logo-icon mr-16"
-                          [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
-                </mat-icon> -->
                 <span fxHide.xs class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Home
                 </span>
@@ -16,8 +13,8 @@
 
         </div>
         <!-- / APP TITLE -->
-        <div fxLayout="row">
-            <span>Home -</span>
+        <div fxLayout="row" style="padding-right:24px">
+            <span>Home&nbsp;&nbsp;&nbsp;-</span>
             <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
                 *ngIf="activeStock === 'prediction'"> Prediction Group</span>
             <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
@@ -78,25 +75,24 @@
 
     <div class="content" fxLayout="column">
         <div class="price-tables" *ngIf="activeStock === 'prediction'" [@routerTransitionDown] fxLayout="row wrap"
-            fxLayoutAlign="center center">
+            fxLayoutAlign="center">
             <div class="price-table style-2" fxLayout="column" *ngFor="let item of predictionGroupData; let i=index">
-                <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                    <div class="value"><img src="assets/images/group/{{item.group_image}}.png" height="70px"
-                            width="70px"></div>
+                <div class="price" fxLayout="row" fxLayoutAlign="center">
+                    <div class="value"><img src="assets/images/group/{{item.group_image}}.png" height="50px"
+                            width="50px"></div>
                 </div>
                 <div class="group-title">{{item.group_name}} Stocks</div>
                 <div class="period">Group</div>
                 <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                     <div class="term">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt
-                        accumsan. In dignissim laoreet ipsum eu interdum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec augue tincidunt.
                     </div>
                 </div>
                 <button mat-stroked-button (click)="groupDetail(item)" class="explore-button">Explore</button>
             </div>
         </div>
         <!-- *ngIf="activeStock ==='portfolio'" -->
-        <div [hidden]="activeStock!=='portfolio'">
+        <div class="portfolio" [hidden]="activeStock!=='portfolio'">
             <div class=" fuse-card auto-width">
                 <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">

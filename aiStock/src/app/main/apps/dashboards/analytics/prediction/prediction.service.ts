@@ -68,7 +68,6 @@ export class PredictionListService implements Resolve<any>
             this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions)
                 .subscribe((response: any) => {
                     this.predictions = response.data;
-                    console.log(this.predictions)
                     this.onPredictionsChanged.next(this.predictions);
                     resolve(response);
                 }, reject);
@@ -84,5 +83,8 @@ export class PredictionListService implements Resolve<any>
                 console.log(err);
             })
         );
+    }
+    toGetPredictions(id): Observable<any> {
+        return this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions);
     }
 }
