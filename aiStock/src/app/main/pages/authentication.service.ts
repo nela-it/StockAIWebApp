@@ -25,6 +25,7 @@ export class AuthenticationService {
       })
     );
   }
+
   registerUser(userData): Observable<any> {
     //this.apiUrl = serverUrl + "user/register"; 
     return this.http.post<any>(registerUrl, userData, this.httpOptions).pipe(
@@ -36,6 +37,7 @@ export class AuthenticationService {
       })
     );
   }
+
   emailCheck(email): Observable<any> {
     //this.apiUrl = serverUrl + "user/register"; 
     return this.http.post<any>(forgotPasswordUrl, email, this.httpOptions).pipe(
@@ -46,6 +48,7 @@ export class AuthenticationService {
       })
     );
   }
+
   changePassword(data): Observable<any> {
     //this.apiUrl = serverUrl + "user/register"; 
     return this.http.post<any>(resetPasswordUrl, data, this.httpOptions).pipe(
@@ -56,9 +59,11 @@ export class AuthenticationService {
       })
     );
   }
+
   getToken() {
     return localStorage.getItem('LoggedInUser');
   }
+
   isLoggednIn() {
     return this.getToken() !== null;
   }

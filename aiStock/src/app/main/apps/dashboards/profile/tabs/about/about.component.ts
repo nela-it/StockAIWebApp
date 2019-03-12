@@ -13,7 +13,10 @@ import { ProfileService } from '../../profile.service';
 })
 export class ProfileAboutComponent implements OnInit, OnDestroy {
     about: any;
-
+    username: string;
+    email: string;
+    userInfo: any;
+    errMsg;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -42,6 +45,15 @@ export class ProfileAboutComponent implements OnInit, OnDestroy {
             .subscribe(about => {
                 this.about = about;
             });
+        this._profileService.getUserInfo().subscribe(res => {
+            this.userInfo = res.data;
+            console.log(this.userInfo)
+            this.username = this.userInfo.username;
+            this.email = this.userInfo.email;
+        }, error => {
+            console.log(error);
+            this.errMsg = error.message;
+        });
     }
 
     /**

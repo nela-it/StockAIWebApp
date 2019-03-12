@@ -15,6 +15,17 @@ export class StockDetailComponent implements OnInit {
   widgets: any;
   stockName: string;
   stockId: string;
+  stockData: any = [];
+  algorithmData: any = [];
+  errMsg: string;
+  ticker: string;
+  earningDate: string;
+  suggestedDate: string;
+  recommendedPrice: string;
+  currentPrice: string;
+  targetPrice: string;
+  predictionGroup: string;
+  tickerImage: string;
   widget1SelectedYear = '2016';
   widget5SelectedDay = 'today';
   constructor(private route: ActivatedRoute,
@@ -30,6 +41,40 @@ export class StockDetailComponent implements OnInit {
       this.groupId = params['groupId'];
       this.stockName = params['stockname'];
     });
+    // Stock Info  
+    if (this._stockDetailService.stockInfo) {
+      this.ticker = this._stockDetailService.stockInfo['ticker'];
+      this.earningDate = this._stockDetailService.stockInfo['target_date'];
+      this.suggestedDate = this._stockDetailService.stockInfo['suggested_date'];
+      this.recommendedPrice = this._stockDetailService.stockInfo['recommended_price'];
+      this.currentPrice = this._stockDetailService.stockInfo['current_price'];
+      this.targetPrice = this._stockDetailService.stockInfo['target_price'];
+      this.tickerImage = this._stockDetailService.stockInfo['ticker_image'];
+      this.predictionGroup = this._stockDetailService.stockInfo['Prediction_group'].group_name;
+    } else {
+      this.errMsg = 'Stock Not Found';
+      console.log(this.errMsg);
+    }
+
+    for (var j = 0; j < this._stockDetailService.algorithmInfo.length; j++) {
+      if (this._stockDetailService.algorithmInfo[j].step_no === 1) {
+        this._stockDetailService.algorithmInfo[j].stepChar = 'One';
+        this._stockDetailService.algorithmInfo[j].stepColor = '#FF9D44';
+      } else if (this._stockDetailService.algorithmInfo[j].step_no === 2) {
+        this._stockDetailService.algorithmInfo[j].stepChar = 'Two';
+        this._stockDetailService.algorithmInfo[j].stepColor = ' #45E792';
+      } else if (this._stockDetailService.algorithmInfo[j].step_no === 3) {
+        this._stockDetailService.algorithmInfo[j].stepChar = 'Three';
+        this._stockDetailService.algorithmInfo[j].stepColor = '#00AFF0';
+      } else if (this._stockDetailService.algorithmInfo[j].step_no === 4) {
+        this._stockDetailService.algorithmInfo[j].stepChar = 'Four';
+        this._stockDetailService.algorithmInfo[j].stepColor = '#FFDD67';
+      }
+    }
+    this.algorithmData = this._stockDetailService.algorithmInfo;
+    console.log(this.algorithmData);
+
+
   }
   private _registerCustomChartJSPlugin(): void {
     (<any>window).Chart.plugins.register({

@@ -6,13 +6,18 @@ export const forgotPasswordUrl: string = serverUrl + 'user/forgotPassword';
 export const resetPasswordUrl: string = serverUrl + 'user/changePassword';
 
 // Prediction Group Data
-
 export const predictionGroup: string = serverUrl + 'prediction_group/getGroups';
 export const getGroupsDetails: string = serverUrl + 'prediction_group/exploreGroups';
 
 // Product Data
-
 export const getProductDetails: string = serverUrl + 'product/getProductInfo';
+
 // Portfolio 
 export const addPortfolio: string = serverUrl + 'portfolio/addPortfolio';
 export const getPortfolio: string = serverUrl + 'portfolio/getPortfolio';
+
+//Stock info 
+export const getStockInfo: string = serverUrl + 'stocks/getStockInfo';
+export const getAlgorithm: string = serverUrl + 'algorithm/getAlgorithm';
+//User info 
+export const getUserInfo: string = serverUrl + 'user/userInfo';

@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { getGroupsDetails, addPortfolio } from 'appConfig/appconfig';
-import { AnalyticsDashboardService } from '../analytics.service';
 import { map, catchError, tap } from 'rxjs/operators';
+
 @Injectable()
 export class PredictionListService implements Resolve<any>
 {
@@ -12,9 +12,9 @@ export class PredictionListService implements Resolve<any>
     id: string;
     groupId: string;
     groupName: string;
-    addedFlag: boolean = false;
+    addedFlag = false;
     onPredictionsChanged: BehaviorSubject<any>;
-    httpOptions
+    httpOptions;
     /**
      * Constructor
      *
@@ -23,7 +23,6 @@ export class PredictionListService implements Resolve<any>
 
     constructor(
         private _httpClient: HttpClient,
-        private _analyticsDashboardService: AnalyticsDashboardService
     ) {
         this.httpOptions = {
             headers: new HttpHeaders({
@@ -68,6 +67,7 @@ export class PredictionListService implements Resolve<any>
             this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions)
                 .subscribe((response: any) => {
                     this.predictions = response.data;
+                    console.log(this.predictions);
                     this.onPredictionsChanged.next(this.predictions);
                     resolve(response);
                 }, reject);
@@ -78,12 +78,13 @@ export class PredictionListService implements Resolve<any>
     addToPortfolio(stockId): Observable<any> {
         return this._httpClient.post(addPortfolio, stockId, this.httpOptions).pipe(
             tap((result) => {
-                console.log("user data", result)
+                console.log('user data', result);
             }, err => {
                 console.log(err);
             })
         );
     }
+
     toGetPredictions(id): Observable<any> {
         return this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions);
     }

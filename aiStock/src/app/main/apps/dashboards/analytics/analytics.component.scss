@@ -97,6 +97,23 @@
         .portfolio{
             padding-left: 40px;
             padding-right: 40px;
+            .fuse-card{
+                transition: none !important;
+                box-shadow: none !important;
+                .text-color {
+                    color: #b1b1b4;
+                }
+                .value{
+                    color: #6F7376;
+                    font-size: 20px;
+                }
+                .stock-filter{
+
+                    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start{
+                            border-radius: 0px !important;
+                    }
+                }
+            }
         }
         .auto-width{
             padding-left: 40px;
@@ -186,17 +203,25 @@
         }
         
     }
-    .fuse-card{
-        transition: none !important;
-        box-shadow: none !important;
-        .text-color {
-            color: #b1b1b4;
+/*     .portfolio{
+        .fuse-card{
+            transition: none !important;
+            box-shadow: none !important;
+            .text-color {
+                color: #b1b1b4;
+            }
+            .value{
+                color: #6F7376;
+                font-size: 20px;
+            }
+            .stock-filter{
+                ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start{
+                        border-radius: 0px
+                }
+            }
         }
-        .value{
-            color: #6F7376;
-            font-size: 20px;
-        }
-    }
+        
+    } */
     .center{
         .predictions-table {
             flex: 1 1 auto;

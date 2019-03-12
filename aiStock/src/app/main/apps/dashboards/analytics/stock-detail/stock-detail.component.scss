@@ -24,6 +24,26 @@
         .header {
             background-color: #E8E7F9;
             color: #8262fa;
+            height:5%;
+            .logo{
+                .logo-text{
+                    a{
+                        text-decoration: none;color:#b1b1b4;vertical-align:middle;
+                        mat-icon{
+                            vertical-align: middle;
+                        }
+                    }
+                    p{
+                        margin: 30px; vertical-align:middle; display: inline;
+                    }
+                }
+            }
+            .right-breadcrumb{
+                padding-right:7px;
+                .routes{
+                    color: #b1b1b4; display: inline; margin-left: 15px;
+                }
+            }
         }
 
     }
@@ -74,9 +94,13 @@
                             padding: 0 8px;                           
                         }
 
-                        .info {                           
-                            mat-icon {                                
-                                font-size: 24px;                                
+                        .info {     
+                            color:#6B6E7D;                           
+                            font-size: 32px;                         
+                            mat-icon {     
+                                color:#6B6E7D;                           
+                                font-size: 32px;    
+                                vertical-align: top;                            
                             }
                         }  
                         @include media-breakpoint-down(xs) {
@@ -211,6 +235,35 @@
             .value{
                 color: #6F7376;
                 font-size: 20px;
+            }
+            .group-filter{
+                ::ng-deep .mat-select{
+                    margin-top: 4px;
+
+                }
+                ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+                    border-radius: 0px !important;
+                    top: 1.25em !important;                
+                }
+
+                ::ng-deep .mat-select-placeholder {
+                    color: black !important;
+                    font-size: 14px !important;
+                    margin-top:4px; 
+                    //display:none !important;
+                }
+
+                ::ng-deep .mat-select-trigger .mat-select-arrow-wrapper .mat-select-arrow {
+                    color:black !important;
+                    margin-top:8px !important; 
+                }
+
+                ::ng-deep .mat-form-field-outline .mat-form-field-outline-start  {
+                    border-radius: 0px;
+                }
+                ::ng-deep .mat-form-field-outline .mat-form-field-outline-end{
+                    border-radius: 0px;
+                }
             }
             
         }

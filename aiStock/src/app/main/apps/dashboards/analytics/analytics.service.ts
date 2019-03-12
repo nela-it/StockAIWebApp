@@ -80,10 +80,12 @@ export class AnalyticsDashboardService implements Resolve<any>
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
                     this.column = response.data;
+                    this.realTimeData = [];
                     for (var i = 0; i < this.column.length; i++) {
                         this.realTimeData.push(this.column[i]['real_time_price']);
 
                         if (i + 1 == this.column.length) {
+                            this.portfolio = [];
                             for (var j = 0; j < this.realTimeData.length; j++) {
                                 this.portfolio.push(this.realTimeData[j].stock);
                             }

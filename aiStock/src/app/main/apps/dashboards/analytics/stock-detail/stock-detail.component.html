@@ -1,40 +1,20 @@
 <div id="predictions" class=" fullwidth inner-scroll">
   <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
-    fxLayoutAlign.gt-xs="space-between center" style="height:5%;">
-
-    <!-- <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
-            shopping_basket
-        </mat-icon>
-        <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Predictions</span>
-    </div> -->
+    fxLayoutAlign.gt-xs="space-between center">
     <div fxLayout="row" fxLayoutAlign="start center">
-
-      <!--  <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-md>
-        <mat-icon>menu</mat-icon>
-      </button> -->
-
       <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-        <!-- <mat-icon class="logo-icon mr-16"
-                    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
-            </mat-icon> -->
         <span class="logo-text h3" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-          <a [routerLink]="['/apps/dashboards/analytics/prediction',groupId,stockName]"
-            style="text-decoration: none;color:#b1b1b4;vertical-align:middle;">
-            <mat-icon style="vertical-align:middle;">keyboard_backspace</mat-icon><span>&nbsp;</span> Back
+          <a [routerLink]="['/apps/dashboards/analytics/prediction',groupId,stockName]">
+            <mat-icon>keyboard_backspace</mat-icon><span>&nbsp;</span> Back
           </a>
-          <p style="margin: 30px; vertical-align:middle; display: inline;">{{stockName}} Stocks</p>
+          <p>{{stockName}} Stocks</p>
         </span>
-
-        <!-- <span class="logo-text h4">
-                Home
-            </span> -->
       </div>
     </div>
-    <div fxLayout="row">
-      <span>Home<span>&nbsp;</span> -</span>
-      <span style="color: #b1b1b4; display: inline; margin-left: 15px;"> Prediction Groups <span>&nbsp;</span> -</span>
-      <span style="color: #b1b1b4; display: inline; margin-left: 15px;">{{stockName}} Stocks</span>
+    <div fxLayout="row" class="right-breadcrumb">
+      <span>Home<span>&nbsp;</span>-</span>
+      <span class="routes">Prediction Groups<span>&nbsp;</span>-</span>
+      <span class="routes">{{stockName}} Stocks</span>
     </div>
     <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
         <label for="search" class="mr-8">
@@ -50,32 +30,26 @@
       <mat-card class="nav-bar" fxLayoutWrap fxFlex="70%" fxLayoutAlign="start">
         <div class="code">
           <div style="float:left;margin-top: -20px;">
-            NASDAQ: AMZN
+            NASDAQ: {{ticker}}
           </div>
-          <div style="float:right;    margin-top: -20px;">
+          <div style="float:right;margin-top: -20px;">
             New York, United States
           </div>
           <div class="issuer" fxLayout="row" fxLayoutAlign="start center">
-            <!-- <div style="float:left;">
-              NASDAQ: AMZN
-            </div>
-            <div style="float:right">
-              New York, United States
-            </div> -->
             <div class="logo">
-              <img src="assets/images/company/amzn.png" width="75px" height="75px">
+              <img src="assets/images/company/{{tickerImage}}.png" width="75px" height="75px">
             </div>
 
             <div class="info">
               <div class="title">
-                <div style="font-size:32px; color:#6B6E7D">
+                <div>
                   <b>54.21</b>
                   <mat-icon>arrow_upwards</mat-icon>
                 </div>
               </div>
               <div class="address">
-                <h2 style="font-size:18px;"><label style="color:#2CCEFC">+$34.21</label> | <label
-                    style="color:#F79319">2.4%</label></h2>
+                <h2 style="font-size:18px;"><label style="color:#2CCEFC"><b>+$34.21</b></label> | <label
+                    style="color:#F79319"><b>2.4%</b></label></h2>
               </div>
             </div>
           </div>
@@ -89,7 +63,7 @@
                   </span>
                 </div>
                 <div class="info">
-                  <div>14.03.2018</div>
+                  <div>{{earningDate | date:'dd.MM.yyyy'}}</div>
                   <div class="title">Earnings Date</div>
                 </div>
               </div>
@@ -102,7 +76,7 @@
                   </span>
                 </div>
                 <div class="info">
-                  <div>$2355.23</div>
+                  <div>{{recommendedPrice | currency:'USD':'symbol'}}</div>
                   <div class="title">Recommended Price</div>
                 </div>
               </div>
@@ -115,7 +89,7 @@
                   </span>
                 </div>
                 <div class="info">
-                  <div>$2042.71</div>
+                  <div>{{currentPrice | currency:'USD':'symbol'}}</div>
                   <div class="title">Current Price</div>
                 </div>
               </div>
@@ -130,7 +104,7 @@
                   </span>
                 </div>
                 <div class="info">
-                  <div>08.03.2018</div>
+                  <div>{{suggestedDate | date:'dd.MM.yyyy'}}</div>
                   <div class="title">Suggested Date</div>
                 </div>
               </div>
@@ -143,7 +117,7 @@
                   </span>
                 </div>
                 <div class="info">
-                  <div>$2176.49</div>
+                  <div>{{targetPrice | currency:'USD':'symbol'}}</div>
                   <div class="title">Target Price</div>
                 </div>
               </div>
@@ -156,8 +130,8 @@
                   </span>
                 </div>
                 <div class="info">
-                  <div>Lion Stocks</div>
-                  <div class="title">Pregiction Group</div>
+                  <div>{{predictionGroup}} Stocks</div>
+                  <div class="title">Prediction Group</div>
                 </div>
               </div>
             </div>
@@ -204,22 +178,22 @@
     <h2>Algorithm</h2>
   </div>
   <div class="algorithm" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1.5%" fxLayoutAlign="center">
-    <mat-card class="card-picture">
+    <mat-card class="card-picture" *ngFor="let item of algorithmData; let i=index">
       <div class="number">
         <div class="logo">
-          <b style=" color: #FF9D44;">
-            01
+          <b [ngStyle]="{'color':algorithmData[i].stepColor}">
+            0{{algorithmData[i].step_no}}
           </b>
         </div>
         <div class="info">
-          <div>Step One</div>
+          <div>Step {{algorithmData[i].stepChar}}</div>
           <div class="title">Process</div>
         </div>
       </div>
-      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-      <div style="margin-top:10px;">This completes task one.</div>
+      <div class="content">{{algorithmData[i].step_details}}</div>
+      <div style="margin-top:10px;">This completes task {{algorithmData[i].stepChar | lowercase}}.</div>
     </mat-card>
-    <mat-card class="card-picture">
+    <!-- <mat-card class="card-picture">
       <div class="number">
         <div class="logo">
           <b style=" color: #45E792;">02
@@ -262,7 +236,7 @@
       </div>
       <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
       <div style="margin-top:10px;">This completes task four.</div>
-    </mat-card>
+    </mat-card> -->
     <mat-card class="card-picture">
       <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
         <span fxFlex="80%"></span>
@@ -289,15 +263,15 @@
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center">
-          <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+          <!-- <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
             (click)="widget5SelectedDay = 'yesterday'" [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
             Yesterday
           </div>
           <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
             (click)="widget5SelectedDay = 'today'" [ngClass]="{'grey-300-bg': widget5SelectedDay === 'today'}">
             Today
-          </div>
-          <div>
+          </div> -->
+          <div class="group-filter">
             <mat-form-field appearance="outline">
               <mat-select placeholder="Last 30 days ">
                 <mat-option> abc </mat-option>

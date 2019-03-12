@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { getUserInfo } from 'appConfig/appconfig';
+
 
 @Injectable()
 export class ProfileService implements Resolve<any>
@@ -9,11 +11,11 @@ export class ProfileService implements Resolve<any>
     timeline: any;
     about: any;
     photosVideos: any;
-
+    userInfo: any;
     timelineOnChanged: BehaviorSubject<any>;
     aboutOnChanged: BehaviorSubject<any>;
     photosVideosOnChanged: BehaviorSubject<any>;
-
+    httpOptions
     /**
      * Constructor
      *
@@ -21,8 +23,13 @@ export class ProfileService implements Resolve<any>
      */
     constructor(
         private _httpClient: HttpClient
-    )
-    {
+    ) {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         // Set the defaults
         this.timelineOnChanged = new BehaviorSubject({});
         this.aboutOnChanged = new BehaviorSubject({});
@@ -36,13 +43,13 @@ export class ProfileService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
             Promise.all([
                 this.getTimeline(),
                 this.getAbout(),
-                this.getPhotosVideos()
+                this.getPhotosVideos(),
+                this.getUserInfo()
             ]).then(
                 () => {
                     resolve();
@@ -55,8 +62,7 @@ export class ProfileService implements Resolve<any>
     /**
      * Get timeline
      */
-    getTimeline(): Promise<any[]>
-    {
+    getTimeline(): Promise<any[]> {
         return new Promise((resolve, reject) => {
 
             this._httpClient.get('api/profile-timeline')
@@ -71,8 +77,7 @@ export class ProfileService implements Resolve<any>
     /**
      * Get about
      */
-    getAbout(): Promise<any[]>
-    {
+    getAbout(): Promise<any[]> {
         return new Promise((resolve, reject) => {
 
             this._httpClient.get('api/profile-about')
@@ -87,8 +92,7 @@ export class ProfileService implements Resolve<any>
     /**
      * Get photos & videos
      */
-    getPhotosVideos(): Promise<any[]>
-    {
+    getPhotosVideos(): Promise<any[]> {
         return new Promise((resolve, reject) => {
 
             this._httpClient.get('api/profile-photos-videos')
@@ -100,4 +104,7 @@ export class ProfileService implements Resolve<any>
         });
     }
 
+    public getUserInfo(): Observable<any> {
+        return this._httpClient.get(getUserInfo, this.httpOptions);
+    }
 }

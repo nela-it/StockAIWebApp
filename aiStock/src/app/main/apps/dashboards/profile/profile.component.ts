@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
-
+import { ProfileService } from './profile.service'
 @Component({
     selector: 'profile',
     templateUrl: './profile.component.html',
@@ -11,13 +11,15 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class ProfileComponent {
     username: any;
+
     /**
      * Constructor
      */
-    constructor() {
+    constructor(public _profileService: ProfileService) {
 
     }
     ngOnInit(): void {
         this.username = localStorage.getItem('username');
+
     }
 }
