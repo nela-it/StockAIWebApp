@@ -9,7 +9,9 @@ const Op = db.Op;
 exports.addPortfolio = async (req, res, next) => {
   try {
     let getRealTimeId = await realTimePrice.findOne({
-      where: { stock_id: req.body.stockId }
+      where: {
+        stock_id: req.body.stockId
+      }
     });
     let isAlreadyPortfolio = await Portfolio.findOne({
       where: {
@@ -42,20 +44,26 @@ exports.addPortfolio = async (req, res, next) => {
 };
 
 exports.getPortfolio = async (req, res, next) => {
-  Portfolio.belongsTo(realTimePrice, { foreignKey: "real_time_price_id" });
-  realTimePrice.belongsTo(Stocks, { foreignKey: "stock_id" });
-  Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
+  Portfolio.belongsTo(realTimePrice, {
+    foreignKey: "real_time_price_id"
+  });
+  realTimePrice.belongsTo(Stocks, {
+    foreignKey: "stock_id"
+  });
+  Stocks.belongsTo(Prediction_group, {
+    foreignKey: "group_id"
+  });
   try {
     let isRecords = await Portfolio.findAll({
-      where: { user_id: req.user.id },
-      include: [
-        {
-          model: realTimePrice,
-          include: {
-            model: Stocks
-          }
+      where: {
+        user_id: req.user.id
+      },
+      include: [{
+        model: realTimePrice,
+        include: {
+          model: Stocks
         }
-      ]
+      }]
     });
     if (isRecords.length > 0) {
       return res.status(200).json({
@@ -74,20 +82,26 @@ exports.getPortfolio = async (req, res, next) => {
 };
 
 exports.checkPortfolio = async (params, cb) => {
-  Portfolio.belongsTo(realTimePrice, { foreignKey: "real_time_price_id" });
-  realTimePrice.belongsTo(Stocks, { foreignKey: "stock_id" });
-  Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
+  Portfolio.belongsTo(realTimePrice, {
+    foreignKey: "real_time_price_id"
+  });
+  realTimePrice.belongsTo(Stocks, {
+    foreignKey: "stock_id"
+  });
+  Stocks.belongsTo(Prediction_group, {
+    foreignKey: "group_id"
+  });
   try {
     let isRecords = await Portfolio.findAll({
-      where: { user_id: params.user.id },
-      include: [
-        {
-          model: realTimePrice,
-          include: {
-            model: Stocks
-          }
+      where: {
+        user_id: params.user.id
+      },
+      include: [{
+        model: realTimePrice,
+        include: {
+          model: Stocks
         }
-      ]
+      }]
     });
     if (isRecords.length > 0) {
       await cb(null, isRecords);

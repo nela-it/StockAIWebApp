@@ -1,31 +1,33 @@
 /**
- * Prediction_group_Schema Schema
+ * Audit Schema
  */
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Prediction_group_Schema = sequelize.define("Prediction_group", {
+  const stock_history = sequelize.define("stock_history", {
     id: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    group_id: {
+    ticker_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+      allowNull: false
+    },
+    closing_price: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    group_name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    group_image: {
-      type: DataTypes.STRING,
-      allowNull: false
+    date: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      default: DataTypes.DATE
     }
   });
 
-  return Prediction_group_Schema;
+  return stock_history;
 };
 
 /**

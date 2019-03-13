@@ -1,9 +1,4 @@
 <div id="predictions" class="page-layout carded fullwidth inner-scroll">
-
-    <!-- TOP BACKGROUND -->
-    <!-- <div class="top-bg mat-accent-bg"></div> -->
-    <!-- / TOP BACKGROUND -->
-
     <!-- CENTER -->
     <div class="header p-16 p-sm-18" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
         fxLayoutAlign.gt-xs="space-between center">
@@ -139,23 +134,9 @@
             <!-- / Widget 2 -->
 
         </div>
-        <div class="filter-bar">
-            <div class="filter">
-
-
-
-
-            </div>
-            <div class="search-bar">
-                <!-- <mat-form-field floatLabel="never">
-                    <input id="search" matInput #filter placeholder="Search">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field> -->
-            </div>
-        </div>
-        <div class="subfilter-bar">
-            <div class="subfilter">
-                <mat-form-field (click)="active_filter('all')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'all' }"
+        <div fxLayout="column" class="subfilter-bar" fxLayoutAlign="start stretch">
+            <div class="subfilter" fxLayout="row" fxLayoutAlign="start start">
+                <mat-form-field fxLayout.xs="row" (click)="active_filter('all')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'all' }"
                     floatLabel="never">
                     <mat-select placeholder="All">
                         <mat-option *ngFor="let food of foods" [value]="food.value">
@@ -163,7 +144,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field (click)="active_filter('country')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'country' }"
+                <mat-form-field fxLayout.xs="row" (click)="active_filter('country')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'country' }"
                     floatLabel="never">
                     <mat-select placeholder="Country">
                         <mat-option *ngFor="let food of foods" [value]="food.value">
@@ -171,7 +152,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field (click)="active_filter('exchange')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'exchange' }"
+                <mat-form-field fxLayout.xs="row" (click)="active_filter('exchange')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'exchange' }"
                     floatLabel="never">
                     <mat-select placeholder="Exchange">
                         <mat-option *ngFor="let food of foods" [value]="food.value">
@@ -180,17 +161,13 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="right-subfilter">
-                <div>
-                    <button (click)="paginate('next')" [ngClass]="{active: paginateTab == 'next' }" mat-flat-button>Next
-                        100 <mat-icon style="font-size:18px; vertical-align:center">
-                            arrow_forward</mat-icon>
-                    </button>
-                </div>
-                <div>
-                    <button (click)="paginate('view')" [ngClass]="{active: paginateTab == 'view' }" mat-flat-button
-                        style="padding-left:30px; padding-right:30px">View All</button>
-                </div>
+            <div class="right-subfilter" fxLayout="row" fxLayoutAlign="end start">
+                <button (click)="paginate('next')" [ngClass]="{active: paginateTab == 'next' }" mat-flat-button>Next
+                    100 <mat-icon style="font-size:18px; vertical-align:center">
+                        arrow_forward</mat-icon>
+                </button>
+                <button (click)="paginate('view')" [ngClass]="{active: paginateTab == 'view' }" mat-flat-button style="padding-left:30px; padding-right:30px">View
+                    All</button>
                 &nbsp;&nbsp;&nbsp;
                 <mat-form-field floatLabel="never" style="height: 56px;">
                     <mat-select placeholder="USD">
@@ -201,6 +178,7 @@
                 </mat-form-field>
             </div>
         </div>
+
         <!-- CONTENT CARD -->
         <div class="content-card mat-white-bg">
 

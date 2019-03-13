@@ -11,7 +11,7 @@
         </span>
       </div>
     </div>
-    <div fxLayout="row" class="right-breadcrumb">
+    <div fxLayout="row" fxHide.xs class="right-breadcrumb">
       <span>Home<span>&nbsp;</span>-</span>
       <span class="routes">Prediction Groups<span>&nbsp;</span>-</span>
       <span class="routes">{{stockName}} Stocks</span>
@@ -26,13 +26,14 @@
     </div> -->
   </div>
   <div class="main-widget">
-    <div fxLayout="row" class="nav-header">
+    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" class="nav-header">
+
       <mat-card class="nav-bar" fxLayoutWrap fxFlex="70%" fxLayoutAlign="start">
         <div class="code">
-          <div style="float:left;margin-top: -20px;">
+          <div class="left-text">
             NASDAQ: {{ticker}}
           </div>
-          <div style="float:right;margin-top: -20px;">
+          <div class="right-text">
             New York, United States
           </div>
           <div class="issuer" fxLayout="row" fxLayoutAlign="start center">
@@ -158,27 +159,28 @@
           <div class="address bgColor">Choose a stock from the selected prediction groups</div>
         </div> -->
       </mat-card>
-      <mat-card class="nav-bar" fxFlex="30%" fxLayoutAlign="center center" style="background-color: #7C61EE;">
+      <mat-card class="notes-bar" fxFlex="30%" fxLayoutAlign="center center">
         <div class="notes">
           <div class="title fontSize"><b>Useful Notes</b></div>
           <div class="address bgColor">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec
             augue tincidunt accumsan. In dignissim laoreet ipsum.
           </div>
-          <div style="padding-left:15px;">
+          <div fxLayout.sm="row" fxLayoutAlign="center center">
             <label><b>$2042.71</b></label>
-            <button style="margin-left:40px;" class="add-button" mat-flat-button>Add to portfolio</button>
+            <button class="add-button" mat-flat-button>Add to portfolio</button>
           </div>
         </div>
       </mat-card>
 
     </div>
   </div>
-  <div style="margin-left:25px;">
+  <div style="margin-left:2.5%">
     <h2>Algorithm</h2>
   </div>
-  <div class="algorithm" fxLayout="row" fxLayout.xs="column" fxLayoutGap="1.5%" fxLayoutAlign="center">
-    <mat-card class="card-picture" *ngFor="let item of algorithmData; let i=index">
+  <!-- fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25" -->
+  <!-- <div class="algorithm" fxLayout.xs="column" fxLayoutGap="1.5%" fxLayoutAlign="center">
+    <mat-card fxLayout="column" class="card-picture" *ngFor="let item of algorithmData; let i=index">
       <div class="number">
         <div class="logo">
           <b [ngStyle]="{'color':algorithmData[i].stepColor}">
@@ -193,59 +195,47 @@
       <div class="content">{{algorithmData[i].step_details}}</div>
       <div style="margin-top:10px;">This completes task {{algorithmData[i].stepChar | lowercase}}.</div>
     </mat-card>
-    <!-- <mat-card class="card-picture">
-      <div class="number">
-        <div class="logo">
-          <b style=" color: #45E792;">02
-          </b>
-        </div>
-        <div class="info">
-          <div>Step Two</div>
-          <div class="title">Process</div>
-        </div>
-      </div>
-      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-      <div style="margin-top:10px;">This completes task two.</div>
-    </mat-card>
-    <mat-card class="card-picture">
-      <div class="number">
-        <div class="logo">
-          <b style=" color: #00AFF0;">
-            03
-          </b>
-        </div>
-        <div class="info">
-          <div>Step Three</div>
-          <div class="title">Process</div>
-        </div>
-      </div>
-      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-      <div style="margin-top:10px;">This completes task three.</div>
-    </mat-card>
-    <mat-card class="card-picture">
-      <div class="number">
-        <div class="logo">
-          <b style=" color: #FFDD67;">
-            04
-          </b>
-        </div>
-        <div class="info">
-          <div>Step Four</div>
-          <div class="title">Process</div>
-        </div>
-      </div>
-      <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-      <div style="margin-top:10px;">This completes task four.</div>
-    </mat-card> -->
+
     <mat-card class="card-picture">
       <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
-        <span fxFlex="80%"></span>
 
       </mat-card-title>
       <img mat-card-image>
     </mat-card>
-  </div>
+  </div> -->
+  <div class="courses" fxLayout="row wrap" fxLayoutAlign="start start">
+    <div class="course" *ngFor="let course of algorithmData; let i=index" fxFlex="100" fxFlex.gt-xs="50"
+      fxFlex.gt-sm="20">
+      <div class="course-content" fxLayout="column">
+        <div class="content" fxLayout="column" fxLayoutAlign="start start">
+          <div class="number">
+            <div class="logo">
+              <b [ngStyle]="{'color':algorithmData[i].stepColor}">
+                0{{algorithmData[i].step_no}}
+              </b>
+            </div>
+            <div class="info">
+              <div>Step {{algorithmData[i].stepChar}}</div>
+              <div class="title">Process</div>
+            </div>
+          </div>
+          <div class="desc">{{algorithmData[i].step_details}}</div>
+          <div style="margin-top:10px;">This completes task {{algorithmData[i].stepChar | lowercase}}.</div>
+        </div>
+      </div>
+    </div>
+    <div class="course" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="20" [@animate]="{value:'*',params:{y:'100%'}}">
+      <div class="course-content" fxLayout="column">
+        <div class="content" fxLayout="column" fxLayoutAlign="start start" fxFlex>
 
+        </div>
+      </div>
+    </div>
+    <div class="no-courses" *ngIf="algorithmData.length === 0">
+      No courses found!
+    </div>
+
+  </div>
   <div class="chart">
     <div class="fuse-card auto-width">
       <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">

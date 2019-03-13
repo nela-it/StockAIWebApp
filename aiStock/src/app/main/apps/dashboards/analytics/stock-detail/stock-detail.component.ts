@@ -72,9 +72,6 @@ export class StockDetailComponent implements OnInit {
       }
     }
     this.algorithmData = this._stockDetailService.algorithmInfo;
-    console.log(this.algorithmData);
-
-
   }
   private _registerCustomChartJSPlugin(): void {
     (<any>window).Chart.plugins.register({

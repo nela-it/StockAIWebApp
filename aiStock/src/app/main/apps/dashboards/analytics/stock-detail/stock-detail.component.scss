@@ -44,17 +44,18 @@
                     color: #b1b1b4; display: inline; margin-left: 15px;
                 }
             }
+            @include media-breakpoint-down(xs) {
+                height:2%;
+            }
         }
 
     }
     .main-widget {
-       /*  display: flex;
-        flex-direction: column; */
-
+      
         .nav-header {
-            padding: 20px;
+            //padding: 20px;
             display: inline-block;
-
+            margin: 2.5%;
             mat-card {                
                 max-width: 270px;               
                 mat-icon {
@@ -72,19 +73,36 @@
                         color: #8262fa;
                     }
                 }
+                @include media-breakpoint-down(sm) {
+                   max-width: none;
+                }
             }
             .mat-card{
                 transition: none !important;
                 box-shadow: none !important;
             }
+            
             .nav-bar {               
                 color: black;
-                margin: 10px;
                 background-color: white;
-               
+               /*  .bg-color{
+                    background-color: #7C61EE;
+                } */
                 .code{
-                    margin-top: 18px;
-                   // display:inline;
+                        margin-top: 18px;
+                    // display:inline;
+                    .left-text{
+                        float:left;
+                        margin-top: -20px;
+                    }      
+                    .right-text{
+                        float:right;
+                        margin-top: -20px;
+                        @include media-breakpoint-down(xs) {
+                            float: none;
+                            margin-top: 0px;
+                         }
+                    }                  
                     .issuer {
                         float: left;                                                                        
                         margin-top: 15px;
@@ -138,40 +156,60 @@
                     
                 }                                
 
-                .fontSize {
+/*                 .fontSize {
                     font-size: 20px;
                     color: white;
                     text-align: center;
-                }
+                } */
 
                 .cardHeight {
                     height: 100px !important;
                 }
 
-                .bgColor {
-                    color: white;
+              
+      
+                
+            }
+            .notes-bar{
+                margin-left: 10px;                
+                background-color: #7C61EE;
+                color: white;
+                @include media-breakpoint-down(md) {
+                    margin-top:10px;   
+                    margin-left: 0px; 
+                }  
+                .add-button{                   
+                    display: inline-block;
+                    vertical-align: middle;
+                    text-align: center;                    
+                    background-color: #623EF7 !important;
+                    border-radius: 8px;
+                    //height: 30px;
+                    margin-left:60px; 
+                    @include media-breakpoint-down(md) {
+                        margin-left:0px;    
+                    }  
+                    @include media-breakpoint-down(sm) {
+                        margin-left:0px;    
+                    }    
+                }
+                .fontSize {
+                    font-size: 20px;                
+                    text-align: center;
+                }
+                .bgColor {                    
                     text-align: center;
                     padding: 15px;
                 }
-                .add-button{
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin: 10px 0 ;
-                    text-align: center;
-                    color: white;
-                    background-color: #623EF7 !important;
-                    border-radius: 8px;
-                }               
                 label{
                     display: inline-block;
                     vertical-align: middle;
                     margin: 10px 0;
                     font-size: 28px;
-                    text-align: center;
-                    color: white;
+                    text-align: center;                    
                 }
-            }
 
+            }
             .active {
                 background-color: #8262fa;
                 color: white;
@@ -187,45 +225,9 @@
             }
 
         }
-    }
-    .algorithm {
-       /*  display: flex;
-        flex-direction: column; */
-        .mat-card{
-            transition: none !important;
-            box-shadow: none !important;
-        }
-        .card-picture {
-            width: 18%;
-            //margin-bottom: 2%;
-            //display: flex;
-            .number{
-                display:flex;
-                align-items: center;
-                
-                .logo{
-                    font-size: 32px;                   
-                    //display: flex;
-                    //flex-direction: row;
-                }
-                .info{
-                    margin: 10px;
-                    
-                    .title{
-                        color: #b1b1b4;
-                    }
-                    //display: flex;
-                    //flex-direction: column;
-                }
-            }
-            .content{
-                color: #b1b1b4;        
-            }
-            
-        }
-    }
+    }    
     .chart{            
-        margin: 25px;
+        margin: 2.5%;
         .fuse-card{
             transition: none !important;
             box-shadow: none !important;
@@ -268,5 +270,57 @@
             
         }
 
+    }
+    .courses {
+        //width: 100%;
+        max-width: 1540px;
+        margin: 1.5%;
+        max-height: 0%;
+        .no-courses {
+            font-size: 24px;
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .course {
+            padding: 10px;
+            .course-content {
+                background: white;
+                min-height: 160px;              
+                .content {
+                    padding: 12px;
+
+                    .h1 {
+                        font-size: 16px;
+                        text-align: center;
+                    }
+
+                    .updated {
+                        font-size: 14px;
+                        font-weight: 500;
+                        margin-top: 4px;
+                        color: rgba(0, 0, 0, 0.37);
+                    }
+                    .number{
+                        display:flex;
+                        align-items: center;
+                        
+                        .logo{
+                            font-size: 28px;                                      
+                        }
+                        .info{
+                            margin: 10px;
+                            
+                            .title{
+                                color: #b1b1b4;
+                            }                    
+                        }
+                    }
+                    .desc{
+                        color: #b1b1b4;        
+                    }
+                }
+            }
+        }
     }
 }

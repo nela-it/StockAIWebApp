@@ -105,8 +105,7 @@
         border-radius: 3px;
         height: 40px;
         width: 350px;
-        input{
-            font-weight: bold;
+        input{            
             margin-left: 18px;
             background-color: #F3F3F3;
             color:#A9A9A9;    
@@ -114,13 +113,11 @@
         }
         ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: #A9A9A9;
-            font-weight: bold;
             font-size: 14px;
             vertical-align: middle;
             opacity: 1; /* Firefox */
           }
         mat-icon{
-            font-weight: bold;
             margin: 10px 10px 0px 10px;
             font-size: 16px;
             padding-left: 12px;

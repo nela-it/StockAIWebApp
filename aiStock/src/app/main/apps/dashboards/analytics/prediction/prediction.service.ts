@@ -66,8 +66,7 @@ export class PredictionListService implements Resolve<any>
         return new Promise((resolve, reject) => {
             this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions)
                 .subscribe((response: any) => {
-                    this.predictions = response.data;
-                    console.log(this.predictions);
+                    this.predictions = response.data;                    
                     this.onPredictionsChanged.next(this.predictions);
                     resolve(response);
                 }, reject);

@@ -1,13 +1,9 @@
 const db = require("../models/index");
-const User = db.User;
 const Prediction_group = db.Prediction_group;
 const Stocks = db.Stocks;
 const realTimePrice = db.Real_time_price;
-const Portfolio = db.Portfolio;
-const Op = db.Op;
 const checkPortfolio = require("./portfolio.controller").checkPortfolio;
 const atob = require("atob");
-const _ = require("underscore");
 Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
 
 // Stocks.sync({ force: true });
@@ -19,7 +15,9 @@ exports.saveGroupData = data => {
     data.forEach(async (column, i) => {
       setTimeout(async () => {
         let isGroupExists = await Prediction_group.findAll({
-          where: { group_id: column.GroupId }
+          where: {
+            group_id: column.GroupId
+          }
         });
         if (isGroupExists.length === 0) {
           console.log("not found");
@@ -87,10 +85,11 @@ exports.getGroups = async (req, res, next) => {
 };
 
 exports.exploreGroups = async (req, res, next) => {
-  console.log("exploreGroups");
   try {
     let isStockFound = await Stocks.findAll({
-      where: { group_id: atob(req.body.group_id) },
+      where: {
+        group_id: atob(req.body.group_id)
+      },
       include: [Prediction_group]
     });
     if (isStockFound.length > 0) {
@@ -130,7 +129,6 @@ exports.exploreGroups = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log("error -----------", error);
     next(error);
   }
 };

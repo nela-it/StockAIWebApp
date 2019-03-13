@@ -138,6 +138,10 @@
         /* flex: 1 0 auto; */
         width: 100% !important;
         min-width: 100% !important;
+
+        @include media-breakpoint('xs') {
+            display: flex !important;
+        }
     }
 
     .page-layout {
@@ -228,6 +232,7 @@
                 vertical-align: middle;
             }
         }
+
 
         .submit-button {
             //height: 30px;            
@@ -431,7 +436,7 @@
         .right-subfilter {
             float: right;
             color: black;
-            display: flex;
+            // display: flex;
 
             button {
                 height: 56px;
@@ -442,20 +447,18 @@
 
             .active {
                 background-color: rgb(124, 97, 238);
-                ;
                 color: white;
             }
 
             mat-form-field {
                 float: right;
                 background-color: rgb(124, 97, 238);
-                ;
                 padding-right: 18px;
                 padding-left: 18px;
                 //font-weight: bold;
             }
 
-            margin-top:-65px;
+            margin-top:-56px;
 
             ::ng-deep .mat-form-field-underline {
                 display: none;

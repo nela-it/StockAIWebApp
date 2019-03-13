@@ -1,7 +1,6 @@
 const db = require("../models/index");
 const Product_info = db.Product_info;
 const Op = db.Op;
-// Product_info.sync({ force: true });
 
 exports.getProductInfo = async (req, res, next) => {
   try {

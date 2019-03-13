@@ -63,7 +63,6 @@ export class StockDetailService implements Resolve<any>{
 
   getStockInfo(id): Promise<any> {
     return new Promise((resolve, reject) => {
-      console.log(atob(id))
       this._httpClient.post(getStockInfo, { 'stockId': atob(id) }, this.httpOptions)
         .subscribe((response: any) => {
           this.stockInfo = response.data;
@@ -73,7 +72,6 @@ export class StockDetailService implements Resolve<any>{
   }
   getAlgorithm(id): Promise<any> {
     return new Promise((resolve, reject) => {
-      console.log(atob(id))
       this._httpClient.post(getAlgorithm, { 'groupId': atob(id) }, this.httpOptions)
         .subscribe((response: any) => {
           this.algorithmInfo = response.data;

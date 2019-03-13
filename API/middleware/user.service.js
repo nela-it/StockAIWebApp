@@ -82,7 +82,6 @@ exports.login = (params, next, cb) => {
   })
     .then(user => {
       if (user) {
-        // let password = cryptr.decrypt(params.password);
         let password = atob(params.password);
         if (
           user.password !== null &&
@@ -153,8 +152,6 @@ exports.register = (params, next, cb) => {
           cb(null, data);
         }
       } else {
-        // User.sync({ force: true }).then(() => {
-        // let decrypt = cryptr.decrypt(params.password);
         let decrypt = atob(params.password);
         let password = bcryptService.generateHash(decrypt);
         User.create({
@@ -190,16 +187,8 @@ exports.register = (params, next, cb) => {
             }
           })
           .catch(e => {
-            // return Promise.reject(
-            //   new APIError(
-            //     "Something Went Wrong",
-            //     httpStatus.BAD_REQUEST,
-            //     true
-            //   )
-            // );
             next(e);
           });
-        // });
       }
     })
     .catch(e => {

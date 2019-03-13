@@ -4,11 +4,8 @@ const bcryptService = require("../middleware/bcryptService");
 const userService = require("../middleware/user.service");
 const mailService = require("../middleware/mailService");
 const forgotPasswordTemplate = require("../middleware/templates");
-const APIError = require("../helpers/APIError");
-const httpStatus = require("http-status");
 const User = db.User;
 const Payment = db.Payment;
-const Op = db.Op;
 const atob = require("atob");
 const btoa = require("btoa");
 // User.sync({ force: true });
@@ -100,7 +97,9 @@ exports.login = (req, res, next) => {
 exports.forgotPassword = async (req, res, next) => {
   try {
     let isUser = await User.findOne({
-      where: { email: req.body.email }
+      where: {
+        email: req.body.email
+      }
     });
     if (isUser) {
       let template = forgotPasswordTemplate(
@@ -114,7 +113,9 @@ exports.forgotPassword = async (req, res, next) => {
       };
       mailService.sendMail(mailOptions, (err, data) => {
         if (err) next(err);
-        isUser.update({ forgotPassword: "true" });
+        isUser.update({
+          forgotPassword: "true"
+        });
         res.status(200).json({
           message: "mail send successfully"
         });
@@ -131,7 +132,11 @@ exports.forgotPassword = async (req, res, next) => {
 
 exports.changePassword = async (req, res, next) => {
   try {
-    let isUser = await User.findOne({ where: { id: req.body.userId } });
+    let isUser = await User.findOne({
+      where: {
+        id: req.body.userId
+      }
+    });
     if (isUser) {
       if (isUser.dataValues.forgotPassword === "true") {
         let decrypt = atob(req.body.password);
@@ -144,10 +149,14 @@ exports.changePassword = async (req, res, next) => {
           message: "Password reset successfully"
         });
       } else {
-        return res.status(404).json({ message: "Password Is Already Changed" });
+        return res.status(404).json({
+          message: "Password Is Already Changed"
+        });
       }
     } else {
-      return res.status(404).json({ message: "User Not Found" });
+      return res.status(404).json({
+        message: "User Not Found"
+      });
     }
   } catch (error) {
     next(error);
@@ -156,10 +165,16 @@ exports.changePassword = async (req, res, next) => {
 
 exports.userInfo = async (req, res, next) => {
   try {
-    let isUser = await User.findOne({ where: { id: req.user.id } });
+    let isUser = await User.findOne({
+      where: {
+        id: req.user.id
+      }
+    });
     if (isUser) {
       let isPayment = await Payment.findOne({
-        where: { user_id: req.user.id }
+        where: {
+          user_id: req.user.id
+        }
       });
       if (isPayment) {
         return res.status(200).json({
@@ -185,7 +200,9 @@ exports.userInfo = async (req, res, next) => {
         });
       }
     } else {
-      return res.status(404).json({ message: "User Not Found" });
+      return res.status(404).json({
+        message: "User Not Found"
+      });
     }
   } catch (error) {
     next(error);
