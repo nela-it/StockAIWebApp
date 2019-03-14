@@ -108,17 +108,50 @@
                     font-size: 20px;
                 }
                 .stock-filter{
-
-                    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start{
-                            border-radius: 0px !important;
+                   /*  .mat-form-field {
+                       height: 10px;
+                    } */
+                    .mat-select{
+                        margin-top: 4px;
+    
                     }
+                    .mat-select-placeholder {
+                        color: black !important;
+                        font-size: 14px !important;
+                        margin-top:4px; 
+                        //display:none !important;
+                    }
+    
+                    .mat-form-field-appearance-outline .mat-form-field-outline{
+                        height: 44px;
+                        top: 1.25em !important;                        
+                    }
+                    .mat-select-trigger .mat-select-arrow-wrapper .mat-select-arrow {
+                        color:black !important;
+                        margin-top:8px !important; 
+                    }
+                    .mat-form-field-outline .mat-form-field-outline-start  {
+                        border-radius: 0px;
+                    }
+                    .mat-form-field-outline .mat-form-field-outline-end{
+                        border-radius: 0px;
+                    }
+                   /*  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start{
+                            border-radius: 0px !important;
+                    } */
+                    .mat-form-field-wrapper{
+                        @include media-breakpoint('xs') {
+                            padding-bottom: 0em;
+                        }
+                    }
+                     
                 }
             }
         }
-        .auto-width{
+       /*  .auto-width{
             padding-left: 40px;
             padding-right: 40px;
-        }
+        } */
         .product-card {
             text-align: center;
             //padding: 10px;
@@ -228,13 +261,25 @@
             border-bottom: 1px solid rgba(0, 0, 0, .12);
             overflow: auto;
             -webkit-overflow-scrolling: touch;
-    
+            .chart-cell{
+                display: block;
+                width: 155px;
+                height: 86px;
+            }
             mat-header-cell {
                 color: black;
+                background-color: #F3F7FA;
             }
-    
+            .mat-row {
+                height: 64px;            
+                border-bottom-width: 5px;
+                border-bottom-color: rgb(243, 247, 250);
+                overflow: hidden;
+            }
             .mat-header-row {
                 min-height: 64px;
+                border-bottom-width: 5px;
+                border-bottom-color: rgb(243, 247, 250);
             }
     
             .prediction {
@@ -304,40 +349,50 @@
             .active-icon {
                 border-radius: 50%;
             }
+            .iconWidth {
+                margin-left: 10px;
+                cursor: pointer;
+            }
+        
+        }
+    }
+    .product-info{
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-bottom: 40px;    
+        .footer {
+            transition: none !important;
+            box-shadow: none !important;
+            padding-top: 25px;
+            padding-left: 30px;
+            //font-family: 'CircularStd Book';
+            .note {
+                font-size: 24px;
+                font-weight: 400;
+                margin-bottom: 5px;
+            }
+    
+            // IE10 fix
+            .logo,
+            .small-note {
+                -ms-flex: 0 1 auto;
+            }
+    
+            .sub-note {
+                font-size: 16px;
+                font-weight: 400;
+                margin-bottom: 18px;
+            }
+    
+            .small-note {
+                font-size: 13px;
+                color: rgba(0, 0, 0, 0.54);
+                line-height: 18px;
+                margin-left: 50px;             
+            }
     
         }
     }
-    .footer {
-        transition: none !important;
-        box-shadow: none !important;
-        padding-top: 25px;
-        padding-left: 30px;
-        //font-family: 'CircularStd Book';
-        .note {
-            font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 5px;
-        }
-
-        // IE10 fix
-        .logo,
-        .small-note {
-            -ms-flex: 0 1 auto;
-        }
-
-        .sub-note {
-            font-size: 16px;
-            font-weight: 400;
-            margin-bottom: 18px;
-        }
-
-        .small-note {
-            font-size: 13px;
-            color: rgba(0, 0, 0, 0.54);
-            line-height: 18px;
-            margin-left: 50px;             
-        }
-
-    }
+    
 
 }

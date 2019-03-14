@@ -84,13 +84,9 @@
             
             .nav-bar {               
                 color: black;
-                background-color: white;
-               /*  .bg-color{
-                    background-color: #7C61EE;
-                } */
+                background-color: white;               
                 .code{
-                        margin-top: 18px;
-                    // display:inline;
+                    margin-top: 18px;                    
                     .left-text{
                         float:left;
                         margin-top: -20px;
@@ -105,8 +101,8 @@
                     }                  
                     .issuer {
                         float: left;                                                                        
-                        margin-top: 15px;
-                        margin-left: 15px;
+                        margin-top: 38px;
+                        //margin-left: 15px;
                         .logo {
                             //width: 60px;
                             padding: 0 8px;                           
@@ -129,8 +125,7 @@
                         }                                      
                     }
 
-                    .row {                        
-                       // margin-left: 100px;                        
+                    .row {                                                                       
                         display: flex;
                         flex-direction: row;
                         flex-wrap: wrap;                            
@@ -155,26 +150,16 @@
                     }                
                     
                 }                                
-
-/*                 .fontSize {
-                    font-size: 20px;
-                    color: white;
-                    text-align: center;
-                } */
-
                 .cardHeight {
                     height: 100px !important;
-                }
-
-              
-      
-                
+                }              
             }
             .notes-bar{
-                margin-left: 10px;                
+                margin-left: 10px; 
+                //margin-top:10px;               
                 background-color: #7C61EE;
                 color: white;
-                @include media-breakpoint-down(md) {
+                @include media-breakpoint-down(sm) {
                     margin-top:10px;   
                     margin-left: 0px; 
                 }  
@@ -223,7 +208,6 @@
                     color: white;
                 }
             }
-
         }
     }    
     .chart{            
@@ -233,6 +217,9 @@
             box-shadow: none !important;
             .text-color {
                 color: #b1b1b4;
+                @include media-breakpoint-down(sm) {
+                   padding-top: 10px;
+                 }
             }
             .value{
                 color: #6F7376;
@@ -269,6 +256,9 @@
             }
             
         }
+        @include media-breakpoint-down(sm) {
+            padding-top:24px;    
+        }   
 
     }
     .courses {

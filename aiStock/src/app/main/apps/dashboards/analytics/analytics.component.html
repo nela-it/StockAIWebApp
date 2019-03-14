@@ -94,7 +94,8 @@
         <!-- *ngIf="activeStock ==='portfolio'" -->
         <div class="portfolio" [hidden]="activeStock!=='portfolio'">
             <div class=" fuse-card auto-width">
-                <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="position-relative p-24" fxLayout="row" fxLayout.xs="column"
+                    fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">
                         <span class="h2">Summary</span>
                         <label style="color: #b1b1b4">
@@ -145,22 +146,10 @@
 
             </div>
             <div style="padding-top: 20px; padding-bottom: 20px;font-size:20px;"> Stocks from Prediction Groups
-                <!-- <div style="margin-top: -20px; float:right;">
-                    <mat-form-field appearance="outline">
-                        <mat-select placeholder="All stock groups ">
-                            <mat-option> abc </mat-option>
-                            <mat-option> abc </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div> -->
+
             </div>
 
             <div class="center">
-
-                <!-- HEADER -->
-
-                <!-- / HEADER -->
-
                 <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
                         <label for="search" class="mr-8">
                             <mat-icon class="secondary-text">search</mat-icon>
@@ -243,21 +232,12 @@
                             <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Value Graph
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
-                                <div class="h-96 w-100-p">
+                                <div class="chart-cell">
                                     <canvas baseChart [datasets]="widgets.widget3.datasets"
                                         [labels]="widgets.widget3.labels" [colors]="widgets.widget3.colors"
                                         [options]="widgets.widget3.options" [chartType]="widgets.widget3.chartType">
                                     </canvas>
                                 </div>
-                                <p class="text-truncate">
-
-                                    <!-- <button *ngIf="portfolio.addedToPortfolio == false " class="submit-button"
-                                            mat-stroked-button (click)="addToPortfolioSubmit(portfolio.id)">Add to
-                                            portfolio</button>
-                                        <button style="color: white;
-                                        background-color: #7F63F4;" *ngIf="portfolio.addedToPortfolio == true "
-                                            class="submit-button" mat-stroked-button disabled>Already Added</button> -->
-                                </p>
                             </mat-cell>
                         </ng-container>
 
@@ -278,7 +258,7 @@
                 <!-- / CONTENT CARD -->
             </div>
         </div>
-        <div class="auto-width" *ngIf="activeStock === 'product' ">
+        <div class="product-info" *ngIf="activeStock === 'product' ">
             <mat-card class="footer" *ngFor="let item of product; let i=index">
                 <div class="note">{{item.question}}</div>
                 <div class="sub-note">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

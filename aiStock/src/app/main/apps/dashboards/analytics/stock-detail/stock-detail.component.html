@@ -178,31 +178,6 @@
   <div style="margin-left:2.5%">
     <h2>Algorithm</h2>
   </div>
-  <!-- fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="25" -->
-  <!-- <div class="algorithm" fxLayout.xs="column" fxLayoutGap="1.5%" fxLayoutAlign="center">
-    <mat-card fxLayout="column" class="card-picture" *ngFor="let item of algorithmData; let i=index">
-      <div class="number">
-        <div class="logo">
-          <b [ngStyle]="{'color':algorithmData[i].stepColor}">
-            0{{algorithmData[i].step_no}}
-          </b>
-        </div>
-        <div class="info">
-          <div>Step {{algorithmData[i].stepChar}}</div>
-          <div class="title">Process</div>
-        </div>
-      </div>
-      <div class="content">{{algorithmData[i].step_details}}</div>
-      <div style="margin-top:10px;">This completes task {{algorithmData[i].stepChar | lowercase}}.</div>
-    </mat-card>
-
-    <mat-card class="card-picture">
-      <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
-
-      </mat-card-title>
-      <img mat-card-image>
-    </mat-card>
-  </div> -->
   <div class="courses" fxLayout="row wrap" fxLayoutAlign="start start">
     <div class="course" *ngFor="let course of algorithmData; let i=index" fxFlex="100" fxFlex.gt-xs="50"
       fxFlex.gt-sm="20">
@@ -234,11 +209,10 @@
     <div class="no-courses" *ngIf="algorithmData.length === 0">
       No courses found!
     </div>
-
   </div>
   <div class="chart">
     <div class="fuse-card auto-width">
-      <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="position-relative p-24" fxLayout.xs="column" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="column" fxLayoutAlign="start start">
           <span class="h2">Amazon Vs NASDAQ</span>
           <label style="color: #b1b1b4">
@@ -252,7 +226,7 @@
         <div class="text-color">Beta Value<div class="value">0.6825</div>
         </div>
 
-        <div fxLayout="row" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayoutAlign="start start">
           <!-- <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
             (click)="widget5SelectedDay = 'yesterday'" [ngClass]="{'grey-300-bg': widget5SelectedDay === 'yesterday'}">
             Yesterday
