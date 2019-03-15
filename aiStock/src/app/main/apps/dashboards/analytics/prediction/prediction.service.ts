@@ -24,12 +24,7 @@ export class PredictionListService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
     ) {
-        this.httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'authorization': localStorage.getItem('LoggedInUser')
-            })
-        };
+
         // Set the defaults
         this.onPredictionsChanged = new BehaviorSubject({});
     }
@@ -63,10 +58,16 @@ export class PredictionListService implements Resolve<any>
      */
 
     getPredictions(id): Promise<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         return new Promise((resolve, reject) => {
             this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions)
                 .subscribe((response: any) => {
-                    this.predictions = response.data;                    
+                    this.predictions = response.data;
                     this.onPredictionsChanged.next(this.predictions);
                     resolve(response);
                 }, reject);
@@ -75,6 +76,12 @@ export class PredictionListService implements Resolve<any>
 
 
     addToPortfolio(stockId): Observable<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         return this._httpClient.post(addPortfolio, stockId, this.httpOptions).pipe(
             tap((result) => {
                 console.log('user data', result);
@@ -85,6 +92,12 @@ export class PredictionListService implements Resolve<any>
     }
 
     toGetPredictions(id): Observable<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         return this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions);
     }
 }

@@ -72,6 +72,7 @@
        
         @include media-breakpoint-down('xs') {
             height: 64px;
+            min-width: 0px;
         }
     }
 

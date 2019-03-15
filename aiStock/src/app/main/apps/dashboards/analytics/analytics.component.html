@@ -15,18 +15,19 @@
         <!-- / APP TITLE -->
         <div fxLayout="row" style="padding-right:24px">
             <span>Home&nbsp;&nbsp;&nbsp;-</span>
-            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 10px;"
                 *ngIf="activeStock === 'prediction'"> Prediction Group</span>
-            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 10px;"
                 *ngIf="activeStock === 'portfolio'"> Portfolio </span>
-            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 15px;"
+            <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 10px;"
                 *ngIf="activeStock === 'product'"> Product Info</span>
         </div>
     </div>
     <!-- / HEADER -->
 
     <div class="main-widget">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" class="nav-header">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="start stretch"
+            class="nav-header">
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
                 fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
                 (click)="active_stock('prediction')">
@@ -94,19 +95,27 @@
         <!-- *ngIf="activeStock ==='portfolio'" -->
         <div class="portfolio" [hidden]="activeStock!=='portfolio'">
             <div class=" fuse-card auto-width">
-                <div class="position-relative p-24" fxLayout="row" fxLayout.xs="column"
-                    fxLayoutAlign="space-between center">
+                <span class="h2">Summary</span>
+                <div class="position-relative" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+
                     <div fxLayout="column" fxLayoutAlign="start start">
-                        <span class="h2">Summary</span>
-                        <label style="color: #b1b1b4">
-                            <mat-icon style="color: #8262fa">minimize</mat-icon> Portfolio
-                            <mat-icon style="color: #b1b1b4">minimize</mat-icon> Benchmark Portfolio
+
+                        <label style="color: #b1b1b4" fxLayout.xs="column">
+                            <div>
+                                <mat-icon style="color: #8262fa">minimize</mat-icon> Portfolio
+                            </div>
+                            <div>
+                                <mat-icon style="color: #b1b1b4">minimize</mat-icon> Benchmark Portfolio
+                            </div>
                         </label>
                     </div>
-                    <div class="text-color">No. of Stocks<div class="value">2000</div>
+                    <div fxLayout.xs="row">
+                        <div class="text-color">No. of Stocks<div class="value">2000</div>
+                        </div>
+                        <div class="text-color">% of Charge<div class="value">1.7%</div>
+                        </div>
                     </div>
-                    <div class="text-color">% of Charge<div class="value">1.7%</div>
-                    </div>
+
                     <div class="stock-filter">
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="All Stock Groups">
@@ -114,8 +123,8 @@
                                 <mat-option> abc </mat-option>
                             </mat-select>
                         </mat-form-field>
-                    </div>
-                    <div class="stock-filter">
+
+
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="Last 30 days ">
                                 <mat-option> abc </mat-option>

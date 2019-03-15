@@ -29,12 +29,7 @@ export class AnalyticsDashboardService implements Resolve<any>
         private _httpClient: HttpClient
     ) {
         //localStorage.getItem('LoggedInUser')
-        this.httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'authorization': localStorage.getItem('LoggedInUser')
-            })
-        };
+
         this.onPortfolioChanged = new BehaviorSubject({});
     }
 
@@ -66,6 +61,7 @@ export class AnalyticsDashboardService implements Resolve<any>
      * @returns {Promise<any>}
      */
     getWidgets(): Promise<any> {
+
         return new Promise((resolve, reject) => {
             this._httpClient.get('api/analytics-dashboard-widgets')
                 .subscribe((response: any) => {
@@ -76,6 +72,12 @@ export class AnalyticsDashboardService implements Resolve<any>
     }
     getPortfolio(): Promise<any> {
         // http://192.168.0.9:3001/api/portfolio/getPortfolio
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         return new Promise((resolve, reject) => {
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
@@ -101,10 +103,22 @@ export class AnalyticsDashboardService implements Resolve<any>
         });
     }
     public getGroupList(): Observable<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         return this._httpClient.get(predictionGroup, this.httpOptions);
     }
 
     public getProduct(): Observable<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         return this._httpClient.get(getProductDetails, this.httpOptions);
     }
 

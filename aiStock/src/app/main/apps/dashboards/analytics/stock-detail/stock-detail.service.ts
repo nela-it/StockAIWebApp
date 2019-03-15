@@ -13,12 +13,7 @@ export class StockDetailService implements Resolve<any>{
   algorithmInfo: any[];
   httpOptions;
   constructor(private _httpClient: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'authorization': localStorage.getItem('LoggedInUser')
-      })
-    };
+
   }
   /**
      * Resolver
@@ -62,6 +57,12 @@ export class StockDetailService implements Resolve<any>{
   } */
 
   getStockInfo(id): Promise<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'authorization': localStorage.getItem('LoggedInUser')
+      })
+    };
     return new Promise((resolve, reject) => {
       this._httpClient.post(getStockInfo, { 'stockId': atob(id) }, this.httpOptions)
         .subscribe((response: any) => {
@@ -71,6 +72,12 @@ export class StockDetailService implements Resolve<any>{
     });
   }
   getAlgorithm(id): Promise<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'authorization': localStorage.getItem('LoggedInUser')
+      })
+    };
     return new Promise((resolve, reject) => {
       this._httpClient.post(getAlgorithm, { 'groupId': atob(id) }, this.httpOptions)
         .subscribe((response: any) => {

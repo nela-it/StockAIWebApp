@@ -29,7 +29,8 @@
         .header {
             background-color: rgb(232, 231, 249);
             color: rgb(124, 97, 238);
-            .breadcrumb{
+
+            .breadcrumb {
                 color: #b1b1b4;
             }
         }
@@ -144,6 +145,8 @@
         @include media-breakpoint('xs') {
             display: flex !important;
         }
+
+
     }
 
     .page-layout {
@@ -170,15 +173,25 @@
         overflow: auto;
         -webkit-overflow-scrolling: touch;
 
-
         mat-header-cell {
             color: rgb(74, 76, 88);
             background-color: rgb(243, 247, 250);
+
+            @include media-breakpoint('xs') {
+                margin-left: 20px;
+            }
+
+            @include media-breakpoint('sm') {
+                margin-left: 20px;
+            }
         }
+
 
         .mat-header-row {
             min-height: 64px;
             border-style: none;
+            color: rgb(74, 76, 88);
+            background-color: rgb(243, 247, 250);
         }
 
         .prediction {
@@ -201,6 +214,14 @@
             min-width: 0;
             display: flex;
             align-items: center;
+
+            @include media-breakpoint('xs') {
+                margin-left: 20px;
+            }
+
+            @include media-breakpoint('sm') {
+                margin-left: 20px;
+            }
         }
 
         .mat-column-id {
@@ -242,9 +263,9 @@
             background-color: white;
             color: #7F63F4;
 
-            @include media-breakpoint('xs') {
+            /*   @include media-breakpoint('xs') {
                 width: 90%;
-            }
+            } */
         }
 
         .submit-button:hover {
@@ -361,6 +382,149 @@
             }
         }
 
+    }
+
+    .filter-bar-tab {
+        margin-top: 10px;
+        color: white;
+
+        mat-form-field {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        ::ng-deep .mat-form-field-underline {
+            display: none;
+        }
+
+
+        .filters-left {
+
+
+            mat-form-field {
+                height: 56px;
+            }
+
+            ::ng-deep .mat-select-placeholder {
+                color: black !important;
+                font-size: 14px !important;
+            }
+
+            ::ng-deep .mat-form-field-label-wrapper .mat-form-field-label {
+                display: none !important;
+                color: black !important;
+                font-size: 14px !important;
+            }
+
+            ::ng-deep .mat-select-trigger {
+                font-size: 14px !important;
+
+                .mat-select-value {
+                    color: black !important;
+                    font-size: 14px !important;
+
+                    .mat-select-value-text {
+                        font-size: 14px !important;
+                    }
+                }
+            }
+
+
+        }
+
+        .filters-right {
+            @include media-breakpoint-down(xs) {
+                margin-top: 10px;
+
+            }
+
+            button {
+                height: 56px;
+                border-radius: 0%;
+                background-color: white;
+                color: black;
+            }
+
+            mat-form-field {
+                height: 56px;
+                background-color: rgb(124, 97, 238);
+                color: white;
+            }
+
+            .active {
+                background-color: rgb(124, 97, 238);
+                color: white;
+            }
+
+            ::ng-deep .mat-select-placeholder {
+                color: white !important;
+                font-size: 14px !important;
+            }
+
+            ::ng-deep .mat-form-field-label-wrapper .mat-form-field-label {
+                display: none !important;
+                color: white !important;
+                font-size: 14px !important;
+            }
+
+            ::ng-deep .mat-select-trigger .mat-select-arrow-wrapper .mat-select-arrow {
+                color: white !important;
+                font-size: 14px !important;
+
+            }
+
+            ::ng-deep .mat-select-trigger {
+                font-size: 14px !important;
+
+                .mat-select-value {
+                    color: white !important;
+                    font-size: 14px !important;
+
+                    .mat-select-value-text {
+                        font-size: 14px !important;
+                    }
+                }
+            }
+
+
+
+
+        }
+
+        .active {
+            background-color: rgb(124, 97, 238);
+
+            ::ng-deep .mat-select-trigger .mat-select-arrow-wrapper .mat-select-arrow {
+                color: white !important;
+            }
+
+            ::ng-deep .mat-form-field-label-wrapper .mat-form-field-label {
+                display: none !important;
+                color: white !important;
+                font-size: 14px !important;
+            }
+
+            ::ng-deep .mat-form-field-label-wrapper .mat-form-field-label {
+                display: none !important;
+                color: black !important;
+                font-size: 14px !important;
+            }
+
+
+            ::ng-deep .mat-select-placeholder {
+                color: white !important;
+                font-size: 14px !important;
+                //display:none !important;
+            }
+
+            ::ng-deep .mat-select-trigger {
+                font-size: 14px !important;
+
+                .mat-select-value {
+                    color: white !important;
+                }
+            }
+        }
     }
 
     .subfilter-bar {

@@ -24,12 +24,7 @@ export class ProfileService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient
     ) {
-        this.httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'authorization': localStorage.getItem('LoggedInUser')
-            })
-        };
+
         // Set the defaults
         this.timelineOnChanged = new BehaviorSubject({});
         this.aboutOnChanged = new BehaviorSubject({});
@@ -105,6 +100,12 @@ export class ProfileService implements Resolve<any>
     }
 
     public getUserInfo(): Observable<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
         return this._httpClient.get(getUserInfo, this.httpOptions);
     }
 }
