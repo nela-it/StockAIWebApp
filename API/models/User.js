@@ -7,80 +7,6 @@ const db = require("../models/index");
 const Audit = db.Audit;
 
 module.exports = (sequelize, DataTypes) => {
-<<<<<<< HEAD
-  const userSchema = sequelize.define(
-    "user", {
-      id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      firstname: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      lastname: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      gender: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      contact_no: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      address: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      social_provider: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      provider_id: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      user_role: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      isActive: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      forgotPassword: {
-        type: DataTypes.ENUM("true", "false"),
-        defaultValue: "false"
-      },
-      createdAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      }
-    }, {}
-  );
-=======
   const userSchema = sequelize.define("user", {
     id: {
       type: DataTypes.BIGINT,
@@ -141,7 +67,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "false"
     }
   });
->>>>>>> dev_backend
 
   return userSchema;
 };
