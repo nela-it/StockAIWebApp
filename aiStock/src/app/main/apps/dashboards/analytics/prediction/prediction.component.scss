@@ -222,6 +222,7 @@
             @include media-breakpoint('sm') {
                 margin-left: 20px;
             }
+
         }
 
         .mat-column-id {
@@ -279,6 +280,12 @@
 
     }
 
+    .text-truncate {
+        @include media-breakpoint('sm') {
+            overflow: initial;
+        }
+    }
+
     .iconWidth {
         margin-left: 10px;
         cursor: pointer;
@@ -286,7 +293,7 @@
 
     //filter css 
     .filter-bar {
-        // height: 30px;
+        height: 56px;
         color: white;
         background-color: rgb(124, 97, 238);
 

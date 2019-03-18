@@ -48,7 +48,7 @@ fs.readdirSync(__dirname)
 
 // trigger's Declaration
 // sequelize.query(
-// 'CREATE TRIGGER `afterInsertUser` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO audits VALUES(null, "users", NEW.id, "INSERT", "New User Created", NOW(),NOW(),NOW())'
+//   'CREATE TRIGGER `afterInsertUser` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO audits VALUES(null, "users", NEW.id, "INSERT", "New User Created", NOW(),NOW(),NOW())'
 // );
 // sequelize.query(
 //   'CREATE TRIGGER `afterUpdateUser` AFTER UPDATE ON `users` FOR EACH ROW INSERT INTO audits VALUES(null, "users", NEW.id, "UPDATE", "Updated User Details", NOW(),NOW(),NOW())'

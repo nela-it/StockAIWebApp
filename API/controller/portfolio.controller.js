@@ -55,13 +55,18 @@ exports.getPortfolio = async (req, res, next) => {
   });
   try {
     let isRecords = await Portfolio.findAll({
-      where: {
-        user_id: req.user.id
-      },
-      include: [{
-        model: realTimePrice,
-        include: {
-          model: Stocks
+      where: { user_id: req.user.id },
+      include: [
+        {
+          model: realTimePrice,
+          include: [
+            {
+              model: Stocks,
+              include: {
+                model: Prediction_group
+              }
+            }
+          ]
         }
       }]
     });
@@ -77,6 +82,7 @@ exports.getPortfolio = async (req, res, next) => {
       });
     }
   } catch (error) {
+    console.log("error-----------" + error);
     next(error);
   }
 };

@@ -26,8 +26,8 @@
     <!-- / HEADER -->
 
     <div class="main-widget">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="start stretch"
-            class="nav-header">
+        <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign="start center"
+            fxLayoutAlign.xs="start stretch" fxLayoutAlign.sm="start stretch" class="nav-header">
             <div class="nav-bar" fxFlex="0 1 calc(25% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
                 fxLayoutAlign="start center" [ngClass]="{active: activeStock == 'prediction'}"
                 (click)="active_stock('prediction')">
@@ -95,10 +95,11 @@
         <!-- *ngIf="activeStock ==='portfolio'" -->
         <div class="portfolio" [hidden]="activeStock!=='portfolio'">
             <div class=" fuse-card auto-width">
-                <span class="h2">Summary</span>
-                <div class="position-relative" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+                <span class="h2" fxLayout.xs="row">Summary</span>
+                <div class="position-relative" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="none"
+                    fxLayoutAlign="space-between center">
 
-                    <div fxLayout="column" fxLayoutAlign="start start">
+                    <div fxLayout="column" fxLayoutAlign.lg="center">
 
                         <label style="color: #b1b1b4" fxLayout.xs="column">
                             <div>
@@ -109,14 +110,14 @@
                             </div>
                         </label>
                     </div>
-                    <div fxLayout.xs="row">
+                    <div class="text-data" fxLayout.xs="row" fxLayoutAlign.lg="center">
                         <div class="text-color">No. of Stocks<div class="value">2000</div>
                         </div>
                         <div class="text-color">% of Charge<div class="value">1.7%</div>
                         </div>
                     </div>
 
-                    <div class="stock-filter">
+                    <div class="stock-filter" fxLayout.xs="column" fxLayoutAlign.lg="center">
                         <mat-form-field appearance="outline">
                             <mat-select placeholder="All Stock Groups">
                                 <mat-option> abc </mat-option>
@@ -154,10 +155,20 @@
                 </div>
 
             </div>
-            <div style="padding-top: 20px; padding-bottom: 20px;font-size:20px;"> Stocks from Prediction Groups
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between">
+                <div style="padding-top: 30px; padding-bottom: 20px;font-size:20px;">
+                    Stocks from Prediction Groups
+                </div>
+                <div class="stock-filter">
+                    <mat-form-field appearance="outline">
+                        <mat-select placeholder="All Stock Groups">
+                            <mat-option> abc </mat-option>
+                            <mat-option> abc </mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
+                </div>
             </div>
-
             <div class="center">
                 <!-- <div class="search-input-wrapper ml-sm-16" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
                         <label for="search" class="mr-8">

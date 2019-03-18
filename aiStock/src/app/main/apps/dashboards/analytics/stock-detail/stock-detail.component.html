@@ -30,11 +30,13 @@
 
       <mat-card class="nav-bar" fxLayoutWrap fxFlex="70%" fxLayoutAlign="start">
         <div class="code">
-          <div class="left-text">
-            NASDAQ: {{ticker}}
-          </div>
-          <div class="right-text">
-            New York, United States
+          <div fxLayout="row" fxLayoutAlign="space-between">
+            <div class="left-text">
+              NASDAQ: {{ticker}}
+            </div>
+            <div class="right-text">
+              New York, United States
+            </div>
           </div>
           <div class="issuer" fxLayout="row" fxLayoutAlign="start center">
             <div class="logo">
@@ -166,8 +168,8 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a diam nec
             augue tincidunt accumsan. In dignissim laoreet ipsum.
           </div>
-          <div fxLayout.sm="row" fxLayoutAlign="center center">
-            <label><b>$2042.71</b></label>
+          <div class="box-shadow" fxLayout.sm="row" fxLayoutAlign="center center">
+            <label><b>{{currentPrice | currency:'USD':'symbol'}}</b></label>
             <button class="add-button" mat-flat-button>Add to portfolio</button>
           </div>
         </div>

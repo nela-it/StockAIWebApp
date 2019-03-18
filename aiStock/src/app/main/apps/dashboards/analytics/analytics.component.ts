@@ -72,6 +72,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.predictionGroupData = res.data;
+            console.log(this.predictionGroupData)
         }, error => {
             console.log(error);
             this.errMsg = error.message;

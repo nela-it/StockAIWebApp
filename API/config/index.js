@@ -33,6 +33,8 @@ const config = {
   jwtSecret: envVars.JWT_SECRET,
   jwtExpiresIn: envVars.JWT_EXPIRES_IN,
   db: dbConfig[envVars.NODE_ENV],
+  client_id: envVars.CLIENT_ID,
+  client_secret: envVars.CLIENT_SECRET,
   storeImage: "https://localhost:3001/api/",
   frontImage: "https://stockzai.com/"
 };

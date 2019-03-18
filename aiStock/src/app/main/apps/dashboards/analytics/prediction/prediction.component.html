@@ -80,17 +80,17 @@
             <div class="widget filter" fxFlex-sm="25">
                 <mat-form-field fxLayout="row" fxLayout.xs="column" floatLabel="never">
                     <mat-select placeholder="Market Cap">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
+                        <mat-option *ngFor="let cap of marketcaps" [value]="cap.value">
+                            {{cap.viewValue}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="widget filter" fxFlex-sm="25">
                 <mat-form-field fxLayout="row" fxLayout.xs="column" floatLabel="never">
-                    <mat-select placeholder="Share Volume">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
+                    <mat-select placeholder="Sector">
+                        <mat-option *ngFor="let sector of sectors" [value]="sector.value">
+                            {{sector.viewValue}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -98,13 +98,13 @@
             <div class="widget filter" fxFlex-sm="25">
                 <mat-form-field fxLayout="row" fxLayout.xs="column" floatLabel="never">
                     <mat-select placeholder="Trending">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
+                        <mat-option *ngFor="let trend of trending" [value]="trend.value">
+                            {{trend.viewValue}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="widget filter" fxFlex.sm="25">
+            <!-- <div class="widget filter" fxFlex.sm="25">
                 <mat-form-field fxLayout="row" fxLayout.xs="column" floatLabel="never">
                     <mat-select placeholder="Tools">
                         <mat-option *ngFor="let food of foods" [value]="food.value">
@@ -112,7 +112,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> -->
             <div class="widget search-bar" fxFlex.sm="25">
                 <mat-form-field floatLabel="never">
                     <input id="search" matInput #filter placeholder="Search">
@@ -130,7 +130,7 @@
                     <mat-form-field (click)="active_filter('all')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'all' }"
                         floatLabel="never">
                         <mat-select placeholder="All">
-                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                            <mat-option *ngFor="let food of marketcaps" [value]="food.value">
                                 {{food.viewValue}}
                             </mat-option>
                         </mat-select>
@@ -138,7 +138,7 @@
                     <mat-form-field (click)="active_filter('country')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'country' }"
                         floatLabel="never">
                         <mat-select placeholder="Country">
-                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                            <mat-option *ngFor="let food of sectors" [value]="food.value">
                                 {{food.viewValue}}
                             </mat-option>
                         </mat-select>
@@ -146,7 +146,7 @@
                     <mat-form-field (click)="active_filter('exchange')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'exchange' }"
                         floatLabel="never">
                         <mat-select placeholder="Exchange">
-                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                            <mat-option *ngFor="let food of trending" [value]="food.value">
                                 {{food.viewValue}}
                             </mat-option>
                         </mat-select>
@@ -210,9 +210,9 @@
 
                 <!-- Total Price Column -->
                 <ng-container matColumnDef="currentPrice">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Current Price
+                    <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Current Price
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let prediction">
+                    <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <p class="total-price text-truncate">
                             {{prediction.suggested_date_price | currency:'USD':'symbol'}}
                         </p>
@@ -245,7 +245,7 @@
                 <ng-container matColumnDef="action">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
                     <mat-cell *matCellDef="let prediction">
-                        <p class="text-truncate">
+                        <p class="">
                             <button *ngIf="prediction.addedToPortfolio === false" class="submit-button"
                                 mat-stroked-button (click)="addToPortfolioSubmit(prediction.id)">Add to
                                 portfolio</button>

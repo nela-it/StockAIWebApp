@@ -17,10 +17,19 @@ import {
     MatSnackBarVerticalPosition,
 } from '@angular/material';
 
-export interface Food {
+export interface marketCap {
     value: string;
     viewValue: string;
 }
+export interface sector {
+    value: string;
+    viewValue: string;
+}
+export interface trending {
+    value: string;
+    viewValue: string;
+}
+
 @Component({
     selector: 'prediction-list',
     templateUrl: './prediction.component.html',
@@ -36,10 +45,20 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     stockName: string;
     activeFilterTab = 'all';
     paginateTab = "next";
-    foods: Food[] = [
-        { value: 'steak-0', viewValue: 'Steak' },
-        { value: 'pizza-1', viewValue: 'Pizza' },
-        { value: 'tacos-2', viewValue: 'Tacos' }
+    marketcaps: marketCap[] = [
+        { value: 'large-cap', viewValue: 'Large Cap' },
+        { value: 'mid-cap', viewValue: 'Mid Cap' },
+        { value: 'small-cap', viewValue: 'Small Cap' }
+    ];
+    sectors: sector[] = [
+        { value: 'health-care', viewValue: 'Health Care' },
+        { value: 'tech', viewValue: 'Tech' },
+        { value: 'retail', viewValue: 'Retail' },
+        { value: 'banking&finance', viewValue: 'Banking & Finance' }
+    ];
+    trending: sector[] = [
+        { value: 'up', viewValue: 'Up' },
+        { value: 'down', viewValue: 'Dwon' }
     ];
     @ViewChild(MatPaginator)
     paginator: MatPaginator;

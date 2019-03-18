@@ -88,16 +88,15 @@
                 .code{
                     margin-top: 18px;                    
                     .left-text{
+                        font-size: 18px;
                         float:left;
                         margin-top: -20px;
                     }      
                     .right-text{
                         float:right;
+                        font-size: 16px;
                         margin-top: -20px;
-                        @include media-breakpoint-down(xs) {
-                            float: none;
-                            margin-top: 0px;
-                         }
+                        color: #686C78;                       
                     }                  
                     .issuer {
                         float: left;                                                                        
@@ -162,7 +161,12 @@
                 @include media-breakpoint-down(sm) {
                     margin-top:10px;   
                     margin-left: 0px; 
-                }  
+                } 
+                .box-shadow{
+                    border-radius: 10px;
+                    background-color: rgb(124, 97, 238);
+                    box-shadow: inset 0px 0px 20px 0px rgba(0, 0, 0, 0.3);                   
+                } 
                 .add-button{                   
                     display: inline-block;
                     vertical-align: middle;

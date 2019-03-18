@@ -82,6 +82,7 @@ export class AnalyticsDashboardService implements Resolve<any>
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
                     this.column = response.data;
+                    console.log(this.column)
                     this.realTimeData = [];
                     for (var i = 0; i < this.column.length; i++) {
                         this.realTimeData.push(this.column[i]['real_time_price']);
@@ -94,6 +95,7 @@ export class AnalyticsDashboardService implements Resolve<any>
                         }
                     }
                     this.onPortfolioChanged.next(this.portfolio);
+                    console.log(this.portfolio)
                     resolve(response);
                 }, err => {
                     resolve([])
