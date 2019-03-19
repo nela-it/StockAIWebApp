@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const User = db.User;
+const Payment = db.Payment;
 const Op = db.Op;
 const jwt = require("jsonwebtoken");
 const config = require("../config");
@@ -194,4 +195,21 @@ exports.register = (params, next, cb) => {
     .catch(e => {
       next(e);
     });
+};
+
+exports.isSubscribed = async (params, next, cb) => {
+  try {
+    let isPayment = await Payment.findOne({
+      where: {
+        user_id: params.user.id
+      }
+    });
+    if (isPayment) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  } catch (e) {
+    next(e);
+  }
 };

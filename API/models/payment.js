@@ -4,40 +4,40 @@
 
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const payment_Schema = sequelize.define(
-    "payment",
-    {
-      payment_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      user_id: {
-        type: DataTypes.BIGINT,
-        foreignKey: true,
-        allowNull: false
-      },
-      transaction_id: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      subscription_plan: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      subscription_amount: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      timestamp: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        default: DataTypes.DATE
-      }
+  const payment_Schema = sequelize.define("payment", {
+    id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {}
-  );
+    user_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+      allowNull: false
+    },
+    transaction_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    subscription_plan: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    subscription_amount: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    subscription_details: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    timestamp: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      default: DataTypes.DATE
+    }
+  });
 
   return payment_Schema;
 };

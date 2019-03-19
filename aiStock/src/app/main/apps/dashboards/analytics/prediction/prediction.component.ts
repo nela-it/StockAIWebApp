@@ -29,6 +29,10 @@ export interface trending {
     value: string;
     viewValue: string;
 }
+export interface food {
+    value: string;
+    viewValue: string;
+}
 
 @Component({
     selector: 'prediction-list',
@@ -45,6 +49,11 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     stockName: string;
     activeFilterTab = 'all';
     paginateTab = "next";
+    foods: food[] = [
+        { value: 'steak-0', viewValue: 'Steak' },
+        { value: 'pizza-1', viewValue: 'Pizza' },
+        { value: 'tacos-2', viewValue: 'Tacos' }
+    ];
     marketcaps: marketCap[] = [
         { value: 'large-cap', viewValue: 'Large Cap' },
         { value: 'mid-cap', viewValue: 'Mid Cap' },

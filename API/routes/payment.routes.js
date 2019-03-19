@@ -13,10 +13,7 @@ const paramsValidation = {
   }
 };
 
-router.route("/payment").get(
-  // validate(paramsValidation.getStockInfo),
-  // checkAuth,
-  paymentController.payment
-);
+router.route("/payment").get(checkAuth, paymentController.payment);
+router.route("/successPayment").get(paymentController.successPayment);
 
 module.exports = router;

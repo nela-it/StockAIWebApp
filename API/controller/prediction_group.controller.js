@@ -2,6 +2,7 @@ const db = require("../models/index");
 const Prediction_group = db.Prediction_group;
 const Stocks = db.Stocks;
 const realTimePrice = db.Real_time_price;
+const userService = require("../middleware/user.service");
 const checkPortfolio = require("./portfolio.controller").checkPortfolio;
 const atob = require("atob");
 Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
@@ -86,48 +87,58 @@ exports.getGroups = async (req, res, next) => {
 
 exports.exploreGroups = async (req, res, next) => {
   try {
-    let isStockFound = await Stocks.findAll({
-      where: {
-        group_id: atob(req.body.group_id)
-      },
-      include: [Prediction_group]
-    });
-    if (isStockFound.length > 0) {
-      checkPortfolio(req, async (err, getPortfolio) => {
-        if (getPortfolio.length > 0) {
-          isStockFound.forEach(async stock => {
-            getPortfolio.forEach(async portfolio => {
-              if (
-                stock.dataValues.id ===
-                portfolio.dataValues.real_time_price.dataValues.stock_id
-              ) {
-                stock.dataValues.addedToPortfolio = true;
-              } else {
-                if (stock.dataValues.addedToPortfolio !== true) {
-                  stock.dataValues.addedToPortfolio = false;
+    userService.isSubscribed(req, next, async (err, isSubscribed) => {
+      let isStockFound;
+      if (isSubscribed) {
+        isStockFound = await Stocks.findAll({
+          where: { group_id: atob(req.body.group_id) },
+          include: [Prediction_group]
+        });
+      } else {
+        isStockFound = await Stocks.findAll({
+          where: { group_id: atob(req.body.group_id) },
+          include: [Prediction_group],
+          limit: 2
+        });
+      }
+
+      if (isStockFound.length > 0) {
+        checkPortfolio(req, async (err, getPortfolio) => {
+          if (getPortfolio.length > 0) {
+            isStockFound.forEach(async stock => {
+              getPortfolio.forEach(async portfolio => {
+                if (
+                  stock.dataValues.id ===
+                  portfolio.dataValues.real_time_price.dataValues.stock_id
+                ) {
+                  stock.dataValues.addedToPortfolio = true;
+                } else {
+                  if (stock.dataValues.addedToPortfolio !== true) {
+                    stock.dataValues.addedToPortfolio = false;
+                  }
                 }
-              }
+              });
             });
-          });
-          return await res.status(200).json({
-            message: "Stocks Found",
-            data: isStockFound
-          });
-        } else {
-          isStockFound.forEach(async (stock, i) => {
-            stock.dataValues.addedToPortfolio = false;
-          });
-          return await res.status(200).json({
-            message: "Stocks Found",
-            data: isStockFound
-          });
-        }
-      });
-    } else {
-      return await res.status(404).json({
-        message: "Stocks Not Found"
-      });
-    }
+            return await res.status(200).json({
+              message: "Stocks Found",
+              data: isStockFound
+            });
+          } else {
+            isStockFound.forEach(async (stock, i) => {
+              stock.dataValues.addedToPortfolio = false;
+            });
+            return await res.status(200).json({
+              message: "Stocks Found",
+              data: isStockFound
+            });
+          }
+        });
+      } else {
+        return await res.status(404).json({
+          message: "Stocks Not Found"
+        });
+      }
+    });
   } catch (error) {
     next(error);
   }
