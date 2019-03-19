@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { predictionGroup, getProductDetails, getPortfolio } from 'appConfig/appconfig';
+import { predictionGroup, getProductDetails, getPortfolio, getSub } from 'appConfig/appconfig';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 
@@ -123,5 +123,13 @@ export class AnalyticsDashboardService implements Resolve<any>
         };
         return this._httpClient.get(getProductDetails, this.httpOptions);
     }
-
+    public getSubPlan(): Observable<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
+        return this._httpClient.get(getSub, this.httpOptions);
+    }
 }

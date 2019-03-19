@@ -177,6 +177,18 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this._predictionListService.groupName = data.group_name;
         this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id), data.group_name]);
     }
+
+    subscription() {
+        //this._analyticsDashboardService.getSubPlan();
+        this._analyticsDashboardService.getSubPlan().subscribe(res => {
+
+            console.log(res)
+        }, error => {
+            console.log(error);
+            this.errMsg = error.message;
+        });
+
+    }
     /**
  * On destroy
  */

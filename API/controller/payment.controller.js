@@ -47,6 +47,7 @@ exports.payment = async (req, res, next) => {
   try {
     paypal.payment.create(create_payment_json, function(error, payment) {
       if (error) {
+        console.log("error -----> ", error);
         next(error);
       } else {
         payment.links.forEach(link => {
@@ -55,6 +56,7 @@ exports.payment = async (req, res, next) => {
       }
     });
   } catch (e) {
+    console.log("error ----- ", e);
     next(e);
   }
 };

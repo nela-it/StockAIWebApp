@@ -21,3 +21,5 @@ export const getStockInfo: string = serverUrl + 'stocks/getStockInfo';
 export const getAlgorithm: string = serverUrl + 'algorithm/getAlgorithm';
 //User info 
 export const getUserInfo: string = serverUrl + 'user/userInfo';
+
+export const getSub: string = serverUrl + 'payment/payment';
