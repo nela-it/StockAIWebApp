@@ -176,10 +176,13 @@
                     //height: 30px;
                     margin-left:60px; 
                     @include media-breakpoint-down(md) {
-                        margin-left:0px;    
+                        margin-left:10px;    
                     }  
                     @include media-breakpoint-down(sm) {
-                        margin-left:0px;    
+                        margin-left:40px;    
+                    }    
+                    @include media-breakpoint-down(xs) {
+                        margin-left:20px;    
                     }    
                 }
                 .fontSize {
@@ -261,7 +264,7 @@
             
         }
         @include media-breakpoint-down(sm) {
-            padding-top:150px;    
+            padding-top:24px;    
         }  
         @include media-breakpoint-down(xs) {
             padding-top:24px;    

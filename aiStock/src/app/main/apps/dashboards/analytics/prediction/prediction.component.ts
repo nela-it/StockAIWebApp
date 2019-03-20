@@ -133,8 +133,9 @@ export class PredictionListComponent implements OnInit, OnDestroy {
     activeStock(tab) {
         this.activeStockTab = tab;
     }
-    openStockDetail(stockid) {
-        this.router.navigate(['/apps/dashboards/analytics/stockDetail', btoa(stockid), this.groupId, this.stockName]);
+    openStockDetail(stockid, addtoportfolioFlag) {
+        console.log(addtoportfolioFlag)
+        this.router.navigate(['/apps/dashboards/analytics/stockDetail', btoa(stockid), this.groupId, this.stockName, addtoportfolioFlag]);
     }
     addToPortfolioSubmit(stockId: string) {
         if (stockId) {

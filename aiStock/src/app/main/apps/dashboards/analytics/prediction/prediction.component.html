@@ -12,7 +12,8 @@
         <div fxLayout="row" fxLayoutAlign="start center">
             <div class="logo" fxLayout="row" fxLayoutAlign="start center">
                 <span class="logo-text h3" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    <a [routerLink]="'/apps/dashboards/analytics'" style="text-decoration: none;color:#b1b1b4;vertical-align:middle;">
+                    <a [routerLink]="'/apps/dashboards/analytics'"
+                        style="text-decoration: none;color:#b1b1b4;vertical-align:middle;">
                         <mat-icon style="vertical-align:middle;">keyboard_backspace</mat-icon>Back
                     </a>
                     <p style="margin: 30px; vertical-align:middle; display: inline;">{{stockName}} Stocks</p>
@@ -37,8 +38,8 @@
     <div class="main-widget">
         <div fxLayout="row" fxLayout.xs="column" class="nav-header">
             <div class="nav-bar" fxFlex="0 1 calc(30% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
-                fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'listStocks'}" (click)="activeStock('listStocks')"
-                style="height:120px;">
+                fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'listStocks'}"
+                (click)="activeStock('listStocks')" style="height:120px;">
                 <div class="logo">
                     <span>
                         <mat-icon>sort</mat-icon>
@@ -51,8 +52,8 @@
                 </div>
             </div>
             <div class="nav-bar" fxFlex="0 1 calc(30% - 0.5%)" fxFlex.lt-md="0 1 calc(50% - 0.5%)" fxFlex.lt-sm="100%"
-                fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'criteria'}" (click)="activeStock('criteria')"
-                style="height:120px;">
+                fxLayoutAlign="start center" [ngClass]="{active: activeStockTab == 'criteria'}"
+                (click)="activeStock('criteria')" style="height:120px;">
                 <div class="logo">
                     <span>
                         <mat-icon>view_comfy</mat-icon>
@@ -75,7 +76,8 @@
                 <input id="search" matInput #filter placeholder="Search">
             </mat-form-field>
         </div> -->
-        <div class="filter-bar" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+        <div class="filter-bar" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start start">
 
             <!-- Widget 2 -->
             <div class="widget filter" fxFlex-sm="25">
@@ -128,24 +130,24 @@
             <div class="filters" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
                 fxLayoutAlign.gt-xs="space-between center" fxLayoutAlign.xs="start stretch">
                 <div class="filters-left" fxLayout.gt-xs="row">
-                    <mat-form-field (click)="active_filter('all')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'all' }"
-                        floatLabel="never">
+                    <mat-form-field (click)="active_filter('all')" class="bgColortoggle"
+                        [ngClass]="{active: activeFilterTab == 'all' }" floatLabel="never">
                         <mat-select placeholder="All">
                             <mat-option *ngFor="let food of marketcaps" [value]="food.value">
                                 {{food.viewValue}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field (click)="active_filter('country')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'country' }"
-                        floatLabel="never">
+                    <mat-form-field (click)="active_filter('country')" class="bgColortoggle"
+                        [ngClass]="{active: activeFilterTab == 'country' }" floatLabel="never">
                         <mat-select placeholder="Country">
                             <mat-option *ngFor="let food of sectors" [value]="food.value">
                                 {{food.viewValue}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field (click)="active_filter('exchange')" class="bgColortoggle" [ngClass]="{active: activeFilterTab == 'exchange' }"
-                        floatLabel="never">
+                    <mat-form-field (click)="active_filter('exchange')" class="bgColortoggle"
+                        [ngClass]="{active: activeFilterTab == 'exchange' }" floatLabel="never">
                         <mat-select placeholder="Exchange">
                             <mat-option *ngFor="let food of trending" [value]="food.value">
                                 {{food.viewValue}}
@@ -176,8 +178,8 @@
         <!-- CONTENT CARD -->
         <div class="content-card mat-white-bg">
 
-            <mat-table class="predictions-table" #table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
-                fusePerfectScrollbar>
+            <mat-table class="predictions-table" #table [dataSource]="dataSource" matSort
+                [@animateStagger]="{value:'50'}" fusePerfectScrollbar>
                 <!-- ID Column -->
                 <ng-container matColumnDef="ticker">
                     <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Ticker</mat-header-cell>
@@ -192,7 +194,8 @@
 
                     <mat-cell *matCellDef="let prediction">
                         <img src="assets/images/company/{{prediction.ticker_image}}.png" height="25px" width="25px">
-                        <p class="text-truncate iconWidth" (click)="openStockDetail(prediction.id)">
+                        <p class="text-truncate iconWidth"
+                            (click)="openStockDetail(prediction.id,prediction.addedToPortfolio)">
                             {{prediction.stock_name}}</p>
                     </mat-cell>
 
@@ -262,9 +265,12 @@
                 <mat-row *matRowDef="let prediction; columns: displayedColumns;">
                 </mat-row>
             </mat-table>
-
+            <div class="subscribed-text" *ngIf="_predictionListService.isSubscribed == 'false'">
+                <h2 fxLayoutAlign="start start">Subscribe for full list of stocks.</h2>
+            </div>
             <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
                 [pageSizeOptions]="[5, 10, dataSource.filteredData.length]">
+
             </mat-paginator>
 
         </div>

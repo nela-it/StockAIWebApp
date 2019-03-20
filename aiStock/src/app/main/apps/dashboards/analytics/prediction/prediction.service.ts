@@ -13,6 +13,7 @@ export class PredictionListService implements Resolve<any>
     groupId: string;
     groupName: string;
     addedFlag = false;
+    isSubscribed: string;
     onPredictionsChanged: BehaviorSubject<any>;
     httpOptions;
     /**
@@ -67,6 +68,7 @@ export class PredictionListService implements Resolve<any>
         return new Promise((resolve, reject) => {
             this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions)
                 .subscribe((response: any) => {
+                    this.isSubscribed = response.isSubscribed;
                     this.predictions = response.data;
                     this.onPredictionsChanged.next(this.predictions);
                     resolve(response);

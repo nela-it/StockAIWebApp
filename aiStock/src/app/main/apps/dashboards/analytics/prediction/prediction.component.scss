@@ -9,6 +9,14 @@
             .content-card {
                 overflow: initial !important;
                 box-shadow: none;
+                .subscribed-text{
+                    color: #7F63F4;                                        
+                    background-color: rgb(198, 189, 236);
+                    box-shadow: inset 0px 0px 20px 0px rgba(0, 0, 0, 0.3); 
+                    h2{
+                        margin-left: 20px
+                    }           
+                }
             }
 
             >.header {
@@ -277,7 +285,7 @@
         .active-icon {
             border-radius: 50%;
         }
-
+        
     }
 
     .text-truncate {

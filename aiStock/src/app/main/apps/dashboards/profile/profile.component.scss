@@ -27,7 +27,9 @@
         .name {
             font-size: 34px;
             color: #FFFFFF;
-
+            @include media-breakpoint-down(xs) {                
+                margin-bottom: 32px;
+            }  
             @include media-breakpoint('sm') {
                 margin-bottom: 32px;
             }

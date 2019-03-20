@@ -30,7 +30,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     pageSize;
     groupId;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'action'];
+    displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice'];
     stockName: string;
     portfolio: boolean;
     @ViewChild(MatPaginator)
@@ -180,9 +180,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
     subscription() {
         //this._analyticsDashboardService.getSubPlan();
+        // window.location.href = 'https://www.sandbox.paypal.com/webapps/xoonboarding?token=EC-65E11139SN398630L&country.x=US&locale.x=en_US&country.x=US&locale.x=en_US#/checkout/guest';
         this._analyticsDashboardService.getSubPlan().subscribe(res => {
-
-            console.log(res)
+            console.log(res);
+            if (res.redirection_link) {
+                window.location.href = res.redirection_link;
+            }
         }, error => {
             console.log(error);
             this.errMsg = error.message;

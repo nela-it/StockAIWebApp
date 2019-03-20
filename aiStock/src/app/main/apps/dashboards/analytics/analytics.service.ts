@@ -82,7 +82,6 @@ export class AnalyticsDashboardService implements Resolve<any>
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
                     this.column = response.data;
-                    console.log(this.column)
                     this.realTimeData = [];
                     for (var i = 0; i < this.column.length; i++) {
                         this.realTimeData.push(this.column[i]['real_time_price']);
@@ -91,11 +90,16 @@ export class AnalyticsDashboardService implements Resolve<any>
                             this.portfolio = [];
                             for (var j = 0; j < this.realTimeData.length; j++) {
                                 this.portfolio.push(this.realTimeData[j].stock);
+
                             }
                         }
                     }
+                    /*  for (var a = 0; a < this.portfolio.length; a++) {
+                         console.log(this.portfolio[a].Prediction_group['group_name'])
+ 
+                     } */
+                    //console.log(this.portfolio)
                     this.onPortfolioChanged.next(this.portfolio);
-                    console.log(this.portfolio)
                     resolve(response);
                 }, err => {
                     resolve([])
@@ -111,6 +115,7 @@ export class AnalyticsDashboardService implements Resolve<any>
                 'authorization': localStorage.getItem('LoggedInUser')
             })
         };
+
         return this._httpClient.get(predictionGroup, this.httpOptions);
     }
 

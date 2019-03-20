@@ -4,6 +4,11 @@ import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { StockDetailService } from './stock-detail.service';
 import { from } from 'rxjs';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material';
 @Component({
   selector: 'app-stock-detail',
   templateUrl: './stock-detail.component.html',
@@ -29,7 +34,8 @@ export class StockDetailComponent implements OnInit {
   widget1SelectedYear = '2016';
   widget5SelectedDay = 'today';
   constructor(private route: ActivatedRoute,
-    private router: Router, public _stockDetailService: StockDetailService) {
+    private router: Router, public _stockDetailService: StockDetailService,
+    public snackBar: MatSnackBar, ) {
     this._registerCustomChartJSPlugin();
   }
 
@@ -126,5 +132,40 @@ export class StockDetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  addToPortfolioSubmit(stockId: string) {
+    console.log(stockId)
+    if (stockId) {
+      const stockid = {
+        'stockId': stockId.toString()
+      }
+      this._stockDetailService.addToPortfolio(stockid).subscribe((result) => {
+
+        this.snackBar.open('Success', 'Your porfolio successfully added.', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+        this._stockDetailService.toGetPredictions(this.groupId).subscribe((result) => {
+          // this._stockDetailService.predictions = result.data;
+          //  this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
+          // window.location.reload();
+        }, (err) => {
+          console.log(err);
+        });
+        // this.getPortfolioData()
+        // window.location.reload();
+      }, (err) => {
+        console.log(err);
+        if (err) {
+          this.snackBar.open('Error', err.error.message, {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top'
+          });
+        }
+      });
+    }
   }
 }

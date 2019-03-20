@@ -34,7 +34,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'stockDetail/:stockId/:groupId/:stockname',
+        path: 'stockDetail/:stockId/:groupId/:stockname/:portfolioFlag',
         component: StockDetailComponent,
         canActivate: [AuthGuard],
         resolve: {

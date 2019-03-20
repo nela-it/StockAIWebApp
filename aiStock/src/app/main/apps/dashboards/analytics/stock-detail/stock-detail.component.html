@@ -12,7 +12,7 @@
       </div>
     </div>
     <div fxLayout="row" fxHide.xs class="right-breadcrumb">
-      <span>Home<span>&nbsp;</span>-</span>
+      <span [routerLink]="'/apps/dashboards/analytics'" style="cursor:pointer;">Home<span>&nbsp;</span>-</span>
       <span class="routes">Prediction Groups<span>&nbsp;</span>-</span>
       <span class="routes">{{stockName}} Stocks</span>
     </div>
@@ -170,7 +170,12 @@
           </div>
           <div class="box-shadow" fxLayout.sm="row" fxLayoutAlign="center center">
             <label><b>{{currentPrice | currency:'USD':'symbol'}}</b></label>
-            <button class="add-button" mat-flat-button>Add to portfolio</button>
+            <!-- *ngIf="prediction.addedToPortfolio === false" -->
+            <button class="add-button" mat-flat-button>Add to
+              portfolio</button>
+            <!-- <button style="color: white;
+            background-color: #7F63F4;" *ngIf="prediction.addedToPortfolio === true"
+                class="submit-button" mat-stroked-button disabled>Already Added</button> -->
           </div>
         </div>
       </mat-card>
@@ -203,8 +208,8 @@
     </div>
     <div class="course" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="20">
       <div class="course-content" fxLayout="column">
-        <div class="content" fxLayout="column" fxLayoutAlign="start start" fxFlex>
-
+        <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+          <img src="assets/images/etc/content.png" width="75px" height="75px">
         </div>
       </div>
     </div>

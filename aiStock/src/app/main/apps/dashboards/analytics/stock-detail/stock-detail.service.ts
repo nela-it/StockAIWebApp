@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { predictionGroup, getStockInfo, getAlgorithm } from 'appConfig/appconfig';
+import { predictionGroup, getStockInfo, getAlgorithm, getGroupsDetails, addPortfolio } from 'appConfig/appconfig';
 import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
@@ -85,5 +85,29 @@ export class StockDetailService implements Resolve<any>{
           resolve(response);
         }, reject);
     });
+  }
+  addToPortfolio(stockId): Observable<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'authorization': localStorage.getItem('LoggedInUser')
+      })
+    };
+    return this._httpClient.post(addPortfolio, stockId, this.httpOptions).pipe(
+      tap((result) => {
+        console.log('user data', result);
+      }, err => {
+        console.log(err);
+      })
+    );
+  }
+  toGetPredictions(id): Observable<any> {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'authorization': localStorage.getItem('LoggedInUser')
+      })
+    };
+    return this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions);
   }
 }

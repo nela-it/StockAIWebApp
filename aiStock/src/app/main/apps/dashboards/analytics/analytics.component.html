@@ -6,16 +6,16 @@
         <!-- APP TITLE -->
         <div fxLayout="row" fxLayoutAlign="start center">
             <div class="logo" fxLayout="row" fxLayoutAlign="start center">
-                <span [routerLink]="'/apps/dashboards/analytics'" fxHide.xs class="logo-text h1"
+                <span style="cursor:pointer;" [routerLink]="'/apps/dashboards/analytics'" fxHide.xs class="logo-text h1"
                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Home
                 </span>
-                <button class="add-button" (click)="subscription()" mat-flat-button>Subscribe Pro</button>
+                <button class="box-shadow" (click)="subscription()" mat-flat-button>Subscribe Pro</button>
             </div>
 
         </div>
         <!-- / APP TITLE -->
-        <div fxLayout="row" style="padding-right:24px">
+        <div fxLayout="row" fxHide.xs style="padding-right:24px">
             <span [routerLink]="'/apps/dashboards/analytics'">Home&nbsp;&nbsp;&nbsp;-</span>
             <span style="color: #b1b1b4;vertical-align:middle; display: inline;margin-left: 10px;"
                 *ngIf="activeStock === 'prediction'"> Prediction Group</span>
@@ -253,19 +253,19 @@
                         </ng-container>
 
                         <!-- Date Column -->
-                        <ng-container matColumnDef="action">
+                        <!--   <ng-container matColumnDef="action">
                             <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Value Graph
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
-                                <div class="chart-cell">
-                                    <canvas baseChart [datasets]="widgets.widget3.datasets"
+                                <div class="chart-cell"> -->
+                        <!--  <canvas baseChart [datasets]="widgets.widget3.datasets"
                                         [labels]="widgets.widget3.labels" [colors]="widgets.widget3.colors"
                                         [options]="widgets.widget3.options" [chartType]="widgets.widget3.chartType">
-                                    </canvas>
-                                </div>
+                                    </canvas> -->
+                        <!--     </div>
                             </mat-cell>
                         </ng-container>
-
+ -->
                         <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
 
                         <mat-row *matRowDef="let portfolio; columns: displayedColumns;">
