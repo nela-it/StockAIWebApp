@@ -16,10 +16,10 @@ export const getProductDetails: string = serverUrl + 'product/getProductInfo';
 export const addPortfolio: string = serverUrl + 'portfolio/addPortfolio';
 export const getPortfolio: string = serverUrl + 'portfolio/getPortfolio';
 
-//Stock info 
+// Stock info 
 export const getStockInfo: string = serverUrl + 'stocks/getStockInfo';
 export const getAlgorithm: string = serverUrl + 'algorithm/getAlgorithm';
-//User info 
+// User info 
 export const getUserInfo: string = serverUrl + 'user/userInfo';
 
 export const getSub: string = serverUrl + 'payment/payment';

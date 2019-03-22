@@ -94,11 +94,12 @@ export class AnalyticsDashboardService implements Resolve<any>
                             }
                         }
                     }
-                    /*  for (var a = 0; a < this.portfolio.length; a++) {
-                         console.log(this.portfolio[a].Prediction_group['group_name'])
- 
-                     } */
-                    //console.log(this.portfolio)
+                    for (var a = 0; a < this.portfolio.length; a++) {
+                        console.log(this.portfolio[a].Prediction_group['group_name'])
+                        this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name']
+
+                    }
+                    console.log(this.portfolio)
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);
                 }, err => {

@@ -195,7 +195,16 @@
                                 <p class="text-truncate">{{portfolio.ticker}}</p>
                             </mat-cell>
                         </ng-container>
+                        <ng-container matColumnDef="groupName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Group Name
+                            </mat-header-cell>
 
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
+                                <p class="text-truncate iconWidth">
+                                    {{portfolio.groupName}}</p>
+                            </mat-cell>
+
+                        </ng-container>
                         <!-- Reference Column -->
                         <ng-container matColumnDef="stockName">
                             <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Stock Name

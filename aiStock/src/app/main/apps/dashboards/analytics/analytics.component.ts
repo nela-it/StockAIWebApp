@@ -30,7 +30,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     pageSize;
     groupId;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['ticker', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice'];
+    displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice'];
     stockName: string;
     portfolio: boolean;
     @ViewChild(MatPaginator)
