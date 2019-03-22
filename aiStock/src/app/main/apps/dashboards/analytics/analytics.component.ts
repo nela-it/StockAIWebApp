@@ -72,9 +72,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.predictionGroupData = res.data;
-            console.log(this.predictionGroupData)
         }, error => {
-            console.log(error);
             this.errMsg = error.message;
         });
 
@@ -82,7 +80,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this._analyticsDashboardService.getProduct().subscribe(res => {
             this.product = res.data;
         }, error => {
-            console.log(error);
             this.errMsg = error.message;
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
