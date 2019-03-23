@@ -8,7 +8,12 @@ const cors = require("cors");
 const APIError = require("./helpers/APIError");
 const config = require("./config/index");
 const service = require("./controller/prediction_group.controller");
+const stockService = require("./controller/stocks.controller")
+  .updateRealtimePrice;
 const logger = require("morgan");
+const chokidar = require("chokidar");
+const XLSX = require("xlsx");
+const CronJob = require("cron").CronJob;
 
 if (config.env === "development") {
   app.use(logger("dev"));
@@ -24,8 +29,20 @@ app.use(
   })
 );
 
-var chokidar = require("chokidar");
-const XLSX = require("xlsx");
+//Cron job for update realtime price of stock
+new CronJob(
+  "*/5 * * * *",
+  async function() {
+    console.log("<------------------5 mins Cron Job Start------------------>");
+    await stockService();
+    console.log("<------------------5 mins Cron Job End------------------>");
+  },
+  null,
+  true,
+  "America/Los_Angeles"
+);
+
+// read excel sheet and update records in DB
 var watcher = chokidar.watch("./files", {
   persistent: true
 });

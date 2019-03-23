@@ -19,21 +19,28 @@ exports.check_auth_provider = (params, next, cb) => {
     }
   }).then(user => {
     if (user) {
-      let token = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-          username: user.username
-        },
-        config.jwtSecret
+      checkSubscribed(
+        { user_id: user.dataValues.id },
+        next,
+        (err, isSubscribed) => {
+          let token = jwt.sign(
+            {
+              id: user.id,
+              email: user.email,
+              username: user.username
+            },
+            config.jwtSecret
+          );
+          let data = {
+            status: 200,
+            token: token,
+            username: params.username,
+            message: "Success",
+            isSubscribed: err ? false : isSubscribed
+          };
+          cb(null, data);
+        }
       );
-      let data = {
-        status: 200,
-        token: token,
-        username: params.username,
-        message: "Success"
-      };
-      cb(null, data);
     } else {
       User.create({
         email: params.email,
@@ -55,7 +62,8 @@ exports.check_auth_provider = (params, next, cb) => {
               status: 200,
               token: token,
               username: params.username,
-              message: "Success"
+              message: "Success",
+              isSubscribed: false
             };
             cb(null, data);
           } else {
@@ -83,35 +91,42 @@ exports.login = (params, next, cb) => {
   })
     .then(user => {
       if (user) {
-        let password = atob(params.password);
-        if (
-          user.password !== null &&
-          bcryptService.validPassword(password, user.password)
-        ) {
-          let token = jwt.sign(
-            {
-              id: user.id,
-              email: user.email,
-              username: user.username
-            },
-            config.jwtSecret
-          );
-          let data = {
-            status: 200,
-            token: token,
-            message: "Success",
-            username: user.dataValues.username
-          };
-          cb(null, data);
-        } else {
-          let data = {
-            status: 404,
-            token: null,
-            username: null,
-            message: "Entered Password is Wrong"
-          };
-          cb(null, data);
-        }
+        checkSubscribed(
+          { user_id: user.dataValues.id },
+          next,
+          (err, isSubscribed) => {
+            let password = atob(params.password);
+            if (
+              user.password !== null &&
+              bcryptService.validPassword(password, user.password)
+            ) {
+              let token = jwt.sign(
+                {
+                  id: user.id,
+                  email: user.email,
+                  username: user.username
+                },
+                config.jwtSecret
+              );
+              let data = {
+                status: 200,
+                token: token,
+                message: "Success",
+                username: user.dataValues.username,
+                isSubscribed: err ? false : isSubscribed
+              };
+              cb(null, data);
+            } else {
+              let data = {
+                status: 404,
+                token: null,
+                username: null,
+                message: "Entered Password is Wrong"
+              };
+              cb(null, data);
+            }
+          }
+        );
       } else {
         let data = {
           status: 404,
@@ -202,6 +217,23 @@ exports.isSubscribed = async (params, next, cb) => {
     let isPayment = await Payment.findOne({
       where: {
         user_id: params.user.id
+      }
+    });
+    if (isPayment) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  } catch (e) {
+    next(e);
+  }
+};
+
+checkSubscribed = async (params, next, cb) => {
+  try {
+    let isPayment = await Payment.findOne({
+      where: {
+        user_id: params.user_id
       }
     });
     if (isPayment) {

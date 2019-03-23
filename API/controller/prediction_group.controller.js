@@ -121,7 +121,8 @@ exports.exploreGroups = async (req, res, next) => {
             });
             return await res.status(200).json({
               message: "Stocks Found",
-              data: isStockFound
+              data: isStockFound,
+              isSubscribed: isSubscribed
             });
           } else {
             isStockFound.forEach(async (stock, i) => {
@@ -129,7 +130,8 @@ exports.exploreGroups = async (req, res, next) => {
             });
             return await res.status(200).json({
               message: "Stocks Found",
-              data: isStockFound
+              data: isStockFound,
+              isSubscribed: isSubscribed
             });
           }
         });

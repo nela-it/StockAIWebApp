@@ -19,6 +19,22 @@ module.exports = (sequelize, DataTypes) => {
     current_price: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    today_change_percentage: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    today_change: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    your_change_percentage: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    your_change: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });
 

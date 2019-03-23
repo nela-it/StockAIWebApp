@@ -18,10 +18,10 @@ exports.payment = async (req, res, next) => {
         payment_method: "paypal"
       },
       redirect_urls: {
-        return_url: `${config.frontImage}/api/payment/successPayment?userId=${
+        return_url: `${config.frontImage}api/payment/successPayment?userId=${
           req.user.id
         }`,
-        cancel_url: `${config.frontImage}/#/apps/dashboards/analytics`
+        cancel_url: `${config.frontImage}#/apps/dashboards/analytics`
       },
       transactions: [
         {
@@ -47,16 +47,16 @@ exports.payment = async (req, res, next) => {
   try {
     paypal.payment.create(create_payment_json, function(error, payment) {
       if (error) {
-        console.log("error -----> ", error);
         next(error);
       } else {
         payment.links.forEach(link => {
-          link.rel === "approval_url" ? res.redirect(link.href) : null;
+          link.rel === "approval_url"
+            ? res.status(200).json({ redirection_link: link.href })
+            : null;
         });
       }
     });
   } catch (e) {
-    console.log("error ----- ", e);
     next(e);
   }
 };
@@ -72,7 +72,6 @@ exports.successPayment = async (req, res, next) => {
       timestamp: Date()
     });
     if (createPayment) {
-      console.log("payment successfull");
       res.send(
         `<b>Subscription Payment Successfull</b><br /> return to profile <a href='${
           config.frontImage
@@ -84,7 +83,6 @@ exports.successPayment = async (req, res, next) => {
       });
     }
   } catch (e) {
-    console.log("e-----------", e);
     next(e);
   }
 };

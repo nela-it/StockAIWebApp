@@ -19,7 +19,8 @@ exports.register = (req, res, next) => {
         return res.status(data.status).json({
           message: data.message,
           token: data.token,
-          username: data.username
+          username: data.username,
+          isSubscribed: data.isSubscribed
         });
       });
     } else {
@@ -35,7 +36,8 @@ exports.register = (req, res, next) => {
         return res.status(data.status).json({
           message: data.message,
           token: data.token,
-          username: data.username
+          username: data.username,
+          isSubscribed: false
         });
       });
     } else {
@@ -62,7 +64,8 @@ exports.login = (req, res, next) => {
           return res.status(data.status).json({
             message: data.message,
             token: data.token,
-            username: data.username
+            username: data.username,
+            isSubscribed: data.isSubscribed
           });
         }
       );
@@ -79,7 +82,8 @@ exports.login = (req, res, next) => {
         return res.status(data.status).json({
           message: data.message,
           token: data.token,
-          username: data.username
+          username: data.username,
+          isSubscribed: data.isSubscribed
         });
       });
     } else {
