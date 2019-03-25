@@ -32,6 +32,8 @@ export class StockDetailComponent implements OnInit {
   predictionGroup: string;
   tickerImage: string;
   alreadyAdded: string;
+  todayChange: string;
+  todayChangePercentage: string;
   id: string;
   widget1SelectedYear = '2016';
   widget5SelectedDay = 'today';
@@ -57,10 +59,13 @@ export class StockDetailComponent implements OnInit {
       this.earningDate = this._stockDetailService.stockInfo['target_date'];
       this.suggestedDate = this._stockDetailService.stockInfo['suggested_date'];
       this.recommendedPrice = this._stockDetailService.stockInfo['recommended_price'];
-      this.currentPrice = this._stockDetailService.stockInfo['current_price'];
+      this.currentPrice = this._stockDetailService.stockInfo['real_time_price'].current_price;
       this.targetPrice = this._stockDetailService.stockInfo['target_price'];
       this.tickerImage = this._stockDetailService.stockInfo['ticker_image'];
       this.predictionGroup = this._stockDetailService.stockInfo['Prediction_group'].group_name;
+      this.todayChange = this._stockDetailService.stockInfo['real_time_price'].today_change;
+      this.todayChangePercentage = this._stockDetailService.stockInfo['real_time_price'].today_change_percentage;
+
     } else {
       this.errMsg = 'Stock Not Found';
       console.log(this.errMsg);

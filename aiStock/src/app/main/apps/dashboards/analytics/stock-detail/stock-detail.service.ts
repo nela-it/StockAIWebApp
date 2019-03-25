@@ -68,6 +68,7 @@ export class StockDetailService implements Resolve<any>{
       this._httpClient.post(getStockInfo, { 'stockId': atob(id) }, this.httpOptions)
         .subscribe((response: any) => {
           this.stockInfo = response.data;
+          console.log(this.stockInfo['real_time_price'].current_price)
           resolve(response);
         }, reject);
     });

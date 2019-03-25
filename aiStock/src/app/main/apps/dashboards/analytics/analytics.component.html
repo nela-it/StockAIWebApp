@@ -11,10 +11,11 @@
                     Home
                 </span>
                 <!-- (click)="called()" (click)="subscription()" *ngIf="isSubscribed === 'false'" -->
-                <button id="openPaypal" class="box-shadow" (click)="subscription()" mat-flat-button>Subscribe Pro
+                <button id="openPaypal" class="box-shadow" *ngIf="isSubscribed === 'false'" (click)="subscription()"
+                    mat-flat-button>Subscribe Pro
                 </button>
-                <div style="display:none;" id="paypal-checkout-btn"></div>
-
+                <!-- <div style="display:none;" id="paypal-checkout-btn"></div>
+ -->
                 <!--  <input type="number" [(ngModel)]="finalAmount" style="padding-bottom: 10px;">
                 <h2 *ngIf="paypalLoad">Paypal button is loading</h2>-->
 
@@ -269,7 +270,42 @@
                                 </p>
                             </mat-cell>
                         </ng-container>
-
+                        <ng-container matColumnDef="todayChangePercentage">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Today Change %
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
+                                <p [ngStyle]="{'color':portfolio.todayperfontColor}">
+                                    {{portfolio.today_change_percentage}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="addTodayChange">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Add Today Change
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
+                                <p [ngStyle]="{'color':portfolio.todayaddfontColor}">
+                                    {{portfolio.today_change | currency:'USD':'symbol'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="yourChangePercentage">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Your Change %
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
+                                <p [ngStyle]="{'color':portfolio.yourperfontColor}">
+                                    {{portfolio.your_change_percentage | number : '1.2'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="addYourChange">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Add Your Change
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
+                                <p [ngStyle]="{'color':portfolio.addyourfontColor}">
+                                    {{portfolio.your_change | currency:'USD':'symbol'}}
+                                </p>
+                            </mat-cell>
+                        </ng-container>
                         <!-- Date Column -->
                         <!--   <ng-container matColumnDef="action">
                             <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Value Graph

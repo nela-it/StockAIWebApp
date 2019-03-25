@@ -17,6 +17,7 @@ export class AnalyticsDashboardService implements Resolve<any>
     groupName: string;
     groupId: string;
     errmsg: string;
+    fontColor: string;
     onPortfolioChanged: BehaviorSubject<any>;
     httpOptions
     /**
@@ -85,23 +86,30 @@ export class AnalyticsDashboardService implements Resolve<any>
                     this.realTimeData = [];
                     for (let i = 0; i < this.column.length; i++) {
                         this.realTimeData.push(this.column[i]['real_time_price']);
-                        console.log(this.realTimeData)
                         if (i + 1 == this.column.length) {
                             this.portfolio = [];
                             for (let j = 0; j < this.realTimeData.length; j++) {
-                                //console.log(this.realTimeData[j].current_price);
+                                console.log(this.realTimeData[j].today_change_percentage);
                                 this.portfolio.push(this.realTimeData[j].stock);
                                 this.portfolio[j].current_price = this.realTimeData[j].current_price;
+                                this.portfolio[j].today_change_percentage = this.realTimeData[j].today_change_percentage;
+                                this.portfolio[j].todayperfontColor = parseInt(this.portfolio[j].today_change_percentage) >= 0 ? 'green' : 'red';
 
+                                this.portfolio[j].today_change = this.realTimeData[j].today_change;
+                                this.portfolio[j].todayaddfontColor = parseInt(this.portfolio[j].today_change) >= 0 ? 'green' : 'red';
+
+                                this.portfolio[j].your_change_percentage = this.realTimeData[j].your_change_percentage;
+                                this.portfolio[j].yourperfontColor = parseInt(this.portfolio[j].your_change_percentage) >= 0 ? 'green' : 'red';
+
+                                this.portfolio[j].your_change = this.realTimeData[j].your_change;
+                                this.portfolio[j].addyourfontColor = parseInt(this.portfolio[j].your_change) >= 0 ? 'green' : 'red';
                             }
                         }
                     }
                     for (let a = 0; a < this.portfolio.length; a++) {
-                        //console.log(this.portfolio)
                         this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name']
 
                     }
-                    console.log(this.portfolio)
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);
                 }, err => {

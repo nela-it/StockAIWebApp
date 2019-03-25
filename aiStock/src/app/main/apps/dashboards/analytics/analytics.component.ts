@@ -19,7 +19,7 @@ declare let paypal: any;
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     widgets: any;
     product: any;
     widget1SelectedYear = '2016';
@@ -32,42 +32,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
     pageSize;
     groupId;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice'];
+    displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'todayChangePercentage', 'addTodayChange', 'yourChangePercentage', 'addYourChange'];
     stockName: string;
     portfolio: boolean;
-    // paypal declaration
-    addScript: boolean = false;
-    paypalLoad: boolean = true;
-    finalAmount: number = 5;
-    paypalConfig = {
-        env: 'sandbox',
-        client: {
-            sandbox: 'AaVjrE0H_T29glzn_RJJTdQgqKpxhq5fGG6wiBzNXTCGiKlMYsC6RWoP6GcaWbr2-h6zunnsT-6K4U7W',
-            production: '<your-production-key here>'
-        },
-        style: {
-            color: 'blue',
-            shape: 'pill',
-            label: 'pay',
-            height: 40,
-        },
-        commit: true,
-        payment: (data, actions) => {
-            return actions.payment.create({
-                payment: {
-                    transactions: [
-                        { amount: { total: this.finalAmount, currency: 'USD' } }
-                    ]
-                }
-            });
-        },
-        onAuthorize: (data, actions) => {
-            return actions.payment.execute().then((payment) => {
-                //Do something when payment is successful.
-                console.log(payment)
-            })
-        }
-    };
+
 
     @ViewChild(MatPaginator)
     public paginator: MatPaginator;
@@ -109,7 +77,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.predictionGroupData = res.data;
-            console.log(this.predictionGroupData)
         }, error => {
             console.log(error);
             this.errMsg = error.message;
@@ -137,36 +104,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
     }
-    ngAfterViewChecked(): void {
-        if (!this.addScript) {
-            this.addPaypalScript().then(() => {
 
-                /*  paypal.Button.render({
-
-                     style: {
-                         size: 'small'
-                     },
-
-                     payment: function () {
-                         this.paypalConfig
-                     },
-
-                 }, '#buynow'); */
-
-                paypal.Button.render(this.paypalConfig, '#paypal-checkout-btn');
-                this.paypalLoad = false;
-            })
-        }
-    }
-    addPaypalScript() {
-        this.addScript = true;
-        return new Promise((resolve, reject) => {
-            let scripttagElement = document.createElement('script');
-            scripttagElement.src = 'https://www.paypalobjects.com/api/checkout.js';
-            scripttagElement.onload = resolve;
-            document.body.appendChild(scripttagElement);
-        })
-    }
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
@@ -237,7 +175,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
     }
 
     groupDetail(data) {
-        console.log("explore button call", data);
+        // console.log("explore button call", data);
         this._predictionListService.groupId = btoa(data.id);
         this._analyticsDashboardService.groupName = data.group_name;
         this._predictionListService.groupName = data.group_name;
@@ -247,7 +185,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
     subscription() {
         //window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
         this._analyticsDashboardService.getSubPlan().subscribe(res => {
-            console.log("ppp", res);
+            //console.log("ppp", res);
             if (res.redirection_link) {
                 window.location.href = res.redirection_link;
                 //window.open('https://www.google.com', "_blank");
@@ -399,7 +337,7 @@ export class FilesDataSource extends DataSource<any>
                     [propertyA, propertyB] = [a.recommended_price, b.recommended_price];
                     break;
                 case 'currentPrice':
-                    [propertyA, propertyB] = [a.suggested_date_price, b.suggested_date_price];
+                    [propertyA, propertyB] = [a.current_price, b.current_price];
                     break;
                 case 'suggestedDate':
                     [propertyA, propertyB] = [a.suggested_date, b.suggested_date];
@@ -409,6 +347,18 @@ export class FilesDataSource extends DataSource<any>
                     break;
                 case 'date':
                     [propertyA, propertyB] = [a.target_date, b.target_date];
+                    break;
+                case 'todaychangeper':
+                    [propertyA, propertyB] = [a.target_price, b.target_price];
+                    break;
+                case 'addtodaychange':
+                    [propertyA, propertyB] = [a.target_price, b.target_price];
+                    break;
+                case 'yourchangeper':
+                    [propertyA, propertyB] = [a.target_price, b.target_price];
+                    break;
+                case 'addyourchange':
+                    [propertyA, propertyB] = [a.target_price, b.target_price];
                     break;
             }
 

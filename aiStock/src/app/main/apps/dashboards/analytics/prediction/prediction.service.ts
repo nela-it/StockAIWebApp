@@ -72,16 +72,13 @@ export class PredictionListService implements Resolve<any>
                     this.isSubscribed = response.isSubscribed;
                     this.predictions = [];
                     this.predictions = response.data;
-                    // console.log(this.predictions)
                     for (let i = 0; i < this.predictions.length; i++) {
                         this.realTimeData.push(this.predictions[i]['real_time_price']);
                         for (let a = 0; a < this.realTimeData.length; a++) {
-                            // console.log(this.realTimeData[a].current_price)
                             this.predictions[i].current_price = this.realTimeData[a].current_price;
 
                         }
                     }
-                    // console.log(this.predictions)
                     this.onPredictionsChanged.next(this.predictions);
                     resolve(response);
                 }, reject);

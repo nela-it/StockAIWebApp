@@ -46,13 +46,13 @@
             <div class="info">
               <div class="title">
                 <div>
-                  <b>54.21</b>
+                  <b>{{currentPrice | currency:'USD':'symbol'}}</b>
                   <mat-icon>arrow_upwards</mat-icon>
                 </div>
               </div>
               <div class="address">
-                <h2 style="font-size:18px;"><label style="color:#2CCEFC"><b>+$34.21</b></label> | <label
-                    style="color:#F79319"><b>2.4%</b></label></h2>
+                <h2 style="font-size:18px;"><label style="color:#2CCEFC"><b>{{todayChange}}</b></label> | <label
+                    style="color:#F79319"><b>{{todayChangePercentage}}</b></label></h2>
               </div>
             </div>
           </div>
@@ -173,8 +173,7 @@
             <!-- *ngIf="prediction.addedToPortfolio === false" -->
             <button class="add-button" *ngIf="_stockDetailService.alreadyAdded === 'false'"
               (click)="addToPortfolioSubmit(id)" mat-flat-button>Add to portfolio</button>
-            <button class="add-button" *ngIf="_stockDetailService.alreadyAdded === 'true'" mat-flat-button
-              disabled>Already Added
+            <button class="add-button" *ngIf="_stockDetailService.alreadyAdded === 'true'" mat-flat-button>Already Added
             </button>
             <!--  <button style="color: white;
             background-color: #7F63F4;" *ngIf="prediction.addedToPortfolio === true"
