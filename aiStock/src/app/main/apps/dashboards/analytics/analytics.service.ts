@@ -85,16 +85,19 @@ export class AnalyticsDashboardService implements Resolve<any>
                     this.realTimeData = [];
                     for (let i = 0; i < this.column.length; i++) {
                         this.realTimeData.push(this.column[i]['real_time_price']);
-
+                        console.log(this.realTimeData)
                         if (i + 1 == this.column.length) {
                             this.portfolio = [];
                             for (let j = 0; j < this.realTimeData.length; j++) {
+                                //console.log(this.realTimeData[j].current_price);
                                 this.portfolio.push(this.realTimeData[j].stock);
+                                this.portfolio[j].current_price = this.realTimeData[j].current_price;
 
                             }
                         }
                     }
                     for (let a = 0; a < this.portfolio.length; a++) {
+                        //console.log(this.portfolio)
                         this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name']
 
                     }

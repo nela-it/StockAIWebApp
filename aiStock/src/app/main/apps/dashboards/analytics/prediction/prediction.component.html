@@ -108,14 +108,14 @@
                 </mat-form-field>
             </div>
             <!-- <div class="widget filter" fxFlex.sm="25">
-                <mat-form-field fxLayout="row" fxLayout.xs="column" floatLabel="never">
-                    <mat-select placeholder="Tools">
-                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                            {{food.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
+                    <mat-form-field fxLayout="row" fxLayout.xs="column" floatLabel="never">
+                        <mat-select placeholder="Tools">
+                            <mat-option *ngFor="let food of foods" [value]="food.value">
+                                {{food.viewValue}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
             <div class="widget search-bar" fxFlex.sm="25">
                 <mat-form-field floatLabel="never">
                     <input id="search" matInput #filter placeholder="Search">
@@ -127,9 +127,9 @@
         </div>
         <!--      <div class="filter-bar-tab" fxLayout="column" fxLayoutAlign="center">
 
-            <div class="filters" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
-                fxLayoutAlign.gt-xs="space-between center" fxLayoutAlign.xs="start stretch">
-                <div class="filters-left" fxLayout.gt-xs="row">
+                <div class="filters" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+                    fxLayoutAlign.gt-xs="space-between center" fxLayoutAlign.xs="start stretch">
+                    <div class="filters-left" fxLayout.gt-xs="row">
                     <mat-form-field (click)="active_filter('all')" class="bgColortoggle"
                         [ngClass]="{active: activeFilterTab == 'all' }" floatLabel="never">
                         <mat-select placeholder="All">
@@ -218,7 +218,7 @@
                     </mat-header-cell>
                     <mat-cell *matCellDef="let prediction" fxHide fxShow.gt-sm>
                         <p class="total-price text-truncate">
-                            {{prediction.suggested_date_price | currency:'USD':'symbol'}}
+                            {{prediction.current_price | currency:'USD':'symbol'}}
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -265,7 +265,7 @@
                 <mat-row *matRowDef="let prediction; columns: displayedColumns;">
                 </mat-row>
             </mat-table>
-            <div class="subscribed-text" *ngIf="_predictionListService.isSubscribed == 'false'">
+            <div class="subscribed-text" *ngIf="_predictionListService.isSubscribed === 'false'">
                 <h2 fxLayoutAlign="start start">Subscribe for full list of stocks.</h2>
             </div>
             <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"

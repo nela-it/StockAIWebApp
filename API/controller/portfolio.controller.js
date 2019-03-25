@@ -8,13 +8,13 @@ const Op = db.Op;
 
 exports.addPortfolio = async (req, res, next) => {
   try {
-    let getRealTimeId = await realTimePrice.findOne({
-      where: { stock_id: req.body.stockId }
+    let getStockDetails = await Stocks.findOne({
+      where: { id: req.body.stockId }
     });
     let isAlreadyPortfolio = await Portfolio.findOne({
       where: {
         user_id: req.user.id,
-        real_time_price_id: getRealTimeId.dataValues.id
+        real_time_price_id: getStockDetails.dataValues.realtime_price_id
       }
     });
     if (isAlreadyPortfolio) {
@@ -23,7 +23,7 @@ exports.addPortfolio = async (req, res, next) => {
       });
     } else {
       let addPortfolio = await Portfolio.create({
-        real_time_price_id: getRealTimeId.dataValues.id,
+        real_time_price_id: getStockDetails.dataValues.realtime_price_id,
         user_id: req.user.id
       });
       if (addPortfolio) {

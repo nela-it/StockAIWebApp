@@ -244,7 +244,7 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
                                 <p class="total-price text-truncate">
-                                    {{portfolio.suggested_date_price | currency:'USD':'symbol'}}
+                                    {{portfolio.current_price | currency:'USD':'symbol'}}
                                 </p>
                             </mat-cell>
                         </ng-container>

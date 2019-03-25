@@ -6,6 +6,7 @@ const userService = require("../middleware/user.service");
 const checkPortfolio = require("./portfolio.controller").checkPortfolio;
 const atob = require("atob");
 Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
+Stocks.belongsTo(realTimePrice, { foreignKey: "realtime_price_id" });
 
 // Stocks.sync({ force: true });
 // realTimePrice.sync({ force: true });
@@ -50,7 +51,6 @@ exports.saveGroupData = data => {
       ticker_image: column["Ticker Image"],
       stock_name: column["Stock Name"],
       recommended_price: column.prediction_group_id,
-      current_price: column.prediction_group_id,
       suggested_date: column["Suggested Date"],
       suggested_date_price: column["Suggested Date Price"],
       target_price: column.TargetPrice,
@@ -58,10 +58,17 @@ exports.saveGroupData = data => {
       version: column.Version
     });
     if (isStockCreate) {
-      await realTimePrice.create({
-        stock_id: isStockCreate.dataValues.id,
-        current_price: column.prediction_group_id
+      let updateRealtimePrice = await realTimePrice.create({
+        stock_id: isStockCreate.dataValues.id
       });
+      if (updateRealtimePrice) {
+        await Stocks.update(
+          {
+            realtime_price_id: updateRealtimePrice.dataValues.id
+          },
+          { where: { id: isStockCreate.dataValues.id } }
+        );
+      }
     }
     console.log("Stock Created----", isStockCreate.dataValues.id);
   }
@@ -92,12 +99,12 @@ exports.exploreGroups = async (req, res, next) => {
       if (isSubscribed) {
         isStockFound = await Stocks.findAll({
           where: { group_id: atob(req.body.group_id) },
-          include: [Prediction_group]
+          include: [realTimePrice]
         });
       } else {
         isStockFound = await Stocks.findAll({
           where: { group_id: atob(req.body.group_id) },
-          include: [Prediction_group],
+          include: [realTimePrice],
           limit: 2
         });
       }

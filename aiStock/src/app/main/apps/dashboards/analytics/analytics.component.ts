@@ -109,6 +109,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.predictionGroupData = res.data;
+            console.log(this.predictionGroupData)
         }, error => {
             console.log(error);
             this.errMsg = error.message;
@@ -236,7 +237,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
     }
 
     groupDetail(data) {
-
+        console.log("explore button call", data);
         this._predictionListService.groupId = btoa(data.id);
         this._analyticsDashboardService.groupName = data.group_name;
         this._predictionListService.groupName = data.group_name;
@@ -244,17 +245,17 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterView
     }
 
     subscription() {
-        window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
-        /* this._analyticsDashboardService.getSubPlan().subscribe(res => {
+        //window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
+        this._analyticsDashboardService.getSubPlan().subscribe(res => {
             console.log("ppp", res);
-            // if (res.redirection_link) {
-            window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
-            // window.open('https://www.google.com', "_blank");
-            // }
+            if (res.redirection_link) {
+                window.location.href = res.redirection_link;
+                //window.open('https://www.google.com', "_blank");
+            }
         }, error => {
             console.log(error);
             this.errMsg = error.message;
-        }); */
+        });
 
     }
     /*  called() {

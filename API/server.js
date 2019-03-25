@@ -29,13 +29,13 @@ app.use(
   })
 );
 
-//Cron job for update realtime price of stock
+// Cron job for update realtime price of stock
 new CronJob(
-  "*/5 * * * *",
+  "*/2 * * * *",
   async function() {
-    console.log("<------------------5 mins Cron Job Start------------------>");
+    console.log("<------------------2 mins Cron Job Start------------------>");
     await stockService();
-    console.log("<------------------5 mins Cron Job End------------------>");
+    console.log("<------------------2 mins Cron Job End------------------>");
   },
   null,
   true,
@@ -47,7 +47,7 @@ var watcher = chokidar.watch("./files", {
   persistent: true
 });
 
-watcher.on("add", function (path) {
+watcher.on("add", async function(path) {
   console.log("File", path, "has been added");
   if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
     var workbook = XLSX.readFile(`./${path}`, {
@@ -57,7 +57,8 @@ watcher.on("add", function (path) {
     var sheet_name_list = workbook.SheetNames;
     let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
     console.log("excel sheet name", sheet_name_list[0]);
-    // service.saveGroupData(data);
+    await service.saveGroupData(data);
+    await stockService();
   }
 });
 

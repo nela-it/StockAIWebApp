@@ -28,9 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    current_price: {
+    realtime_price_id: {
       type: DataTypes.STRING,
-      allowNull: false
+      foreignKey: true,
+      allowNull: true
     },
     recommended_price: {
       type: DataTypes.STRING,

@@ -5,18 +5,16 @@ const Stocks = db.Stocks;
 const Real_time_price = db.Real_time_price;
 const Prediction_group = db.Prediction_group;
 const request = require("async-request");
+const Sequelize = require("sequelize");
 const Op = db.Op;
 
 exports.getStockInfo = async (req, res, next) => {
   try {
-    Stocks.belongsTo(Prediction_group, {
-      foreignKey: "group_id"
-    });
+    Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
+    Stocks.belongsTo(Real_time_price, { foreignKey: "realtime_price_id" });
     let stockDetail = await Stocks.findOne({
-      where: {
-        id: req.body.stockId
-      },
-      include: [Prediction_group]
+      where: { id: req.body.stockId },
+      include: [Prediction_group, Real_time_price]
     });
     if (stockDetail) {
       res.status(200).json({
@@ -36,7 +34,10 @@ exports.getStockInfo = async (req, res, next) => {
 
 exports.updateRealtimePrice = async () => {
   try {
-    let getAllStocks = await Stocks.findAll({ limit: 3 });
+    let getAllStocks = await Stocks.findAll({
+      limit: 5,
+      order: [[Sequelize.fn("RAND")]]
+    });
     if (getAllStocks.length > 0) {
       for (let i = 0; i < getAllStocks.length; i++) {
         await updateStock(getAllStocks[i].dataValues);
@@ -54,30 +55,29 @@ updateStock = async stock => {
         stock.ticker
       }&apikey=KNAV1IV5MII8BJWQ`
     );
-    if (result) {
+    let resultToJSON = await JSON.parse(result.body);
+    if (!resultToJSON.Note) {
+      resultToJSON = await JSON.parse(result.body)["Global Quote"];
       let updatePrice = await Real_time_price.update(
         {
-          current_price: JSON.parse(result.body)["Global Quote"]["05. price"],
-          today_change_percentage: JSON.parse(result.body)["Global Quote"][
-            "10. change percent"
-          ],
-          today_change: JSON.parse(result.body)["Global Quote"]["09. change"],
+          current_price: resultToJSON["05. price"],
+          today_change_percentage: resultToJSON["10. change percent"],
+          today_change: resultToJSON["09. change"],
           your_change_percentage:
-            ((JSON.parse(result.body)["Global Quote"]["05. price"] -
-              stock.recommended_price) /
-              JSON.parse(result.body)["Global Quote"]["05. price"]) *
+            ((resultToJSON["05. price"] - stock.recommended_price) /
+              resultToJSON["05. price"]) *
             100,
-          your_change:
-            JSON.parse(result.body)["Global Quote"]["05. price"] -
-            stock.recommended_price
+          your_change: resultToJSON["05. price"] - stock.recommended_price
         },
         { where: { stock_id: stock.id } }
       );
       if (updatePrice) {
-        console.log("success---------", stock.id);
+        console.log("success id---------", stock.id);
       } else {
-        console.log("fail---------", stock.id);
+        console.log("fail id---------", stock.id);
       }
+    } else {
+      console.log("------------API maximum calling reached------------");
     }
   } catch (error) {
     console.log("error---------", error);
