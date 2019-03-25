@@ -1,5 +1,5 @@
 <div id="predictions" class=" fullwidth inner-scroll">
-  <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+  <div class="header p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
     fxLayoutAlign.gt-xs="space-between center">
     <div fxLayout="row" fxLayoutAlign="start center">
       <div class="logo" fxLayout="row" fxLayoutAlign="start center">
@@ -171,9 +171,12 @@
           <div class="box-shadow" fxLayout.sm="row" fxLayoutAlign="center center">
             <label><b>{{currentPrice | currency:'USD':'symbol'}}</b></label>
             <!-- *ngIf="prediction.addedToPortfolio === false" -->
-            <button class="add-button" mat-flat-button>Add to
-              portfolio</button>
-            <!-- <button style="color: white;
+            <button class="add-button" *ngIf="_stockDetailService.alreadyAdded === 'false'"
+              (click)="addToPortfolioSubmit(id)" mat-flat-button>Add to portfolio</button>
+            <button class="add-button" *ngIf="_stockDetailService.alreadyAdded === 'true'" mat-flat-button
+              disabled>Already Added
+            </button>
+            <!--  <button style="color: white;
             background-color: #7F63F4;" *ngIf="prediction.addedToPortfolio === true"
                 class="submit-button" mat-stroked-button disabled>Already Added</button> -->
           </div>

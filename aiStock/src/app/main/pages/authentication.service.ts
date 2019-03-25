@@ -19,6 +19,7 @@ export class AuthenticationService {
     //this.apiUrl = serverUrl + "user/login"; 
     return this.http.post<any>(loginUrl, userData, this.httpOptions).pipe(
       tap((user) => {
+        console.log(user)
         localStorage.setItem('LoggedInUser', user.token);
       }, err => {
         console.log(err);

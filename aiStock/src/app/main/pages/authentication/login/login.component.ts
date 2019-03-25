@@ -99,6 +99,7 @@ export class LoginComponent implements OnInit {
             };
             this._authenticationService.loginCheck(loginData).subscribe((result) => {
                 localStorage.setItem('username', result.username);
+                localStorage.setItem('isSubscribed', result.isSubscribed);
                 this.snackBar.open('Success', 'You are login successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
@@ -140,6 +141,7 @@ export class LoginComponent implements OnInit {
                 };
                 this._authenticationService.loginCheck(userData).subscribe((result) => {
                     localStorage.setItem('username', result.username);
+                    localStorage.setItem('isSubscribed', result.isSubscribed);
                     this.snackBar.open('Success', 'You are login successfully', {
                         duration: 2000,
                         horizontalPosition: 'center',
@@ -206,7 +208,7 @@ export class LoginComponent implements OnInit {
             this._authenticationService.loginCheck(userData).subscribe((result) => {
                 localStorage.setItem('userdata', result.token);
                 localStorage.setItem('username', result.username);
-
+                localStorage.setItem('isSubscribed', result.isSubscribed);
                 this.snackBar.open('Success', 'You are login successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',

@@ -11,6 +11,7 @@ export class StockDetailService implements Resolve<any>{
   widgets: any[];
   stockInfo: any[];
   algorithmInfo: any[];
+  alreadyAdded: any;
   httpOptions;
   constructor(private _httpClient: HttpClient) {
 
@@ -24,7 +25,7 @@ export class StockDetailService implements Resolve<any>{
      */
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
     return new Promise((resolve, reject) => {
-
+      this.alreadyAdded = route.params.portfolioFlag;
       Promise.all([
         this.getWidgets(),
         this.getStockInfo(route.params.stockId),

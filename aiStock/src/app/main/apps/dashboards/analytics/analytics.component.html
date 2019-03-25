@@ -10,7 +10,14 @@
                     [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     Home
                 </span>
-                <button class="box-shadow" (click)="subscription()" mat-flat-button>Subscribe Pro</button>
+                <!-- (click)="called()" (click)="subscription()" *ngIf="isSubscribed === 'false'" -->
+                <button id="openPaypal" class="box-shadow" (click)="subscription()" mat-flat-button>Subscribe Pro
+                </button>
+                <div style="display:none;" id="paypal-checkout-btn"></div>
+
+                <!--  <input type="number" [(ngModel)]="finalAmount" style="padding-bottom: 10px;">
+                <h2 *ngIf="paypalLoad">Paypal button is loading</h2>-->
+
             </div>
 
         </div>
@@ -200,20 +207,21 @@
                             </mat-header-cell>
 
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
-                                <p class="text-truncate iconWidth">
+                                <p class="text-truncate ">
                                     {{portfolio.groupName}}</p>
                             </mat-cell>
 
                         </ng-container>
                         <!-- Reference Column -->
                         <ng-container matColumnDef="stockName">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Stock Name
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Stock Name
                             </mat-header-cell>
 
-                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
+                            <mat-cell *matCellDef="let portfolio">
                                 <img src="assets/images/company/{{portfolio.ticker_image}}.png" height="25px"
                                     width="25px">
-                                <p class="text-truncate iconWidth">
+                                <p (click)="openStockDetail(portfolio.id,portfolio.group_id,portfolio.groupName,'true')"
+                                    class="text-truncate iconWidth">
                                     {{portfolio.stock_name}}</p>
                             </mat-cell>
 
@@ -221,8 +229,9 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="recommendedPrice">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header>Recommended Price</mat-header-cell>
-                            <mat-cell *matCellDef="let portfolio">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Recommended Price
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
                                 <p class="text-truncate">
                                     {{portfolio.recommended_price | currency:'USD':'symbol'}}
                                 </p>

@@ -31,6 +31,8 @@ export class StockDetailComponent implements OnInit {
   targetPrice: string;
   predictionGroup: string;
   tickerImage: string;
+  alreadyAdded: string;
+  id: string;
   widget1SelectedYear = '2016';
   widget5SelectedDay = 'today';
   constructor(private route: ActivatedRoute,
@@ -46,9 +48,11 @@ export class StockDetailComponent implements OnInit {
       this.stockId = params['stockId'];
       this.groupId = params['groupId'];
       this.stockName = params['stockname'];
+      this.alreadyAdded = params['portfolioFlag'];
     });
     // Stock Info  
     if (this._stockDetailService.stockInfo) {
+      this.id = this._stockDetailService.stockInfo['id'];
       this.ticker = this._stockDetailService.stockInfo['ticker'];
       this.earningDate = this._stockDetailService.stockInfo['target_date'];
       this.suggestedDate = this._stockDetailService.stockInfo['suggested_date'];
@@ -135,7 +139,7 @@ export class StockDetailComponent implements OnInit {
   }
 
   addToPortfolioSubmit(stockId: string) {
-    console.log(stockId)
+    //console.log(stockId)
     if (stockId) {
       const stockid = {
         'stockId': stockId.toString()
@@ -148,14 +152,13 @@ export class StockDetailComponent implements OnInit {
           verticalPosition: 'top'
         });
         this._stockDetailService.toGetPredictions(this.groupId).subscribe((result) => {
+          this._stockDetailService.alreadyAdded = 'true';
           // this._stockDetailService.predictions = result.data;
           //  this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
           // window.location.reload();
         }, (err) => {
           console.log(err);
         });
-        // this.getPortfolioData()
-        // window.location.reload();
       }, (err) => {
         console.log(err);
         if (err) {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { DataSource } from '@angular/cdk/collections';
@@ -9,8 +9,9 @@ import { merge, Observable, BehaviorSubject, fromEvent, Subject, from } from 'rx
 import { takeUntil } from 'rxjs/internal/operators';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FuseUtils } from '@fuse/utils';
-
-
+import * as $ from 'jquery';
+declare var jQuery: any;
+declare let paypal: any;
 @Component({
     selector: 'analytics-dashboard',
     templateUrl: './analytics.component.html',
@@ -18,13 +19,14 @@ import { FuseUtils } from '@fuse/utils';
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
+export class AnalyticsDashboardComponent implements OnInit, OnDestroy, AfterViewChecked {
     widgets: any;
     product: any;
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
     activeStock = 'prediction';
     predictionGroupData: any;
+    isSubscribed: any;
     errMsg;
     message: string;
     pageSize;
@@ -33,6 +35,40 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice'];
     stockName: string;
     portfolio: boolean;
+    // paypal declaration
+    addScript: boolean = false;
+    paypalLoad: boolean = true;
+    finalAmount: number = 5;
+    paypalConfig = {
+        env: 'sandbox',
+        client: {
+            sandbox: 'AaVjrE0H_T29glzn_RJJTdQgqKpxhq5fGG6wiBzNXTCGiKlMYsC6RWoP6GcaWbr2-h6zunnsT-6K4U7W',
+            production: '<your-production-key here>'
+        },
+        style: {
+            color: 'blue',
+            shape: 'pill',
+            label: 'pay',
+            height: 40,
+        },
+        commit: true,
+        payment: (data, actions) => {
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        { amount: { total: this.finalAmount, currency: 'USD' } }
+                    ]
+                }
+            });
+        },
+        onAuthorize: (data, actions) => {
+            return actions.payment.execute().then((payment) => {
+                //Do something when payment is successful.
+                console.log(payment)
+            })
+        }
+    };
+
     @ViewChild(MatPaginator)
     public paginator: MatPaginator;
 
@@ -69,10 +105,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
+        this.isSubscribed = localStorage.getItem('isSubscribed');
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.predictionGroupData = res.data;
         }, error => {
+            console.log(error);
             this.errMsg = error.message;
         });
 
@@ -80,6 +118,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this._analyticsDashboardService.getProduct().subscribe(res => {
             this.product = res.data;
         }, error => {
+            console.log(error);
             this.errMsg = error.message;
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
@@ -97,7 +136,36 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 this.dataSource.filter = this.filter.nativeElement.value;
             });
     }
+    ngAfterViewChecked(): void {
+        if (!this.addScript) {
+            this.addPaypalScript().then(() => {
 
+                /*  paypal.Button.render({
+
+                     style: {
+                         size: 'small'
+                     },
+
+                     payment: function () {
+                         this.paypalConfig
+                     },
+
+                 }, '#buynow'); */
+
+                paypal.Button.render(this.paypalConfig, '#paypal-checkout-btn');
+                this.paypalLoad = false;
+            })
+        }
+    }
+    addPaypalScript() {
+        this.addScript = true;
+        return new Promise((resolve, reject) => {
+            let scripttagElement = document.createElement('script');
+            scripttagElement.src = 'https://www.paypalobjects.com/api/checkout.js';
+            scripttagElement.onload = resolve;
+            document.body.appendChild(scripttagElement);
+        })
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
@@ -176,18 +244,30 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     }
 
     subscription() {
-        //this._analyticsDashboardService.getSubPlan();
-        // window.location.href = 'https://www.sandbox.paypal.com/webapps/xoonboarding?token=EC-65E11139SN398630L&country.x=US&locale.x=en_US&country.x=US&locale.x=en_US#/checkout/guest';
-        this._analyticsDashboardService.getSubPlan().subscribe(res => {
-            console.log(res);
-            if (res.redirection_link) {
-                window.location.href = res.redirection_link;
-            }
+        window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
+        /* this._analyticsDashboardService.getSubPlan().subscribe(res => {
+            console.log("ppp", res);
+            // if (res.redirection_link) {
+            window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
+            // window.open('https://www.google.com', "_blank");
+            // }
         }, error => {
             console.log(error);
             this.errMsg = error.message;
-        });
+        }); */
 
+    }
+    /*  called() {
+ 
+ 
+         // $('#openPaypal').click(function () {
+         //     console.log('jquery call');
+         //     $('.test').trigger('click');
+         // });
+ 
+     } */
+    openStockDetail(stockid, groupid, stockname, flag) {
+        this.router.navigate(['/apps/dashboards/analytics/stockDetail', btoa(stockid), btoa(groupid), stockname, flag]);
     }
     /**
  * On destroy

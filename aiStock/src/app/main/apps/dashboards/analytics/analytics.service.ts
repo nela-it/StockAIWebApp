@@ -83,19 +83,18 @@ export class AnalyticsDashboardService implements Resolve<any>
                 .subscribe((response: any) => {
                     this.column = response.data;
                     this.realTimeData = [];
-                    for (var i = 0; i < this.column.length; i++) {
+                    for (let i = 0; i < this.column.length; i++) {
                         this.realTimeData.push(this.column[i]['real_time_price']);
 
                         if (i + 1 == this.column.length) {
                             this.portfolio = [];
-                            for (var j = 0; j < this.realTimeData.length; j++) {
+                            for (let j = 0; j < this.realTimeData.length; j++) {
                                 this.portfolio.push(this.realTimeData[j].stock);
 
                             }
                         }
                     }
-                    for (var a = 0; a < this.portfolio.length; a++) {
-                        console.log(this.portfolio[a].Prediction_group['group_name'])
+                    for (let a = 0; a < this.portfolio.length; a++) {
                         this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name']
 
                     }
@@ -130,9 +129,12 @@ export class AnalyticsDashboardService implements Resolve<any>
         return this._httpClient.get(getProductDetails, this.httpOptions);
     }
     public getSubPlan(): Observable<any> {
+
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*',
                 'authorization': localStorage.getItem('LoggedInUser')
             })
         };
