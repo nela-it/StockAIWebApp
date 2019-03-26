@@ -19,52 +19,47 @@
         }
     }
     .logo-content{
+        background-color:#8262fa;
+        padding-right: 8px; 
+        height: 64px; 
+        vertical-align: center;
+        width:250px;
+        .logo {
+            margin: 0px auto;
+            color: #8262fa;
+            width: 100%;
+            
+            .a {
+                display: inline-block;
+                padding: 8px;
+                color: white; 
+                .stockzai-logo{
+                    cursor: pointer;
+                }  
+                .icon-text {
+                    cursor: pointer;
+                    color: white;
+                    font-size: 20px;   
+                    margin-left: 70px; 
+                    padding-top: 4px;                               
+                    @include media-breakpoint-down('xs') {
+                        margin-left: 26px;
+                    }
+                } 
+            }
+    
+            img {
+                width: 125px;
+                height: 36px;
+                max-width: none;            
+                vertical-align: center; 
+                border: none; 
+            }            
+        }
         @include media-breakpoint-down('xs') {
             width: 200px !important;
         } 
-    }
-    /* .logo {
-        display: flex;
-        align-items: center;
-
-        .logo-icon {
-            width: 38px;
-        }
-    } */
-    .logo {
-        margin: 0px auto;
-        color: #8262fa;
-        width: 100%;
-        cursor: pointer;
-        .a {
-            display: inline-block;
-            padding: 8px;
-            color: white;   
-        }
-
-        img {
-            width: 125px;
-            height: 36px;
-            max-width: none;            
-            vertical-align: center; 
-            border: none; 
-        }
-
-        .icon-text {
-            color: white;
-            font-size: 20px;
-            margin-top: 0px;
-            padding: 10px 0px 10px 70px;
-            @include media-breakpoint-down('sm') {
-                padding: 10px 0px 10px 70px;
-            } 
-            @include media-breakpoint-down('xs') {
-                padding: 10px 0px 10px 20px;
-            }
-        }
-
-    }
-
+    }    
     .user-button,
     fuse-search-bar,
     .language-button,

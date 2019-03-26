@@ -1,4 +1,4 @@
-<mat-toolbar class="p-0 mat-elevation-z1">
+<mat-toolbar class="p-0 mat-elevation-z1" *ngIf="userlogin">
 
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
 
@@ -16,18 +16,13 @@
                 </div>
             </div>
 
-            <div class="px-8 px-mat-16 logo-content" fxLayoutAlign="start center"
-                style="background-color:#8262fa; padding-right: 8px; height: 64px; vertical-align: center;width:250px">
+            <div class="px-8 px-mat-16 logo-content" fxLayoutAlign="start center">
                 <div class="logo">
-                    <span class="a"><img [routerLink]="'/apps/dashboards/analytics'" src="assets/images/logos/logo.png">
-                        <span [routerLink]="'/apps/dashboards/profile'" style="vertical-align: middle;">
-                            <mat-icon class="icon-text">settings</mat-icon>
-                        </span>
+                    <span class="a" fxLayoutAlign="start center">
+                        <img class="stockzai-logo" [routerLink]="'/apps/dashboards/analytics'"
+                            src="assets/images/logos/logo.png">
+                        <mat-icon [routerLink]="'/apps/dashboards/profile'" class="icon-text">settings</mat-icon>
                     </span>
-                    <!--  <span class="a">
-                        <h2>AIStock</h2>
-                    </span> -->
-
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" class="serachBar" fxHide.xs fxHide.sm>
                     <mat-icon>search</mat-icon>

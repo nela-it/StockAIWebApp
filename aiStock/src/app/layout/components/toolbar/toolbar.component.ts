@@ -25,6 +25,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     userStatusOptions: any[];
     badgeColor: any;
     username: any;
+    userlogin = false;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -98,8 +99,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         this.username = localStorage.getItem('username');
+        if (this.username) {
+            this.userlogin = true;
+        }
 
-        this.badgeColor = { 'color': '#8262fa' }
+        this.badgeColor = { 'color': '#8262fa' };
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

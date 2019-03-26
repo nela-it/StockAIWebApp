@@ -16,10 +16,8 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   loginCheck(userData): Observable<any> {
-    //this.apiUrl = serverUrl + "user/login"; 
     return this.http.post<any>(loginUrl, userData, this.httpOptions).pipe(
       tap((user) => {
-        console.log(user)
         localStorage.setItem('LoggedInUser', user.token);
       }, err => {
         console.log(err);
@@ -28,11 +26,9 @@ export class AuthenticationService {
   }
 
   registerUser(userData): Observable<any> {
-    //this.apiUrl = serverUrl + "user/register"; 
     return this.http.post<any>(registerUrl, userData, this.httpOptions).pipe(
       tap((user) => {
         localStorage.setItem('LoggedInUser', user.token);
-        console.log("user data", user)
       }, err => {
         console.log(err);
       })
@@ -40,7 +36,6 @@ export class AuthenticationService {
   }
 
   emailCheck(email): Observable<any> {
-    //this.apiUrl = serverUrl + "user/register"; 
     return this.http.post<any>(forgotPasswordUrl, email, this.httpOptions).pipe(
       tap((user) => {
         console.log("user data", user)
@@ -51,7 +46,6 @@ export class AuthenticationService {
   }
 
   changePassword(data): Observable<any> {
-    //this.apiUrl = serverUrl + "user/register"; 
     return this.http.post<any>(resetPasswordUrl, data, this.httpOptions).pipe(
       tap((user) => {
         console.log("user data", user)

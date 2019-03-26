@@ -5,11 +5,12 @@ import { AuthService } from 'angularx-social-login';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
 import { ValidationServiceService } from '../validationService/validation-service.service';
-
+import { AuthGuard } from '../../../../auth.guard';
 const routes = [
     {
         path: 'auth/login',
-        component: LoginComponent
+        component: LoginComponent,
+        // canActivate: [AuthGuard]
     }
 ];
 @NgModule({

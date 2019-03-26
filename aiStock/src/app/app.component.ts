@@ -16,15 +16,15 @@ import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 
 @Component({
-    selector   : 'app',
+    selector: 'app',
     templateUrl: './app.component.html',
-    styleUrls  : ['./app.component.scss']
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy
-{
+export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
-
+    username: any;
+    userlogin = false;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -49,8 +49,7 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
         private _platform: Platform
-    )
-    {
+    ) {
         // Get default navigation
         this.navigation = navigation;
 
@@ -73,8 +72,7 @@ export class AppComponent implements OnInit, OnDestroy
         this._translateService.use('en');
 
         // Add is-mobile class to the body if the platform is mobile
-        if ( this._platform.ANDROID || this._platform.IOS )
-        {
+        if (this._platform.ANDROID || this._platform.IOS) {
             this.document.body.classList.add('is-mobile');
         }
 
@@ -89,20 +87,21 @@ export class AppComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
+        this.username = localStorage.getItem('username');
+        if (this.username) {
+            this.userlogin = true;
+        }
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
                 this.fuseConfig = config;
 
-                if ( this.fuseConfig.layout.width === 'boxed' )
-                {
+                if (this.fuseConfig.layout.width === 'boxed') {
                     this.document.body.classList.add('boxed');
                 }
-                else
-                {
+                else {
                     this.document.body.classList.remove('boxed');
                 }
             });
@@ -111,8 +110,7 @@ export class AppComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -127,8 +125,7 @@ export class AppComponent implements OnInit, OnDestroy
      *
      * @param key
      */
-    toggleSidebarOpen(key): void
-    {
+    toggleSidebarOpen(key): void {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 }

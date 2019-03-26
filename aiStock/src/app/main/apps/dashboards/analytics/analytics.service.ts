@@ -89,7 +89,6 @@ export class AnalyticsDashboardService implements Resolve<any>
                         if (i + 1 == this.column.length) {
                             this.portfolio = [];
                             for (let j = 0; j < this.realTimeData.length; j++) {
-                                console.log(this.realTimeData[j].today_change_percentage);
                                 this.portfolio.push(this.realTimeData[j].stock);
                                 this.portfolio[j].current_price = this.realTimeData[j].current_price;
                                 this.portfolio[j].today_change_percentage = this.realTimeData[j].today_change_percentage;

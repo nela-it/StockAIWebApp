@@ -108,7 +108,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }
             this._authenticationService.registerUser(registerData).subscribe((result) => {
                 localStorage.setItem('username', result.username);
-                localStorage.setItem('isSubscribed', result.isSubscribed);
+
                 this.snackBar.open('Success', 'You are register successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
@@ -151,7 +151,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 }
                 this._authenticationService.registerUser(userData).subscribe((result) => {
                     localStorage.setItem('username', result.username);
-                    localStorage.setItem('isSubscribed', result.isSubscribed);
+
                     this.snackBar.open('Success', 'You are register successfully', {
                         duration: 2000,
                         horizontalPosition: 'center',
@@ -214,7 +214,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             //console.log(userData);
             this._authenticationService.registerUser(userData).subscribe((result) => {
                 localStorage.setItem('username', result.username);
-                localStorage.setItem('isSubscribed', result.isSubscribed);
+
                 this.snackBar.open('Success', 'You are register successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',

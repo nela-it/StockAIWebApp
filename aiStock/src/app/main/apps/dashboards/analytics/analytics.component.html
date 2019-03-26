@@ -11,7 +11,7 @@
                     Home
                 </span>
                 <!-- (click)="called()" (click)="subscription()" *ngIf="isSubscribed === 'false'" -->
-                <button id="openPaypal" class="box-shadow" *ngIf="isSubscribed === 'false'" (click)="subscription()"
+                <button id="openPaypal" class="box-shadow" *ngIf="isSubscribed === false" (click)="subscription()"
                     mat-flat-button>Subscribe Pro
                 </button>
                 <!-- <div style="display:none;" id="paypal-checkout-btn"></div>
@@ -222,7 +222,7 @@
                                 <img src="assets/images/company/{{portfolio.ticker_image}}.png" height="25px"
                                     width="25px">
                                 <p (click)="openStockDetail(portfolio.id,portfolio.group_id,portfolio.groupName,'true')"
-                                    class="text-truncate iconWidth">
+                                    class="text-truncate iconWidth blackFontColor">
                                     {{portfolio.stock_name}}</p>
                             </mat-cell>
 
@@ -233,7 +233,7 @@
                             <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Recommended Price
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
-                                <p class="text-truncate">
+                                <p class="text-truncate blurFontColor">
                                     {{portfolio.recommended_price | currency:'USD':'symbol'}}
                                 </p>
                             </mat-cell>
@@ -241,9 +241,9 @@
 
                         <!-- Total Price Column -->
                         <ng-container matColumnDef="currentPrice">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Current Price
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Current Price
                             </mat-header-cell>
-                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
+                            <mat-cell *matCellDef="let portfolio">
                                 <p class="total-price text-truncate">
                                     {{portfolio.current_price | currency:'USD':'symbol'}}
                                 </p>
@@ -255,16 +255,17 @@
                             <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Suggested Date
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-sm>
-                                <p class="text-truncate">
-                                    {{portfolio.suggested_date | date:'dd MMMM y'}}
+                                <p class="text-truncate blurFontColor">
+                                    {{portfolio.suggested_date | date:'dd MMM y'}}
                                 </p>
                             </mat-cell>
                         </ng-container>
 
                         <!-- Status Column -->
                         <ng-container matColumnDef="tragetPrice">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header>Traget Price</mat-header-cell>
-                            <mat-cell *matCellDef="let portfolio">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header fxHide fxShow.gt-md>Traget Price
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
                                 <p class="status text-truncate h6 p-4">
                                     {{portfolio.target_price| currency:'USD':'symbol'}}
                                 </p>

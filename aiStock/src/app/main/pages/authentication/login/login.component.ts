@@ -9,7 +9,7 @@ import { SocialUser } from 'angularx-social-login';
 import { Md5 } from 'ts-md5/dist/md5';
 import { ValidationServiceService } from '../validationService/validation-service.service';
 import { AuthenticationService } from '../../authentication.service';
-import { from } from 'rxjs';
+import { PlatformLocation } from '@angular/common';
 // import * as CryptoJS from 'crypto-js';
 import {
     MatSnackBar,
@@ -28,8 +28,6 @@ export class LoginComponent implements OnInit {
     private user: SocialUser;
     private loggedIn: boolean;
     public error_msg: string;
-    // horizontalPosition: MatSnackBarHorizontalPosition = 'start';
-    // verticalPosition: MatSnackBarVerticalPosition = 'bottom';
     /**
      * Constructor
      *
@@ -44,8 +42,17 @@ export class LoginComponent implements OnInit {
         public _validationServiceService: ValidationServiceService,
         private route: ActivatedRoute, private router: Router,
         public snackBar: MatSnackBar,
+        location: PlatformLocation
     ) {
-        // Configure the layout
+        location.onPopState(() => {
+            window.location.reload()
+            //this.router.navigate(['/pages/auth/login']);
+            //console.log('pressed back!', window.location);
+            //router.navigate(['/']);
+
+        });
+
+        // Configure the layout        
         this._fuseConfigService.config = {
             layout: {
                 navbar: {
@@ -72,6 +79,7 @@ export class LoginComponent implements OnInit {
      * On init
      */
     ngOnInit(): void {
+
         this.loginForm = this._formBuilder.group({
             email: ['', [
                 Validators.required,
@@ -89,9 +97,6 @@ export class LoginComponent implements OnInit {
         } else {
             const md5 = new Md5();
             const eptPassword = btoa(this.loginForm.value.password);
-            // const encpwd = CryptoJS.AES.encrypt(this.loginForm.value.password, 'Keyishere');
-            // console.log("atob-----", btoa("Nihal Koli"));
-            // console.log('EncText === ', encpwd.toString());
             const loginData = {
                 'apiType': 'login',
                 'username': this.loginForm.value.email,
@@ -99,7 +104,7 @@ export class LoginComponent implements OnInit {
             };
             this._authenticationService.loginCheck(loginData).subscribe((result) => {
                 localStorage.setItem('username', result.username);
-                localStorage.setItem('isSubscribed', result.isSubscribed);
+
                 this.snackBar.open('Success', 'You are login successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',
@@ -141,7 +146,7 @@ export class LoginComponent implements OnInit {
                 };
                 this._authenticationService.loginCheck(userData).subscribe((result) => {
                     localStorage.setItem('username', result.username);
-                    localStorage.setItem('isSubscribed', result.isSubscribed);
+
                     this.snackBar.open('Success', 'You are login successfully', {
                         duration: 2000,
                         horizontalPosition: 'center',
@@ -203,12 +208,11 @@ export class LoginComponent implements OnInit {
                     'provider': 'LINKEDIN'
                 }
             };
-            // console.log(userData);
             // tslint:disable-next-line:no-shadowed-variable
             this._authenticationService.loginCheck(userData).subscribe((result) => {
                 localStorage.setItem('userdata', result.token);
                 localStorage.setItem('username', result.username);
-                localStorage.setItem('isSubscribed', result.isSubscribed);
+
                 this.snackBar.open('Success', 'You are login successfully', {
                     duration: 2000,
                     horizontalPosition: 'center',

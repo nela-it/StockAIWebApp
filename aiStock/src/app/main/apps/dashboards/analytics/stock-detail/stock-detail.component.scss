@@ -286,7 +286,13 @@
             padding: 10px;
             .course-content {
                 background: white;
-                min-height: 160px;              
+                min-height: 160px; 
+                @include media-breakpoint-down(md) {
+                    min-height: 185px;     
+                } 
+                @include media-breakpoint-down(sm) {
+                    min-height: 160px;     
+                }               
                 .content {
                     padding: 12px;
 

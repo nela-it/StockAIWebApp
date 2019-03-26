@@ -73,9 +73,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
-        this.isSubscribed = localStorage.getItem('isSubscribed');
+        //this.isSubscribed = localStorage.getItem('isSubscribed');
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
+            this.isSubscribed = res.isSubscribed;
+            console.log(this.isSubscribed)
             this.predictionGroupData = res.data;
         }, error => {
             console.log(error);
@@ -91,7 +93,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
 
-        fromEvent(this.filter.nativeElement, 'keyup')
+        /* fromEvent(this.filter.nativeElement, 'keyup')
             .pipe(
                 takeUntil(this._unsubscribeAll),
                 debounceTime(150),
@@ -102,7 +104,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     return;
                 }
                 this.dataSource.filter = this.filter.nativeElement.value;
-            });
+            }); */
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -349,16 +351,16 @@ export class FilesDataSource extends DataSource<any>
                     [propertyA, propertyB] = [a.target_date, b.target_date];
                     break;
                 case 'todaychangeper':
-                    [propertyA, propertyB] = [a.target_price, b.target_price];
+                    [propertyA, propertyB] = [a.today_change_percentage, b.today_change_percentage];
                     break;
                 case 'addtodaychange':
-                    [propertyA, propertyB] = [a.target_price, b.target_price];
+                    [propertyA, propertyB] = [a.today_change, b.today_change];
                     break;
                 case 'yourchangeper':
-                    [propertyA, propertyB] = [a.target_price, b.target_price];
+                    [propertyA, propertyB] = [a.your_change_percentage, b.your_change_percentage];
                     break;
                 case 'addyourchange':
-                    [propertyA, propertyB] = [a.target_price, b.target_price];
+                    [propertyA, propertyB] = [a.your_change, b.your_change];
                     break;
             }
 

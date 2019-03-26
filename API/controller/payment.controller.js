@@ -75,7 +75,7 @@ exports.successPayment = async (req, res, next) => {
       res.send(
         `<b>Subscription Payment Successfull</b><br /> return to profile <a href='${
           config.frontImage
-        }'>Click here...</a>`
+        }#/apps/dashboards/analytics'>Click here...</a>`
       );
     } else {
       res.status(404).json({

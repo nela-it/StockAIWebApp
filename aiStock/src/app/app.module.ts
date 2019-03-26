@@ -34,7 +34,8 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'pages/auth/login'
+        redirectTo: 'pages/auth/login',
+        canActivate: [AuthGuard]
     }
 ];
 const config = new AuthServiceConfig([
