@@ -245,3 +245,5 @@ checkSubscribed = async (params, next, cb) => {
     next(e);
   }
 };
+
+exports.checkSubscribedFn = checkSubscribed;

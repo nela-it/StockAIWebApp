@@ -70,6 +70,7 @@ export class PredictionListService implements Resolve<any>
             this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions)
                 .subscribe((response: any) => {
                     this.isSubscribed = response.isSubscribed;
+                    console.log(this.isSubscribed)
                     this.predictions = [];
                     this.predictions = response.data;
                     for (let i = 0; i < this.predictions.length; i++) {

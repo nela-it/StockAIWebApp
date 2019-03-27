@@ -76,17 +76,24 @@ exports.saveGroupData = data => {
 
 exports.getGroups = async (req, res, next) => {
   try {
-    let isGroupsFound = await Prediction_group.findAll();
-    if (isGroupsFound.length > 0) {
-      return res.status(200).json({
-        message: "Groups Found",
-        data: isGroupsFound
-      });
-    } else {
-      return res.status(404).json({
-        message: "Groups Not Found"
-      });
-    }
+    userService.checkSubscribedFn(
+      { user_id: req.user.id },
+      next,
+      async (err, isSubscribed) => {
+        let isGroupsFound = await Prediction_group.findAll();
+        if (isGroupsFound.length > 0) {
+          return res.status(200).json({
+            message: "Groups Found",
+            data: isGroupsFound,
+            isSubscribed: isSubscribed
+          });
+        } else {
+          return res.status(404).json({
+            message: "Groups Not Found"
+          });
+        }
+      }
+    );
   } catch (error) {
     next(error);
   }
