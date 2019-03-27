@@ -187,36 +187,38 @@
   <div style="margin-left:2.5%">
     <h2>Algorithm</h2>
   </div>
-  <div class="courses" fxLayout="row wrap" fxLayoutAlign="start start">
-    <div class="course" *ngFor="let course of algorithmData; let i=index" fxFlex="100" fxFlex.gt-xs="50"
-      fxFlex.gt-sm="20">
-      <div class="course-content" fxLayout="column">
-        <div class="content" fxLayout="column" fxLayoutAlign="start start">
-          <div class="number">
-            <div class="logo">
-              <b [ngStyle]="{'color':algorithmData[i].stepColor}">
-                0{{algorithmData[i].step_no}}
-              </b>
+  <div class="">
+    <div class="courses" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div class="course" *ngFor="let course of algorithmData; let i=index" fxFlex="100" fxFlex.gt-xs="50"
+        fxFlex.gt-sm="20">
+        <div class="course-content" fxLayout="column">
+          <div class="content" fxLayout="column" fxLayoutAlign="start start">
+            <div class="number">
+              <div class="logo">
+                <b [ngStyle]="{'color':algorithmData[i].stepColor}">
+                  0{{algorithmData[i].step_no}}
+                </b>
+              </div>
+              <div class="info">
+                <div>Step {{algorithmData[i].stepChar}}</div>
+                <div class="title">Process</div>
+              </div>
             </div>
-            <div class="info">
-              <div>Step {{algorithmData[i].stepChar}}</div>
-              <div class="title">Process</div>
-            </div>
+            <div class="desc">{{algorithmData[i].step_details}}</div>
+            <div style="margin-top:10px;">This completes task {{algorithmData[i].stepChar | lowercase}}.</div>
           </div>
-          <div class="desc">{{algorithmData[i].step_details}}</div>
-          <div style="margin-top:10px;">This completes task {{algorithmData[i].stepChar | lowercase}}.</div>
         </div>
       </div>
-    </div>
-    <div class="course" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="20">
-      <div class="course-content" fxLayout="column">
-        <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
-          <img src="assets/images/etc/content.png" width="75px" height="75px">
+      <div class="course" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="20">
+        <div class="course-content" fxLayout="column">
+          <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex>
+            <img src="assets/images/etc/content.png" width="75px" height="75px">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="no-courses" *ngIf="algorithmData.length === 0">
-      No courses found!
+      <div class="no-courses" *ngIf="algorithmData.length === 0">
+        No courses found!
+      </div>
     </div>
   </div>
   <div class="chart">
