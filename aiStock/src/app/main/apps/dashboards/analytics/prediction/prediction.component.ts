@@ -69,6 +69,7 @@ export class PredictionListComponent implements OnInit, OnDestroy {
         { value: 'up', viewValue: 'Up' },
         { value: 'down', viewValue: 'Dwon' }
     ];
+    realTimeData = [];
     @ViewChild(MatPaginator)
     paginator: MatPaginator;
 
@@ -150,6 +151,13 @@ export class PredictionListComponent implements OnInit, OnDestroy {
                     verticalPosition: 'top'
                 });
                 this._predictionListService.toGetPredictions(this.groupId).subscribe((result) => {
+                    this.realTimeData = [];
+                    for (let i = 0; i < result.data.length; i++) {
+                        this.realTimeData.push(result.data[i]['real_time_price']);
+                        for (let a = 0; a < this.realTimeData.length; a++) {
+                            result.data[i].current_price = this.realTimeData[a].current_price;
+                        }
+                    }
                     this._predictionListService.predictions = result.data;
                     this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
                     // window.location.reload();
