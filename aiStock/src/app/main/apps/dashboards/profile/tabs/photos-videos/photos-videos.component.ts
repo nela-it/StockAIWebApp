@@ -5,6 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { ProfileService } from '../../profile.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import * as _ from 'underscore'
 
 @Component({
     selector: 'profile-photos-videos',
@@ -14,7 +15,12 @@ import { Subject } from 'rxjs';
 })
 export class ProfilePhotosVideosComponent implements OnInit, OnDestroy {
     photosVideos: any;
-
+    subscriptionDetail: any;
+    subscriptionAmount: any;
+    paymentID: any;
+    paymentDate: any;
+    errMsg;
+    isSubscribed: boolean = true;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -43,6 +49,24 @@ export class ProfilePhotosVideosComponent implements OnInit, OnDestroy {
             .subscribe(photosVideos => {
                 this.photosVideos = photosVideos;
             });
+        this._profileService.getUserInfo().subscribe(res => {
+
+            if (Object.keys(res.payment_detail).length !== 0) {
+                // console.log('true')
+                this.isSubscribed = true;
+                this.subscriptionAmount = res.payment_detail['subscription_amount'];
+                this.paymentDate = res.payment_detail['createdAt'];
+                this.subscriptionDetail = JSON.parse(res.payment_detail['subscription_details']);
+                this.paymentID = this.subscriptionDetail.paymentId;
+            } else {
+                // console.log('false')
+                this.isSubscribed = false;
+            }
+
+        }, error => {
+            console.log(error);
+            this.errMsg = error.message;
+        });
     }
 
     /**

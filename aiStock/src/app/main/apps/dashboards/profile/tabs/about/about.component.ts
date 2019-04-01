@@ -47,7 +47,6 @@ export class ProfileAboutComponent implements OnInit, OnDestroy {
             });
         this._profileService.getUserInfo().subscribe(res => {
             this.userInfo = res.data;
-            console.log(this.userInfo)
             this.username = this.userInfo.username;
             this.email = this.userInfo.email;
         }, error => {

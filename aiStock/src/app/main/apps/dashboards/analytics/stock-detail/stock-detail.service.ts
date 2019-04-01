@@ -11,7 +11,7 @@ export class StockDetailService implements Resolve<any>{
   widgets: any[];
   stockInfo: any[];
   algorithmInfo: any[];
-  alreadyAdded: any;
+  alreadyAdded: string;
   httpOptions;
   constructor(private _httpClient: HttpClient) {
 
@@ -53,9 +53,6 @@ export class StockDetailService implements Resolve<any>{
         }, reject);
     });
   }
-  /* public getStockInfo(): Observable<any> {
-    return this._httpClient.get(getStockInfo,  { 'group_id': id } , this.httpOptions);
-  } */
 
   getStockInfo(id): Promise<any> {
     this.httpOptions = {
@@ -68,7 +65,6 @@ export class StockDetailService implements Resolve<any>{
       this._httpClient.post(getStockInfo, { 'stockId': atob(id) }, this.httpOptions)
         .subscribe((response: any) => {
           this.stockInfo = response.data;
-          console.log(this.stockInfo['real_time_price'].current_price)
           resolve(response);
         }, reject);
     });
@@ -97,19 +93,10 @@ export class StockDetailService implements Resolve<any>{
     };
     return this._httpClient.post(addPortfolio, stockId, this.httpOptions).pipe(
       tap((result) => {
-        console.log('user data', result);
+
       }, err => {
         console.log(err);
       })
     );
-  }
-  toGetPredictions(id): Observable<any> {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'authorization': localStorage.getItem('LoggedInUser')
-      })
-    };
-    return this._httpClient.post(getGroupsDetails, { 'group_id': id }, this.httpOptions);
   }
 }

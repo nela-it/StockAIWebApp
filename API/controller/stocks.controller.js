@@ -10,10 +10,16 @@ const Op = db.Op;
 
 exports.getStockInfo = async (req, res, next) => {
   try {
-    Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
-    Stocks.belongsTo(Real_time_price, { foreignKey: "realtime_price_id" });
+    Stocks.belongsTo(Prediction_group, {
+      foreignKey: "group_id"
+    });
+    Stocks.belongsTo(Real_time_price, {
+      foreignKey: "realtime_price_id"
+    });
     let stockDetail = await Stocks.findOne({
-      where: { id: req.body.stockId },
+      where: {
+        id: req.body.stockId
+      },
       include: [Prediction_group, Real_time_price]
     });
     if (stockDetail) {
@@ -36,7 +42,9 @@ exports.updateRealtimePrice = async () => {
   try {
     let getAllStocks = await Stocks.findAll({
       limit: 5,
-      order: [[Sequelize.fn("RAND")]]
+      order: [
+        [Sequelize.fn("RAND")]
+      ]
     });
     if (getAllStocks.length > 0) {
       for (let i = 0; i < getAllStocks.length; i++) {
@@ -51,26 +59,24 @@ exports.updateRealtimePrice = async () => {
 updateStock = async stock => {
   try {
     let result = await request(
-      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${
-        stock.ticker
-      }&apikey=KNAV1IV5MII8BJWQ`
+      `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stock.ticker}&apikey=KNAV1IV5MII8BJWQ`
     );
     let resultToJSON = await JSON.parse(result.body);
     if (!resultToJSON.Note) {
       resultToJSON = await JSON.parse(result.body)["Global Quote"];
-      let updatePrice = await Real_time_price.update(
-        {
-          current_price: resultToJSON["05. price"],
-          today_change_percentage: resultToJSON["10. change percent"],
-          today_change: resultToJSON["09. change"],
-          your_change_percentage:
-            ((resultToJSON["05. price"] - stock.recommended_price) /
-              resultToJSON["05. price"]) *
-            100,
-          your_change: resultToJSON["05. price"] - stock.recommended_price
-        },
-        { where: { stock_id: stock.id } }
-      );
+      let updatePrice = await Real_time_price.update({
+        current_price: resultToJSON["05. price"],
+        today_change_percentage: resultToJSON["10. change percent"],
+        today_change: resultToJSON["09. change"],
+        your_change_percentage: ((resultToJSON["05. price"] - stock.recommended_price) /
+            resultToJSON["05. price"]) *
+          100,
+        your_change: resultToJSON["05. price"] - stock.recommended_price
+      }, {
+        where: {
+          stock_id: stock.id
+        }
+      });
       if (updatePrice) {
         console.log("success id---------", stock.id);
       } else {

@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { predictionGroup, getProductDetails, getPortfolio, getSub } from 'appConfig/appconfig';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, from } from 'rxjs';
-
+import _ from 'underscore';
 @Injectable()
 export class AnalyticsDashboardService implements Resolve<any>
 {
@@ -12,7 +12,11 @@ export class AnalyticsDashboardService implements Resolve<any>
     widgets: any[];
     product: any[];
     portfolio: any[] = [];
+    groupsList: any[] = [];
+    allGroupData: any[] = [];
+    tickerArray: any[] = [];
     realTimeData: any[] = [];
+    noOfTickers: any;
     predictionGroupData: any[];
     groupName: string;
     groupId: string;
@@ -83,13 +87,17 @@ export class AnalyticsDashboardService implements Resolve<any>
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
                     this.column = response.data;
+                    console.log(this.column)
                     this.realTimeData = [];
                     for (let i = 0; i < this.column.length; i++) {
+                        this.column[i]['real_time_price']['real_time_price_value'] = this.column[i].real_time_price_value;
                         this.realTimeData.push(this.column[i]['real_time_price']);
+
                         if (i + 1 == this.column.length) {
                             this.portfolio = [];
                             for (let j = 0; j < this.realTimeData.length; j++) {
                                 this.portfolio.push(this.realTimeData[j].stock);
+                                this.portfolio[j].real_time_price_value = this.realTimeData[j].real_time_price_value;
                                 this.portfolio[j].current_price = this.realTimeData[j].current_price;
                                 this.portfolio[j].today_change_percentage = this.realTimeData[j].today_change_percentage;
                                 this.portfolio[j].todayperfontColor = parseInt(this.portfolio[j].today_change_percentage) >= 0 ? 'green' : 'red';
@@ -106,15 +114,18 @@ export class AnalyticsDashboardService implements Resolve<any>
                         }
                     }
                     for (let a = 0; a < this.portfolio.length; a++) {
-                        this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name']
-
+                        this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name'];
+                        this.groupsList.push(this.portfolio[a].Prediction_group['group_name']);
+                        this.tickerArray.push(this.portfolio[a].ticker)
                     }
+                    this.noOfTickers = _.uniq(this.tickerArray).length;
+                    this.allGroupData = _.uniq(this.groupsList);
+
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);
                 }, err => {
-                    resolve([])
+                    resolve([]);
                     this.errmsg = err.error.message;
-
                 });
         });
     }

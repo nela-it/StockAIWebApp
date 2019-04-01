@@ -170,14 +170,11 @@
           </div>
           <div class="box-shadow" fxLayout.sm="row" fxLayoutAlign="center center">
             <label><b>{{currentPrice | currency:'USD':'symbol'}}</b></label>
-            <!-- *ngIf="prediction.addedToPortfolio === false" -->
             <button class="add-button" *ngIf="_stockDetailService.alreadyAdded === 'false'"
               (click)="addToPortfolioSubmit(id)" mat-flat-button>Add to portfolio</button>
             <button class="add-button" *ngIf="_stockDetailService.alreadyAdded === 'true'" mat-flat-button>Already Added
             </button>
-            <!--  <button style="color: white;
-            background-color: #7F63F4;" *ngIf="prediction.addedToPortfolio === true"
-                class="submit-button" mat-stroked-button disabled>Already Added</button> -->
+
           </div>
         </div>
       </mat-card>

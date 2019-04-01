@@ -2,50 +2,145 @@
 
 :host {
 
-    #photos-videos {
+    #about {
+        max-width: 1200px;
 
-        .period {
+        .about-content {
+            max-width: 100% !important;
+            .general {
 
-            .period-title {
-                margin-bottom: 24px;
+                .location {
 
-                .name {
-                    font-size: 20px;
-                }
-
-                .info {
-                    margin-left: 16px;
-                    font-size: 15px;
-                    color: rgba(0, 0, 0, 0.54);
+                    mat-icon {
+                        line-height: 13px !important;
+                    }
                 }
             }
 
-            .period-media {
-                margin-bottom: 16px;
+            .work {
 
-                .media {
-                    margin: 0 16px 16px 0;
-                    position: relative;
+                .job {
 
-                    .preview {
-                        width: 256px;
-                        height: 256px;
-                        display: block;
+                    .company {
+                        padding: 0 16px 0 0;
+                        font-weight: 500;
                     }
 
-                    .title {
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        right: 0;
-                        z-index: 10;
-                        padding: 0 16px;
-                        height: 48px;
-                        line-height: 48px;
-                        background: rgba(0, 0, 0, 0.54);
-                        color: #FFF;
-                        font-size: 15px;
+                    .date {
+                        color: rgba(0, 0, 0, 0.54);
                     }
+                }
+            }
+        }
+
+        .about-sidebar {
+            padding-left: 32px;
+
+            @include media-breakpoint('sm') {
+                padding: 8px
+            }
+
+            .friends {
+
+                .content {
+
+                    .friend {
+                        padding: 4px;
+                    }
+                }
+            }
+
+            .groups {
+
+                .content {
+
+                    .group {
+                        margin-bottom: 16px;
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+
+                        .logo {
+                            border: 1px solid rgba(0, 0, 0, 0.12);
+                            margin-right: 16px;
+                        }
+
+                        .name {
+                            font-weight: 500;
+                            font-size: 15px;
+                        }
+
+                        .category,
+                        .members {
+                            color: rgba(0, 0, 0, 0.54);
+                        }
+
+                        .members {
+                            margin-top: 16px;
+                        }
+                    }
+                }
+            }
+        }
+        .subscribed-text{
+            color: #7F63F4;                                        
+            
+            h2{
+                margin-left: 20px
+            }           
+        }
+    }
+
+    // Profile boxes
+    .profile-box {
+        /* margin-bottom: 16px;
+        @include mat-elevation(2);
+ */
+        header {
+            padding: 16px;
+            /* .mat-accent-bg{
+                background-color: #7F63F4 !important;
+            } */
+            .title {
+                font-size: 17px;
+            }
+
+            .more {
+                cursor: pointer;
+            }
+        }
+
+        .content {
+            padding: 16px;
+            background-color: #FFF;
+        }
+
+        footer {
+            padding: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            background-color: rgba(0, 0, 0, 0.06);
+        }
+
+        &.info-box {
+            .mat-accent-bg{
+                background-color: #7F63F4 !important;
+            }
+            .info-line {
+                margin-bottom: 24px;
+
+                .title {
+                    font-size: 15px;
+                    font-weight: 500;
+                    padding-bottom: 4px;
+                }
+
+                .info {
+
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
                 }
             }
         }

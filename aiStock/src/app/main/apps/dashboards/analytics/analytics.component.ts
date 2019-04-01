@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { DataSource } from '@angular/cdk/collections';
@@ -6,12 +6,10 @@ import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/an
 import { Router } from '@angular/router';
 import { PredictionListService } from './prediction/prediction.service';
 import { merge, Observable, BehaviorSubject, fromEvent, Subject, from } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { FuseUtils } from '@fuse/utils';
-import * as $ from 'jquery';
-declare var jQuery: any;
-declare let paypal: any;
+import { takeUntil } from 'rxjs/internal/operators';
+
 @Component({
     selector: 'analytics-dashboard',
     templateUrl: './analytics.component.html',
@@ -32,10 +30,18 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     pageSize;
     groupId;
     dataSource: FilesDataSource | null;
-    displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice', 'currentPrice', 'suggestedDate', 'tragetPrice', 'todayChangePercentage', 'addTodayChange', 'yourChangePercentage', 'addYourChange'];
+    chartType;
+    chartDatasets;
+    chartLabels;
+    chartColors;
+    chartOptions;
+    portfolioPrice = [];
+    realTimePrice = [];
+    displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice',
+        'currentPrice', 'suggestedDate', 'tragetPrice', 'todayChangePercentage', 'addTodayChange', 'yourChangePercentage', 'addYourChange'];
     stockName: string;
     portfolio: boolean;
-
+    selectedStock: string;
 
     @ViewChild(MatPaginator)
     public paginator: MatPaginator;
@@ -56,10 +62,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     constructor(
         public _analyticsDashboardService: AnalyticsDashboardService,
         public _predictionListService: PredictionListService,
-        private router: Router
+        private router: Router,
+        private changeDetectorRefs: ChangeDetectorRef
     ) {
         // Register the custom chart.js plugin
-        this._registerCustomChartJSPlugin();
         this._unsubscribeAll = new Subject();
     }
 
@@ -71,16 +77,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get the widgets from the service
-        this.widgets = this._analyticsDashboardService.widgets;
-        //this.isSubscribed = localStorage.getItem('isSubscribed');
         // Predictions group data
         this._analyticsDashboardService.getGroupList().subscribe(res => {
             this.isSubscribed = res.isSubscribed;
-            console.log(this.isSubscribed)
             this.predictionGroupData = res.data;
         }, error => {
-            console.log(error);
             this.errMsg = error.message;
         });
 
@@ -88,103 +89,126 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this._analyticsDashboardService.getProduct().subscribe(res => {
             this.product = res.data;
         }, error => {
-            console.log(error);
             this.errMsg = error.message;
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
-
-        /* fromEvent(this.filter.nativeElement, 'keyup')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                debounceTime(150),
-                distinctUntilChanged()
-            )
-            .subscribe(() => {
-                if (!this.dataSource) {
-                    return;
-                }
-                this.dataSource.filter = this.filter.nativeElement.value;
-            }); */
+        this.loadChart(this._analyticsDashboardService.portfolio);
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Register a custom plugin
-     */
-    private _registerCustomChartJSPlugin(): void {
-        (<any>window).Chart.plugins.register({
-            afterDatasetsDraw: function (chart, easing) {
-                // Only activate the plugin if it's made available
-                // in the options
-                if (
-                    !chart.options.plugins.xLabelsOnTop ||
-                    (chart.options.plugins.xLabelsOnTop && chart.options.plugins.xLabelsOnTop.active === false)
-                ) {
-                    return;
-                }
-
-                // To only draw at the end of animation, check for easing === 1
-                const ctx = chart.ctx;
-
-                chart.data.datasets.forEach(function (dataset, i) {
-                    const meta = chart.getDatasetMeta(i);
-                    if (!meta.hidden) {
-                        meta.data.forEach(function (element, index) {
-
-                            // Draw the text in black, with the specified font
-                            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                            const fontSize = 13;
-                            const fontStyle = 'normal';
-                            const fontFamily = 'Roboto, Helvetica Neue, Arial';
-                            ctx.font = (<any>window).Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-
-                            // Just naively convert to string for now
-                            const dataString = dataset.data[index].toString() + 'k';
-
-                            // Make sure alignment settings are correct
-                            ctx.textAlign = 'center';
-                            ctx.textBaseline = 'middle';
-                            const padding = 15;
-                            const startY = 24;
-                            const position = element.tooltipPosition();
-                            ctx.fillText(dataString, position.x, startY);
-
-                            ctx.save();
-
-                            ctx.beginPath();
-                            ctx.setLineDash([5, 3]);
-                            ctx.moveTo(position.x, startY + padding);
-                            ctx.lineTo(position.x, position.y - padding);
-                            ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-                            ctx.stroke();
-
-                            ctx.restore();
-                        });
-                    }
-                });
-            }
+    loadChart(portfolioData): void {
+        portfolioData.map((item, i) => {
+            // console.log(item, i);
+            this.portfolioPrice.push(item.real_time_price_value);
+            this.realTimePrice.push(item.current_price);
         });
+        this.chartType = 'line';
+        this.chartDatasets = [
+            {
+                label: 'User Portfolio price',
+                data: this.portfolioPrice,
+                fill: 'start'
+
+            },
+            {
+                label: 'Real time Price',
+                data: this.realTimePrice,
+                fill: 'start'
+            }
+        ];
+        this.chartLabels = ['12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'];
+        this.chartColors = [
+            {
+                borderColor: '#3949ab',
+                backgroundColor: '#3949ab',
+                pointBackgroundColor: '#3949ab',
+                pointHoverBackgroundColor: '#3949ab',
+                pointBorderColor: '#ffffff',
+                pointHoverBorderColor: '#ffffff'
+            },
+            {
+                borderColor: 'rgba(30, 136, 229, 0.87)',
+                backgroundColor: 'rgba(30, 136, 229, 0.87)',
+                pointBackgroundColor: 'rgba(30, 136, 229, 0.87)',
+                pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
+                pointBorderColor: '#ffffff',
+                pointHoverBorderColor: '#ffffff'
+            }
+        ];
+        this.chartOptions = {
+            spanGaps: false,
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            tooltips: {
+                position: 'nearest',
+                mode: 'index',
+                intersect: false
+            },
+            layout: {
+                padding: {
+                    left: 24,
+                    right: 32
+                }
+            },
+            elements: {
+                point: {
+                    radius: 4,
+                    borderWidth: 2,
+                    hoverRadius: 4,
+                    hoverBorderWidth: 2
+                }
+            },
+            scales: {
+                xAxes: [
+                    {
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            fontColor: 'rgba(0,0,0,0.54)'
+                        }
+                    }
+                ],
+                yAxes: [
+                    {
+                        gridLines: {
+                            tickMarkLength: 16
+                        },
+                        ticks: {
+                            stepSize: 1000
+                        }
+                    }
+                ]
+            },
+            plugins: {
+                filler: {
+                    propagate: false
+                }
+            }
+        };
     }
 
-    active_stock(tab) {
+    active_stock(tab): void {
         this.activeStock = tab;
         if (this.activeStock === 'portfolio') {
             this.portfolio = true;
         }
     }
 
-    groupDetail(data) {
+    groupDetail(data): void {
         // console.log("explore button call", data);
         this._predictionListService.groupId = btoa(data.id);
         this._analyticsDashboardService.groupName = data.group_name;
         this._predictionListService.groupName = data.group_name;
         this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id), data.group_name]);
     }
+    selected(event): void {
+        this.dataSource.filter = event.value;
+        this.changeDetectorRefs.detectChanges();
 
-    subscription() {
+    }
+    subscription(): void {
         //window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
         this._analyticsDashboardService.getSubPlan().subscribe(res => {
             //console.log("ppp", res);
@@ -193,21 +217,13 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 //window.open('https://www.google.com', "_blank");
             }
         }, error => {
-            console.log(error);
+            //console.log(error);
             this.errMsg = error.message;
         });
 
     }
-    /*  called() {
- 
- 
-         // $('#openPaypal').click(function () {
-         //     console.log('jquery call');
-         //     $('.test').trigger('click');
-         // });
- 
-     } */
-    openStockDetail(stockid, groupid, stockname, flag) {
+
+    openStockDetail(stockid, groupid, stockname, flag): void {
         this.router.navigate(['/apps/dashboards/analytics/stockDetail', btoa(stockid), btoa(groupid), stockname, flag]);
     }
     /**

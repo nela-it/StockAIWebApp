@@ -20,7 +20,7 @@ export class AuthenticationService {
       tap((user) => {
         localStorage.setItem('LoggedInUser', user.token);
       }, err => {
-        console.log(err);
+        //console.log(err);
       })
     );
   }
@@ -30,7 +30,7 @@ export class AuthenticationService {
       tap((user) => {
         localStorage.setItem('LoggedInUser', user.token);
       }, err => {
-        console.log(err);
+        //console.log(err);
       })
     );
   }
@@ -38,9 +38,9 @@ export class AuthenticationService {
   emailCheck(email): Observable<any> {
     return this.http.post<any>(forgotPasswordUrl, email, this.httpOptions).pipe(
       tap((user) => {
-        console.log("user data", user)
+        //console.log("user data", user)
       }, err => {
-        console.log(err);
+        //console.log(err);
       })
     );
   }
@@ -48,9 +48,9 @@ export class AuthenticationService {
   changePassword(data): Observable<any> {
     return this.http.post<any>(resetPasswordUrl, data, this.httpOptions).pipe(
       tap((user) => {
-        console.log("user data", user)
+        //console.log("user data", user)
       }, err => {
-        console.log(err);
+        //console.log(err);
       })
     );
   }

@@ -5,8 +5,12 @@ const realTimePrice = db.Real_time_price;
 const userService = require("../middleware/user.service");
 const checkPortfolio = require("./portfolio.controller").checkPortfolio;
 const atob = require("atob");
-Stocks.belongsTo(Prediction_group, { foreignKey: "group_id" });
-Stocks.belongsTo(realTimePrice, { foreignKey: "realtime_price_id" });
+Stocks.belongsTo(Prediction_group, {
+  foreignKey: "group_id"
+});
+Stocks.belongsTo(realTimePrice, {
+  foreignKey: "realtime_price_id"
+});
 
 // Stocks.sync({ force: true });
 // realTimePrice.sync({ force: true });
@@ -45,6 +49,7 @@ exports.saveGroupData = data => {
   }
 
   async function updateStocks(column) {
+    console.log("column", column);
     let isStockCreate = await Stocks.create({
       group_id: column.prediction_group_id,
       ticker: column.Ticker,
@@ -62,12 +67,13 @@ exports.saveGroupData = data => {
         stock_id: isStockCreate.dataValues.id
       });
       if (updateRealtimePrice) {
-        await Stocks.update(
-          {
-            realtime_price_id: updateRealtimePrice.dataValues.id
-          },
-          { where: { id: isStockCreate.dataValues.id } }
-        );
+        await Stocks.update({
+          realtime_price_id: updateRealtimePrice.dataValues.id
+        }, {
+          where: {
+            id: isStockCreate.dataValues.id
+          }
+        });
       }
     }
     console.log("Stock Created----", isStockCreate.dataValues.id);
@@ -76,8 +82,9 @@ exports.saveGroupData = data => {
 
 exports.getGroups = async (req, res, next) => {
   try {
-    userService.checkSubscribedFn(
-      { user_id: req.user.id },
+    userService.checkSubscribedFn({
+        user_id: req.user.id
+      },
       next,
       async (err, isSubscribed) => {
         let isGroupsFound = await Prediction_group.findAll();
@@ -105,12 +112,16 @@ exports.exploreGroups = async (req, res, next) => {
       let isStockFound;
       if (isSubscribed) {
         isStockFound = await Stocks.findAll({
-          where: { group_id: atob(req.body.group_id) },
+          where: {
+            group_id: atob(req.body.group_id)
+          },
           include: [realTimePrice]
         });
       } else {
         isStockFound = await Stocks.findAll({
-          where: { group_id: atob(req.body.group_id) },
+          where: {
+            group_id: atob(req.body.group_id)
+          },
           include: [realTimePrice],
           limit: 2
         });

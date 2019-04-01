@@ -150,20 +150,20 @@ export class StockDetailComponent implements OnInit {
         'stockId': stockId.toString()
       }
       this._stockDetailService.addToPortfolio(stockid).subscribe((result) => {
-
+        this._stockDetailService.alreadyAdded = 'true';
         this.snackBar.open('Success', 'Your porfolio successfully added.', {
           duration: 2000,
           horizontalPosition: 'center',
           verticalPosition: 'top'
         });
-        this._stockDetailService.toGetPredictions(this.groupId).subscribe((result) => {
-          this._stockDetailService.alreadyAdded = 'true';
+        /* this._stockDetailService.toGetPredictions(this.groupId).subscribe((result) => {
+          // this._stockDetailService.alreadyAdded = 'true';
           // this._stockDetailService.predictions = result.data;
           //  this.dataSource = new FilesDataSource(this._predictionListService, this.paginator, this.sort);
           // window.location.reload();
         }, (err) => {
           console.log(err);
-        });
+        }); */
       }, (err) => {
         console.log(err);
         if (err) {

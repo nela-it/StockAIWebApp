@@ -1,16 +1,34 @@
-<div id="photos-videos" class="p-24">
-    <div class="period" *ngFor="let period of photosVideos">
+<div id="about" class="p-24" fxLayout="row wrap">
 
-        <!--  <div class="period-title">
-            <span class="name">{{period.name}}</span>
-            <span class="info">{{period.info}}</span>
-        </div> -->
+    <div *ngIf="isSubscribed !== false" class="about-content p-24" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50"
+        fxFlex.gt-md="65">
 
-        <!-- <div class="period-media" fxLayout="row wrap">
-            <div class="media" *ngFor="let media of period.media">
-                <img class="preview" [src]="media.preview" title="{{media.title}}">
-                <div class="title">{{media.title}}</div>
+        <div class="profile-box info-box general" fxLayout="column">
+
+            <header class="mat-accent-bg">
+                <div class="title">Payment Information</div>
+            </header>
+
+            <div class="content">
+                <div class="info-line">
+                    <div class="title">Payment Date </div>
+                    <div class="info"> {{paymentDate | date:'dd MMMM y'}}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Payment ID </div>
+                    <div class="info">{{paymentID}}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Subscription Amount</div>
+                    <div class="info">{{subscriptionAmount}}</div>
+                </div>
             </div>
-        </div> -->
+
+        </div>
+    </div>
+    <div fxLayoutAlign="center center" class="subscribed-text" *ngIf="isSubscribed === false">
+        <h2 fxLayoutAlign="start start">Please subscribe plan.</h2>
     </div>
 </div>

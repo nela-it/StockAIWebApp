@@ -32,14 +32,14 @@ app.use(
 // Cron job for update realtime price of stock
 new CronJob(
   "*/2 * * * *",
-  async function() {
-    console.log("<------------------2 mins Cron Job Start------------------>");
-    await stockService();
-    console.log("<------------------2 mins Cron Job End------------------>");
-  },
-  null,
-  true,
-  "America/Los_Angeles"
+  async () => {
+      console.log("<------------------2 mins Cron Job Start------------------>");
+      await stockService();
+      console.log("<------------------2 mins Cron Job End------------------>");
+    },
+    null,
+    true,
+    "America/Los_Angeles"
 );
 
 // read excel sheet and update records in DB
@@ -47,7 +47,7 @@ var watcher = chokidar.watch("./files", {
   persistent: true
 });
 
-watcher.on("add", async function(path) {
+watcher.on("add", async function (path) {
   console.log("File", path, "has been added");
   if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
     var workbook = XLSX.readFile(`./${path}`, {

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { getUserInfo } from 'appConfig/appconfig';
-
+import { getUserInfo, registerUrl } from 'appConfig/appconfig';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ProfileService implements Resolve<any>
@@ -15,6 +15,7 @@ export class ProfileService implements Resolve<any>
     timelineOnChanged: BehaviorSubject<any>;
     aboutOnChanged: BehaviorSubject<any>;
     photosVideosOnChanged: BehaviorSubject<any>;
+    fileToUpload: File = null;
     httpOptions
     /**
      * Constructor
@@ -108,4 +109,15 @@ export class ProfileService implements Resolve<any>
         };
         return this._httpClient.get(getUserInfo, this.httpOptions);
     }
+
+    upload(data): Observable<any> {
+        return this._httpClient.post<any>(registerUrl, data, this.httpOptions).pipe(
+            tap((user) => {
+                localStorage.setItem('LoggedInUser', user.token);
+            }, err => {
+                //console.log(err);
+            })
+        );
+    }
+
 }

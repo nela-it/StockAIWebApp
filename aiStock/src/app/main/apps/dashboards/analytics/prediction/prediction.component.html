@@ -265,7 +265,7 @@
                 <mat-row *matRowDef="let prediction; columns: displayedColumns;">
                 </mat-row>
             </mat-table>
-            <div class="subscribed-text" *ngIf="!_predictionListService.isSubscribed">
+            <div class="subscribed-text" *ngIf="!_predictionListServicend">
                 <h2 fxLayoutAlign="start start">Subscribe for full list of stocks.</h2>
             </div>
             <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"

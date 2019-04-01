@@ -22,7 +22,7 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider, LinkedInLoginProvider } from 'angularx-social-login';
 import { AuthGuard } from './auth.guard';
-
+import { AdsenseModule } from 'ng2-adsense';
 const appRoutes: Routes = [
     {
         path: 'apps',
@@ -69,7 +69,10 @@ export function provideConfig() {
             delay: 0,
             passThruUnknownUrl: true
         }),
-
+        AdsenseModule.forRoot({
+            adClient: 'ca-pub-7640562161899788',
+            adSlot: 7259870550,
+        }),
         // Material moment date module
         MatMomentDateModule,
 
