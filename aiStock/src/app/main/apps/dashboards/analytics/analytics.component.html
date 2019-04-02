@@ -117,11 +117,6 @@
                             <hr class="portfolio-sign">
                             <label style=" padding-left: 12px;">Portfolio</label>
                         </div>
-                        <!-- <div fxLayout="row" fxLayoutAlign.xs="start" style=" padding-right: 32px;">
-                            <hr class="Benchmark-portfolio-sign">
-                            <label style=" padding-left: 12px;">Benchmark Portfolio</label>
-                        </div> -->
-
                     </div>
                     <div class="text-data" fxLayout.xs="row" fxLayoutAlign.lg="center">
                         <div class="text-color">No. of Stocks<div class="value">
@@ -133,7 +128,8 @@
 
                     <div class="stock-filter" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign.lg="center">
                         <mat-form-field appearance="outline">
-                            <mat-select placeholder="All Stock Groups" name="food">
+                            <mat-select #selectGroups [(ngModel)]="selectedGroups"
+                                (selectionChange)="selectedDayGroup($event)" name="food">
                                 <mat-option value="all">All</mat-option>
                                 <mat-option *ngFor="let food of _analyticsDashboardService.allGroupData" [value]="food">
                                     {{food}}
@@ -143,10 +139,11 @@
 
 
                         <mat-form-field appearance="outline">
-                            <mat-select placeholder="Last 30 days ">
-                                <mat-option> Daily </mat-option>
-                                <mat-option> Weekly </mat-option>
-                                <mat-option> Monthly </mat-option>
+                            <mat-select #selectdays [(ngModel)]="selecteddays"
+                                (selectionChange)="selectedDayGroup($event)">
+                                <mat-option value="Daily"> Daily </mat-option>
+                                <mat-option value="Weekly"> Weekly </mat-option>
+                                <mat-option value="Monthly"> Monthly </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -177,8 +174,8 @@
                 </div>
                 <div class="stock-filter">
                     <mat-form-field appearance="outline">
-                        <mat-select placeholder="All Stock Groups" #filter [(ngModel)]="selectedStock"
-                            (selectionChange)="selected($event)" name="food">
+                        <mat-select #filter [(ngModel)]="selectedStock" (selectionChange)="selected($event)"
+                            name="food">
                             <mat-option value="">All</mat-option>
                             <mat-option *ngFor="let food of _analyticsDashboardService.allGroupData" [value]="food">
                                 {{food}}

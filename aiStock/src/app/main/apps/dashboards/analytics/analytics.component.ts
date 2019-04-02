@@ -1,14 +1,15 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatSelect } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { DataSource } from '@angular/cdk/collections';
 import { AnalyticsDashboardService } from 'app/main/apps/dashboards/analytics/analytics.service';
 import { Router } from '@angular/router';
 import { PredictionListService } from './prediction/prediction.service';
-import { merge, Observable, BehaviorSubject, fromEvent, Subject, from } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { merge, Observable, BehaviorSubject, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FuseUtils } from '@fuse/utils';
-import { takeUntil } from 'rxjs/internal/operators';
+import * as moment from 'moment';
+
 
 @Component({
     selector: 'analytics-dashboard',
@@ -23,6 +24,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
     activeStock = 'prediction';
+    selectedStock = '';
+    selectedGroups = 'all';
+    selecteddays = 'Daily';
     predictionGroupData: any;
     isSubscribed: any;
     errMsg;
@@ -37,17 +41,21 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     chartOptions;
     portfolioPrice = [];
     realTimePrice = [];
+    portfolioLabels = [];
     displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice',
         'currentPrice', 'suggestedDate', 'tragetPrice', 'todayChangePercentage', 'addTodayChange', 'yourChangePercentage', 'addYourChange'];
     stockName: string;
     portfolio: boolean;
-    selectedStock: string;
 
     @ViewChild(MatPaginator)
     public paginator: MatPaginator;
 
     @ViewChild('filter')
     filter: ElementRef;
+
+    @ViewChild('selectGroups') selectGroups: MatSelect;
+    @ViewChild('selectdays') selectdays: MatSelect;
+
 
     @ViewChild(MatSort)
     public sort: MatSort;
@@ -92,15 +100,29 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
             this.errMsg = error.message;
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
-        this.loadChart(this._analyticsDashboardService.portfolio);
+        this.loadChart(this._analyticsDashboardService.portfolio, 'all', 'Daily');
     }
 
-    loadChart(portfolioData): void {
+    loadChart(portfolioData, group, days): void {
+        this.portfolioPrice = [];
+        this.realTimePrice = [];
+        this.portfolioLabels = [];
+
         portfolioData.map((item, i) => {
-            // console.log(item, i);
-            this.portfolioPrice.push(item.real_time_price_value);
-            this.realTimePrice.push(item.current_price);
+            if (days === 'Daily') {
+                if (moment().isSame(item.real_time_price_update_date, 'day')) {
+                    this.portfolioPrice.push(item.real_time_price_value);
+                    this.realTimePrice.push(item.current_price);
+                    this.portfolioLabels.push(moment(item.real_time_price_update_date).format("hh:mm A"))
+                }
+            } else if (days === 'Weekly') {
+                console.log(moment().isBetween(moment().startOf('week'), moment().endOf('week')));
+                // if (moment().startOf('week') >= moment(item.real_time_price_update_date) && moment().endOf('week') >= moment(item.real_time_price_update_date)) {
+                //     console.log();
+                // }
+            }
         });
+
         this.chartType = 'line';
         this.chartDatasets = [
             {
@@ -115,7 +137,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 fill: 'start'
             }
         ];
-        this.chartLabels = ['12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'];
+        this.chartLabels = this.portfolioLabels;
         this.chartColors = [
             {
                 borderColor: '#3949ab',
@@ -188,6 +210,21 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
             }
         };
     }
+
+    selectedDayGroup(e): void {
+        this.loadChart(this._analyticsDashboardService.portfolio, this.selectGroups.triggerValue, this.selectdays.triggerValue);
+    }
+
+    selectedDay(e): void {
+        if (e.value === 'Daily') {
+            console.log(moment());
+        } else if (e.value === 'Weekly') {
+            console.log(moment().startOf('week'), moment().endOf('week'));
+        } else {
+            console.log(moment().month());
+        }
+    }
+
 
     active_stock(tab): void {
         this.activeStock = tab;

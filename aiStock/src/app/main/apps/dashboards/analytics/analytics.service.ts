@@ -87,17 +87,20 @@ export class AnalyticsDashboardService implements Resolve<any>
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
                     this.column = response.data;
-                    console.log(this.column)
+                    console.log(this.column);
                     this.realTimeData = [];
                     for (let i = 0; i < this.column.length; i++) {
                         this.column[i]['real_time_price']['real_time_price_value'] = this.column[i].real_time_price_value;
+                        this.column[i]['real_time_price']['user_updatedAt'] = this.column[i].updatedAt;
                         this.realTimeData.push(this.column[i]['real_time_price']);
 
-                        if (i + 1 == this.column.length) {
+                        if (i + 1 === this.column.length) {
                             this.portfolio = [];
                             for (let j = 0; j < this.realTimeData.length; j++) {
                                 this.portfolio.push(this.realTimeData[j].stock);
                                 this.portfolio[j].real_time_price_value = this.realTimeData[j].real_time_price_value;
+                                this.portfolio[j].real_time_price_update_date = this.realTimeData[j].updatedAt;
+                                this.portfolio[j].user_updatedAt = this.realTimeData[j].user_updatedAt;
                                 this.portfolio[j].current_price = this.realTimeData[j].current_price;
                                 this.portfolio[j].today_change_percentage = this.realTimeData[j].today_change_percentage;
                                 this.portfolio[j].todayperfontColor = parseInt(this.portfolio[j].today_change_percentage) >= 0 ? 'green' : 'red';
