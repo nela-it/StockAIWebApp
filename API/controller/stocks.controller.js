@@ -63,19 +63,18 @@ updateStock = async stock => {
     );
     let resultToJSON = await JSON.parse(result.body);
     if (!resultToJSON.Note) {
+
       resultToJSON = await JSON.parse(result.body)["Global Quote"];
-      let updatePrice = await Real_time_price.update({
+
+      let updatePrice = await Real_time_price.create({
         current_price: resultToJSON["05. price"],
         today_change_percentage: resultToJSON["10. change percent"],
         today_change: resultToJSON["09. change"],
         your_change_percentage: ((resultToJSON["05. price"] - stock.recommended_price) /
             resultToJSON["05. price"]) *
           100,
-        your_change: resultToJSON["05. price"] - stock.recommended_price
-      }, {
-        where: {
-          stock_id: stock.id
-        }
+        your_change: resultToJSON["05. price"] - stock.recommended_price,
+        stock_id: stock.id
       });
       if (updatePrice) {
         console.log("success id---------", stock.id);
