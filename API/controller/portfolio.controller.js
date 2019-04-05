@@ -4,6 +4,8 @@ const Prediction_group = db.Prediction_group;
 const Stocks = db.Stocks;
 const realTimePrice = db.Real_time_price;
 const Op = db.Op;
+const Sequelize = require("sequelize");
+
 // Portfolio.sync({ force: true });
 
 exports.addPortfolio = async (req, res, next) => {
@@ -15,13 +17,14 @@ exports.addPortfolio = async (req, res, next) => {
     });
     let getrealTimeDetails = await realTimePrice.findOne({
       where: {
-        stock_id: req.body.stockId
+        id: req.body.realId
       }
     });
+    console.log(getrealTimeDetails);
     let isAlreadyPortfolio = await Portfolio.findOne({
       where: {
         user_id: req.user.id,
-        real_time_price_id: getStockDetails.dataValues.realtime_price_id
+        real_time_price_id: getrealTimeDetails.dataValues.id,
       }
     });
     if (isAlreadyPortfolio) {
@@ -30,9 +33,10 @@ exports.addPortfolio = async (req, res, next) => {
       });
     } else {
       let addPortfolio = await Portfolio.create({
-        real_time_price_id: getStockDetails.dataValues.realtime_price_id,
+        real_time_price_id: getrealTimeDetails.dataValues.id,
         user_id: req.user.id,
-        real_time_price_value: getrealTimeDetails.dataValues.current_price
+        real_time_price_value: getrealTimeDetails.dataValues.current_price,
+        stock_id: req.body.stockId
       });
       if (addPortfolio) {
         return res.status(200).json({
@@ -45,6 +49,7 @@ exports.addPortfolio = async (req, res, next) => {
       }
     }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -60,6 +65,7 @@ exports.getPortfolio = async (req, res, next) => {
   Stocks.belongsTo(Prediction_group, {
     foreignKey: "group_id"
   });
+  console.log("Portfolio", Portfolio);
   try {
     let isRecords = await Portfolio.findAll({
       where: {
@@ -75,6 +81,35 @@ exports.getPortfolio = async (req, res, next) => {
         }]
       }]
     });
+
+    // let isRecord = await Portfolio.findAll({
+    //   where: {
+    //     user_id: req.user.id
+    //   }
+    // });
+    // let isStock, isrealTime;
+    // console.log(isRecord);
+    // for (let i = 0; i < isRecord.length; i++) {
+    //   isStock = await Stocks.findOne({
+    //     where: {
+    //       id: isRecord[i].stock_id
+    //     }
+    //   });
+
+    //   isrealTime = await await realTimePrice.findAll({
+    //     where: {
+    //       stock_id: isStock.dataValues.id
+    //     },
+    //     order: [
+    //       ['createdAt', 'DESC']
+    //     ],
+    //     limit: 1
+    //   });
+    //   console.log(isrealTime);
+
+    // }
+
+    // res.send(isrealTime);
     if (isRecords.length > 0) {
       return res.status(200).json({
         message: "Portfolio Found",
@@ -102,6 +137,7 @@ exports.checkPortfolio = async (params, cb) => {
   Stocks.belongsTo(Prediction_group, {
     foreignKey: "group_id"
   });
+
   try {
     let isRecords = await Portfolio.findAll({
       where: {

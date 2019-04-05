@@ -109,11 +109,14 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this.portfolioLabels = [];
 
         portfolioData.map((item, i) => {
+            // console.log(item);
             if (days === 'Daily') {
-                if (moment().isSame(item.real_time_price_update_date, 'day')) {
+                // console.log(item.realCreateDate);
+                if (moment().isSame(item.realCreateDate, 'day')) {
                     this.portfolioPrice.push(item.real_time_price_value);
                     this.realTimePrice.push(item.current_price);
-                    this.portfolioLabels.push(moment(item.real_time_price_update_date).format("hh:mm A"))
+                    // console.log(moment(item.realCreateDate).format("hh:mm A"));
+                    this.portfolioLabels.push(moment(item.realCreateDate).format("hh:mm A"))
                 }
             } else if (days === 'Weekly') {
                 console.log(moment().isBetween(moment().startOf('week'), moment().endOf('week')));

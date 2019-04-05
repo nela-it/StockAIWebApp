@@ -195,7 +195,7 @@
                     <mat-cell *matCellDef="let prediction">
                         <img src="assets/images/company/{{prediction.ticker_image}}.png" height="25px" width="25px">
                         <p class="text-truncate iconWidth blackFontColor"
-                            (click)="openStockDetail(prediction.id,prediction.addedToPortfolio)">
+                            (click)="openStockDetail(prediction,prediction.addedToPortfolio)">
                             {{prediction.stock_name}}</p>
                     </mat-cell>
 
@@ -251,7 +251,7 @@
                     <mat-cell *matCellDef="let prediction">
                         <p class="">
                             <button *ngIf="prediction.addedToPortfolio === false" class="submit-button"
-                                mat-stroked-button (click)="addToPortfolioSubmit(prediction.id)">Add to
+                                mat-stroked-button (click)="addToPortfolioSubmit(prediction)">Add to
                                 portfolio</button>
                             <button style="color: white;
                             background-color: #7F63F4;" *ngIf="prediction.addedToPortfolio === true"

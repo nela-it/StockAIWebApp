@@ -9,22 +9,26 @@ const Cryptr = require("cryptr");
 const cryptr = new Cryptr("myTotalySecretKey");
 const atob = require("atob");
 
+
 exports.check_auth_provider = (params, next, cb) => {
   User.findOne({
     where: {
-      [Op.and]: [
-        { social_provider: params.provider },
-        { provider_id: params.id }
+      [Op.and]: [{
+          social_provider: params.provider
+        },
+        {
+          provider_id: params.id
+        }
       ]
     }
   }).then(user => {
     if (user) {
-      checkSubscribed(
-        { user_id: user.dataValues.id },
+      checkSubscribed({
+          user_id: user.dataValues.id
+        },
         next,
         (err, isSubscribed) => {
-          let token = jwt.sign(
-            {
+          let token = jwt.sign({
               id: user.id,
               email: user.email,
               username: user.username
@@ -43,15 +47,14 @@ exports.check_auth_provider = (params, next, cb) => {
       );
     } else {
       User.create({
-        email: params.email,
-        username: params.username,
-        social_provider: params.provider,
-        provider_id: params.id
-      })
+          email: params.email,
+          username: params.username,
+          social_provider: params.provider,
+          provider_id: params.id
+        })
         .then(result => {
           if (result) {
-            let token = jwt.sign(
-              {
+            let token = jwt.sign({
                 id: result.id,
                 email: result.email,
                 username: result.username
@@ -85,14 +88,19 @@ exports.check_auth_provider = (params, next, cb) => {
 
 exports.login = (params, next, cb) => {
   User.findOne({
-    where: {
-      [Op.or]: [{ email: params.username }, { username: params.username }]
-    }
-  })
+      where: {
+        [Op.or]: [{
+          email: params.username
+        }, {
+          username: params.username
+        }]
+      }
+    })
     .then(user => {
       if (user) {
-        checkSubscribed(
-          { user_id: user.dataValues.id },
+        checkSubscribed({
+            user_id: user.dataValues.id
+          },
           next,
           (err, isSubscribed) => {
             let password = atob(params.password);
@@ -100,8 +108,7 @@ exports.login = (params, next, cb) => {
               user.password !== null &&
               bcryptService.validPassword(password, user.password)
             ) {
-              let token = jwt.sign(
-                {
+              let token = jwt.sign({
                   id: user.id,
                   email: user.email,
                   username: user.username
@@ -144,10 +151,14 @@ exports.login = (params, next, cb) => {
 
 exports.register = (params, next, cb) => {
   User.findOne({
-    where: {
-      [Op.or]: [{ email: params.email }, { username: params.username }]
-    }
-  })
+      where: {
+        [Op.or]: [{
+          email: params.email
+        }, {
+          username: params.username
+        }]
+      }
+    })
     .then(user => {
       if (user) {
         if (user.email === params.email) {
@@ -171,14 +182,13 @@ exports.register = (params, next, cb) => {
         let decrypt = atob(params.password);
         let password = bcryptService.generateHash(decrypt);
         User.create({
-          email: params.email,
-          password: password,
-          username: params.username
-        })
+            email: params.email,
+            password: password,
+            username: params.username
+          })
           .then(result => {
             if (result) {
-              let token = jwt.sign(
-                {
+              let token = jwt.sign({
                   id: result.id,
                   email: result.email,
                   username: result.username

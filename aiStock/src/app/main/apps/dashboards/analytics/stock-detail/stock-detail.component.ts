@@ -20,6 +20,7 @@ export class StockDetailComponent implements OnInit {
   widgets: any;
   stockName: string;
   stockId: string;
+  realId: string;
   stockData: any = [];
   algorithmData: any = [];
   errMsg: string;
@@ -48,6 +49,7 @@ export class StockDetailComponent implements OnInit {
     this.widgets = this._stockDetailService.widgets;
     this.route.params.subscribe(params => {
       this.stockId = params['stockId'];
+      this.realId = params['realId'];
       this.groupId = params['groupId'];
       this.stockName = params['stockname'];
       this.alreadyAdded = params['portfolioFlag'];

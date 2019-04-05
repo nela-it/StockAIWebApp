@@ -5,6 +5,8 @@ const realTimePrice = db.Real_time_price;
 const userService = require("../middleware/user.service");
 const checkPortfolio = require("./portfolio.controller").checkPortfolio;
 const atob = require("atob");
+const moment = require("moment");
+
 Stocks.belongsTo(Prediction_group, {
   foreignKey: "group_id"
 });
@@ -109,7 +111,7 @@ exports.getGroups = async (req, res, next) => {
 exports.exploreGroups = async (req, res, next) => {
   try {
     userService.isSubscribed(req, next, async (err, isSubscribed) => {
-      let isStockFound;
+      let isStockFound, realTimeStockData;
       if (isSubscribed) {
         isStockFound = await Stocks.findAll({
           where: {
@@ -117,6 +119,19 @@ exports.exploreGroups = async (req, res, next) => {
           },
           include: [realTimePrice]
         });
+        for (let i = 0; i < isStockFound.length; i++) {
+          realTimeStockData = await realTimePrice.findAll({
+            where: {
+              stock_id: isStockFound[i].dataValues.id
+            },
+            order: [
+              ['createdAt', 'DESC']
+            ],
+            limit: 1
+
+          });
+          isStockFound[i].dataValues.real_time_price = realTimeStockData[0];
+        }
       } else {
         isStockFound = await Stocks.findAll({
           where: {
@@ -125,8 +140,19 @@ exports.exploreGroups = async (req, res, next) => {
           include: [realTimePrice],
           limit: 2
         });
+        for (let i = 0; i < isStockFound.length; i++) {
+          realTimeStockData = await realTimePrice.findAll({
+            where: {
+              stock_id: isStockFound[i].dataValues.id
+            },
+            order: [
+              ['createdAt', 'DESC']
+            ],
+            limit: 1
+          });
+          isStockFound[i].dataValues.real_time_price = realTimeStockData[0];
+        }
       }
-
       if (isStockFound.length > 0) {
         checkPortfolio(req, async (err, getPortfolio) => {
           if (getPortfolio.length > 0) {

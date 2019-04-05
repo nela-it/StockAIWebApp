@@ -28,7 +28,7 @@ export class StockDetailService implements Resolve<any>{
       this.alreadyAdded = route.params.portfolioFlag;
       Promise.all([
         this.getWidgets(),
-        this.getStockInfo(route.params.stockId),
+        this.getStockInfo(route.params.stockId, route.params.realId),
         this.getAlgorithm(route.params.groupId)
       ]).then(
         () => {
@@ -54,7 +54,7 @@ export class StockDetailService implements Resolve<any>{
     });
   }
 
-  getStockInfo(id): Promise<any> {
+  getStockInfo(id, realId): Promise<any> {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export class StockDetailService implements Resolve<any>{
       })
     };
     return new Promise((resolve, reject) => {
-      this._httpClient.post(getStockInfo, { 'stockId': atob(id) }, this.httpOptions)
+      this._httpClient.post(getStockInfo, { 'stockId': atob(id), 'realId': atob(realId) }, this.httpOptions)
         .subscribe((response: any) => {
           this.stockInfo = response.data;
           resolve(response);

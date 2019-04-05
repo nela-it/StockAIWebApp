@@ -22,6 +22,12 @@ exports.getStockInfo = async (req, res, next) => {
       },
       include: [Prediction_group, Real_time_price]
     });
+    let realDetail = await Real_time_price.findOne({
+      where: {
+        id: req.body.realId
+      },
+    });
+    stockDetail.real_time_price.dataValues = realDetail.dataValues;
     if (stockDetail) {
       res.status(200).json({
         message: "success",

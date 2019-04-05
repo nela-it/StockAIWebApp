@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: true,
       allowNull: false
     },
+    stock_id: {
+      type: DataTypes.BIGINT,
+      foreignKey: true,
+      allowNull: false
+    },
     real_time_price_value: {
       type: DataTypes.STRING,
       allowNull: true
