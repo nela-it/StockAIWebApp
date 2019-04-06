@@ -111,15 +111,16 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         portfolioData.map((item, i) => {
             // console.log(item);
             if (days === 'Daily') {
+                console.log(item);
                 // console.log(item.realCreateDate);
                 if (moment().isSame(item.realCreateDate, 'day')) {
                     this.portfolioPrice.push(item.real_time_price_value);
                     this.realTimePrice.push(item.current_price);
-                    // console.log(moment(item.realCreateDate).format("hh:mm A"));
                     this.portfolioLabels.push(moment(item.realCreateDate).format("hh:mm A"))
                 }
             } else if (days === 'Weekly') {
-                console.log(moment().isBetween(moment().startOf('week'), moment().endOf('week')));
+                console.log(moment(item.realCreateDate).isBetween(moment().startOf('week'), moment().endOf('week')));
+                console.log(moment().startOf('week'), moment().endOf('week'));
                 // if (moment().startOf('week') >= moment(item.real_time_price_update_date) && moment().endOf('week') >= moment(item.real_time_price_update_date)) {
                 //     console.log();
                 // }
@@ -193,15 +194,16 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                         ticks: {
                             fontColor: 'rgba(0,0,0,0.54)'
                         }
+
                     }
                 ],
                 yAxes: [
                     {
                         gridLines: {
-                            tickMarkLength: 16
+                            tickMarkLength: 1
                         },
                         ticks: {
-                            stepSize: 1000
+                            beginAtZero: true
                         }
                     }
                 ]
@@ -249,26 +251,26 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
     }
     subscription(): void {
-        //window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
+        // window.location.href = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5D480456AA4645139';
         this._analyticsDashboardService.getSubPlan().subscribe(res => {
-            //console.log("ppp", res);
             if (res.redirection_link) {
                 window.location.href = res.redirection_link;
-                //window.open('https://www.google.com', "_blank");
+                // window.open('https://www.google.com', "_blank");
             }
         }, error => {
-            //console.log(error);
             this.errMsg = error.message;
         });
 
     }
 
-    openStockDetail(stockid, groupid, stockname, flag): void {
-        this.router.navigate(['/apps/dashboards/analytics/stockDetail', btoa(stockid), btoa(groupid), stockname, flag]);
+    openStockDetail(stockid, realId, groupid, stockname, flag): void {
+        this.router.navigate(['/apps/dashboards/analytics/stockDetail', btoa(stockid), btoa(realId), btoa(groupid), stockname, flag]);
     }
+
     /**
- * On destroy
- */
+    * On destroy
+    */
+
     ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();

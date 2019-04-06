@@ -51,7 +51,6 @@ exports.saveGroupData = data => {
   }
 
   async function updateStocks(column) {
-    console.log("column", column);
     let isStockCreate = await Stocks.create({
       group_id: column.prediction_group_id,
       ticker: column.Ticker,
@@ -78,7 +77,6 @@ exports.saveGroupData = data => {
         });
       }
     }
-    console.log("Stock Created----", isStockCreate.dataValues.id);
   }
 };
 

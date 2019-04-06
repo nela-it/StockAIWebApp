@@ -225,7 +225,7 @@
                             <mat-cell *matCellDef="let portfolio">
                                 <img src="assets/images/company/{{portfolio.ticker_image}}.png" height="25px"
                                     width="25px">
-                                <p (click)="openStockDetail(portfolio.id,portfolio.group_id,portfolio.groupName,'true')"
+                                <p (click)="openStockDetail(portfolio.id,portfolio.realId,portfolio.group_id,portfolio.groupName,'true')"
                                     class="text-truncate iconWidth blackFontColor">
                                     {{portfolio.stock_name}}</p>
                             </mat-cell>
@@ -298,7 +298,7 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
                                 <p [ngStyle]="{'color':portfolio.yourperfontColor}">
-                                    {{portfolio.your_change_percentage | number : '1.2'}}
+                                    {{portfolio.your_change_percentage}}%
                                 </p>
                             </mat-cell>
                         </ng-container>

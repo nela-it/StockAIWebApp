@@ -91,6 +91,8 @@ export class AnalyticsDashboardService implements Resolve<any>
                     this.realTimeData = [];
                     for (let i = 0; i < this.column.length; i++) {
                         this.column[i]['real_time_price']['real_time_price_value'] = this.column[i].real_time_price_value;
+                        this.column[i]['real_time_price']['realId'] = this.column[i].real_time_price.id;
+
                         this.realTimeData.push(this.column[i]['real_time_price']);
 
                         if (i + 1 === this.column.length) {
@@ -98,19 +100,21 @@ export class AnalyticsDashboardService implements Resolve<any>
                             for (let j = 0; j < this.realTimeData.length; j++) {
                                 this.portfolio.push(this.realTimeData[j].stock);
                                 this.portfolio[j].real_time_price_value = this.realTimeData[j].real_time_price_value;
+                                this.portfolio[j].realId = this.realTimeData[j].realId;
                                 this.portfolio[j].current_price = this.realTimeData[j].current_price;
-                                this.portfolio[j].realCreateDate = this.realTimeData[j].updatedAt
+                                this.portfolio[j].realCreateDate = this.realTimeData[j].updatedAt;
+
                                 this.portfolio[j].today_change_percentage = this.realTimeData[j].today_change_percentage;
-                                this.portfolio[j].todayperfontColor = parseInt(this.portfolio[j].today_change_percentage) >= 0 ? 'green' : 'red';
+                                this.portfolio[j].todayperfontColor = parseFloat(this.portfolio[j].today_change_percentage) >= 0 ? 'green' : 'red';
 
                                 this.portfolio[j].today_change = this.realTimeData[j].today_change;
-                                this.portfolio[j].todayaddfontColor = parseInt(this.portfolio[j].today_change) >= 0 ? 'green' : 'red';
+                                this.portfolio[j].todayaddfontColor = parseFloat(this.portfolio[j].today_change) >= 0 ? 'green' : 'red';
 
                                 this.portfolio[j].your_change_percentage = this.realTimeData[j].your_change_percentage;
-                                this.portfolio[j].yourperfontColor = parseInt(this.portfolio[j].your_change_percentage) >= 0 ? 'green' : 'red';
+                                this.portfolio[j].yourperfontColor = parseFloat(this.portfolio[j].your_change_percentage) >= 0 ? 'green' : 'red';
 
                                 this.portfolio[j].your_change = this.realTimeData[j].your_change;
-                                this.portfolio[j].addyourfontColor = parseInt(this.portfolio[j].your_change) >= 0 ? 'green' : 'red';
+                                this.portfolio[j].addyourfontColor = parseFloat(this.portfolio[j].your_change) >= 0 ? 'green' : 'red';
                             }
                         }
                     }

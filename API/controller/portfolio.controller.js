@@ -10,17 +10,16 @@ const Sequelize = require("sequelize");
 
 exports.addPortfolio = async (req, res, next) => {
   try {
-    let getStockDetails = await Stocks.findOne({
-      where: {
-        id: req.body.stockId
-      }
-    });
+    // let getStockDetails = await Stocks.findOne({
+    //   where: {
+    //     id: req.body.stockId
+    //   }
+    // });
     let getrealTimeDetails = await realTimePrice.findOne({
       where: {
         id: req.body.realId
       }
     });
-    console.log(getrealTimeDetails);
     let isAlreadyPortfolio = await Portfolio.findOne({
       where: {
         user_id: req.user.id,
@@ -65,55 +64,66 @@ exports.getPortfolio = async (req, res, next) => {
   Stocks.belongsTo(Prediction_group, {
     foreignKey: "group_id"
   });
-  console.log("Portfolio", Portfolio);
   try {
-    let isRecords = await Portfolio.findAll({
-      where: {
-        user_id: req.user.id
-      },
-      include: [{
-        model: realTimePrice,
-        include: [{
-          model: Stocks,
-          include: {
-            model: Prediction_group
-          }
-        }]
-      }]
-    });
-
-    // let isRecord = await Portfolio.findAll({
+    // let isRecords = await Portfolio.findAll({
     //   where: {
     //     user_id: req.user.id
-    //   }
+    //   },
+    //   include: [{
+    //     model: realTimePrice,
+    //     include: [{
+    //       model: Stocks,
+    //       include: {
+    //         model: Prediction_group
+    //       }
+    //     }]
+    //   }]
     // });
-    // let isStock, isrealTime;
-    // console.log(isRecord);
-    // for (let i = 0; i < isRecord.length; i++) {
-    //   isStock = await Stocks.findOne({
-    //     where: {
-    //       id: isRecord[i].stock_id
-    //     }
-    //   });
 
-    //   isrealTime = await await realTimePrice.findAll({
-    //     where: {
-    //       stock_id: isStock.dataValues.id
-    //     },
-    //     order: [
-    //       ['createdAt', 'DESC']
-    //     ],
-    //     limit: 1
-    //   });
-    //   console.log(isrealTime);
+    let isRecord = await Portfolio.findAll({
+      where: {
+        user_id: req.user.id
+      }
+    });
+    let isStock, isrealTime;
 
-    // }
+    for (let i = 0; i < isRecord.length; i++) {
+      isStock = await Stocks.findOne({
+        where: {
+          id: isRecord[i].stock_id
+        },
+        include: {
+          model: Prediction_group
+        }
+      });
 
-    // res.send(isrealTime);
-    if (isRecords.length > 0) {
+      isrealTime = await realTimePrice.findOne({
+        where: {
+          stock_id: isStock.dataValues.id
+        },
+        order: [
+          ['createdAt', 'DESC']
+        ],
+        limit: 1
+      });
+
+      // your_change_percentage: ((resultToJSON["05. price"] - stock.recommended_price) /
+      //     resultToJSON["05. price"]) *
+      //   100,
+      // your_change: resultToJSON["05. price"] - stock.recommended_price,
+      console.log(isrealTime.dataValues.current_price - isRecord[i].real_time_price_value, ((isrealTime.dataValues.current_price - isRecord[i].real_time_price_value) / isrealTime.dataValues.current_price) * 100);
+      isrealTime.dataValues.your_change = `${(isrealTime.dataValues.current_price - isRecord[i].real_time_price_value).toFixed(4)}`;
+      isrealTime.dataValues.your_change_percentage = `${(((isrealTime.dataValues.current_price - isRecord[i].real_time_price_value) / isrealTime.dataValues.current_price) * 100).toFixed(4)}`;
+
+      isrealTime.dataValues.stock = isStock.dataValues;
+      isRecord[i].dataValues.real_time_price = isrealTime.dataValues;
+    }
+
+    // res.send(isRecord);
+    if (isRecord.length > 0) {
       return res.status(200).json({
         message: "Portfolio Found",
-        data: isRecords
+        data: isRecord
       });
     } else {
       return res.status(404).json({
