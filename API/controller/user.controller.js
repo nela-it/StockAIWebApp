@@ -8,7 +8,10 @@ const User = db.User;
 const Payment = db.Payment;
 const atob = require("atob");
 const btoa = require("btoa");
-// User.sync({ force: true });
+
+// User.sync({
+//   force: true
+// });
 
 exports.register = (req, res, next) => {
   if (req.body.apiType === "socialRegister") {

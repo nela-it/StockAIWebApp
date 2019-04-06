@@ -15,7 +15,9 @@ Stocks.belongsTo(realTimePrice, {
 });
 
 // Stocks.sync({ force: true });
-// realTimePrice.sync({ force: true });
+// realTimePrice.sync({
+//   force: true
+// });
 // Prediction_group.sync({ force: true });
 
 exports.saveGroupData = data => {

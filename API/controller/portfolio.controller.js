@@ -6,15 +6,18 @@ const realTimePrice = db.Real_time_price;
 const Op = db.Op;
 const Sequelize = require("sequelize");
 
-// Portfolio.sync({ force: true });
+// Portfolio.sync({
+//   force: true
+// });
 
 exports.addPortfolio = async (req, res, next) => {
   try {
-    // let getStockDetails = await Stocks.findOne({
-    //   where: {
-    //     id: req.body.stockId
-    //   }
-    // });
+    console.log(req.body);
+    let getStockDetails = await Stocks.findOne({
+      where: {
+        id: req.body.stockId
+      }
+    });
     let getrealTimeDetails = await realTimePrice.findOne({
       where: {
         id: req.body.realId
