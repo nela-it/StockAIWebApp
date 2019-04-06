@@ -141,7 +141,7 @@ exports.exploreGroups = async (req, res, next) => {
           limit: 2
         });
         for (let i = 0; i < isStockFound.length; i++) {
-          realTimeStockData = await realTimePrice.findAll({
+          realTimeStockData = await realTimePrice.findOne({
             where: {
               stock_id: isStockFound[i].dataValues.id
             },
@@ -150,7 +150,8 @@ exports.exploreGroups = async (req, res, next) => {
             ],
             limit: 1
           });
-          isStockFound[i].dataValues.real_time_price = realTimeStockData[0];
+          console.log(realTimeStockData);
+          isStockFound[i].dataValues.real_time_price = realTimeStockData;
         }
       }
       if (isStockFound.length > 0) {
