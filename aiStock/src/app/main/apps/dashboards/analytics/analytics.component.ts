@@ -100,124 +100,205 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
             this.errMsg = error.message;
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
-        this.loadChart(this._analyticsDashboardService.portfolio, 'all', 'Daily');
+        this.loadChart('all', 'Daily');
     }
 
-    loadChart(portfolioData, group, days): void {
+    loadChart(group, days): void {
         this.portfolioPrice = [];
         this.realTimePrice = [];
         this.portfolioLabels = [];
-
-        portfolioData.map((item, i) => {
-            // console.log(item);
-            if (days === 'Daily') {
-                console.log(item);
-                // console.log(item.realCreateDate);
-                if (moment().isSame(item.realCreateDate, 'day')) {
-                    this.portfolioPrice.push(item.real_time_price_value);
-                    this.realTimePrice.push(item.current_price);
-                    this.portfolioLabels.push(moment(item.realCreateDate).format("hh:mm A"))
-                }
-            } else if (days === 'Weekly') {
-                console.log(moment(item.realCreateDate).isBetween(moment().startOf('week'), moment().endOf('week')));
-                console.log(moment().startOf('week'), moment().endOf('week'));
-                // if (moment().startOf('week') >= moment(item.real_time_price_update_date) && moment().endOf('week') >= moment(item.real_time_price_update_date)) {
-                //     console.log();
-                // }
-            }
-        });
-
-        this.chartType = 'line';
-        this.chartDatasets = [
-            {
-                label: 'User Portfolio price',
-                data: this.portfolioPrice,
-                fill: 'start'
-
-            },
-            {
-                label: 'Real time Price',
-                data: this.realTimePrice,
-                fill: 'start'
-            }
-        ];
-        this.chartLabels = this.portfolioLabels;
-        this.chartColors = [
-            {
-                borderColor: '#3949ab',
-                backgroundColor: '#3949ab',
-                pointBackgroundColor: '#3949ab',
-                pointHoverBackgroundColor: '#3949ab',
-                pointBorderColor: '#ffffff',
-                pointHoverBorderColor: '#ffffff'
-            },
-            {
-                borderColor: 'rgba(30, 136, 229, 0.87)',
-                backgroundColor: 'rgba(30, 136, 229, 0.87)',
-                pointBackgroundColor: 'rgba(30, 136, 229, 0.87)',
-                pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
-                pointBorderColor: '#ffffff',
-                pointHoverBorderColor: '#ffffff'
-            }
-        ];
-        this.chartOptions = {
-            spanGaps: false,
-            legend: {
-                display: false
-            },
-            maintainAspectRatio: false,
-            tooltips: {
-                position: 'nearest',
-                mode: 'index',
-                intersect: false
-            },
-            layout: {
-                padding: {
-                    left: 24,
-                    right: 32
-                }
-            },
-            elements: {
-                point: {
-                    radius: 4,
-                    borderWidth: 2,
-                    hoverRadius: 4,
-                    hoverBorderWidth: 2
-                }
-            },
-            scales: {
-                xAxes: [
+        const d = {
+            'source': 'Google Trends',
+            'keywords':
+                [
                     {
-                        gridLines: {
+                        'value': 'Keyword 1',
+                        'data':
+                            [
+                                {
+                                    'month': 'Dec',
+                                    'popularity': '10'
+                                },
+                                {
+                                    'month': 'Jan',
+                                    'popularity': '35'
+                                }
+                            ]
+                    },
+                ]
+        };
+        this._analyticsDashboardService.getChartData(group, days).subscribe(res => {
+            console.log(res);
+            for (let i = 0; i < res.data.length; i++) {
+                this.portfolioPrice.push(res.data[i].portfolio);
+                this.realTimePrice.push(res.data[i].realTime);
+                this.portfolioLabels.push(`${res.data[i].time} | ${res.data[i].stockName}`);
+                console.log(res.data.length, i + 1);
+                if (res.data.length === i + 1) {
+                    // line horizontalBar
+                    this.chartType = 'line';
+                    this.chartDatasets = [
+                        {
+                            label: 'User Portfolio price',
+                            data: this.portfolioPrice,
+                            fill: false
+
+                        },
+                        {
+                            label: 'Real time Price',
+                            data: this.realTimePrice,
+                            fill: false
+                        }
+                    ];
+                    // [
+                    //     {
+                    //         label: 'User Portfolio price',
+                    //         data: this.portfolioPrice,
+                    //         fill: false
+
+                    //     },
+                    //     {
+                    //         label: 'Real time Price',
+                    //         data: this.realTimePrice,
+                    //         fill: false
+                    //     }
+                    // ]
+                    // [{
+                    //     data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
+                    //     label: 'Africa',
+                    //     borderColor: '#3e95cd',
+                    //     fill: false
+                    // }, {
+                    //     data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
+                    //     label: 'Asia',
+                    //     borderColor: '#8e5ea2',
+                    //     fill: false
+                    // }, {
+                    //     data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
+                    //     label: 'Europe',
+                    //     borderColor: '#3cba9f',
+                    //     fill: false
+                    // }, {
+                    //     data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
+                    //     label: 'Latin America',
+                    //     borderColor: '#e8c3b9',
+                    //     fill: false
+                    // }, {
+                    //     data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
+                    //     label: 'North America',
+                    //     borderColor: '#c45850',
+                    //     fill: false
+                    // }]
+                    this.chartLabels = this.portfolioLabels;
+                    this.chartColors = [
+                        {
+                            borderColor: '#3949ab',
+                            backgroundColor: '#3949ab',
+                            pointBackgroundColor: '#3949ab',
+                            pointHoverBackgroundColor: '#3949ab',
+                            pointBorderColor: '#ffffff',
+                            pointHoverBorderColor: '#ffffff'
+                        },
+                        {
+                            borderColor: 'rgba(30, 136, 229, 0.87)',
+                            backgroundColor: 'rgba(30, 136, 229, 0.87)',
+                            pointBackgroundColor: 'rgba(30, 136, 229, 0.87)',
+                            pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
+                            pointBorderColor: '#ffffff',
+                            pointHoverBorderColor: '#ffffff'
+                        }
+                    ];
+                    this.chartOptions = {
+                        spanGaps: false,
+                        responsive: true,
+                        legend: {
                             display: false
                         },
-                        ticks: {
-                            fontColor: 'rgba(0,0,0,0.54)'
-                        }
-
-                    }
-                ],
-                yAxes: [
-                    {
-                        gridLines: {
-                            tickMarkLength: 1
+                        maintainAspectRatio: false,
+                        tooltips: {
+                            position: 'nearest',
+                            mode: 'index',
+                            intersect: false
                         },
-                        ticks: {
-                            beginAtZero: true
+                        layout: {
+                            padding: {
+                                left: 24,
+                                right: 32
+                            }
+                        },
+                        elements: {
+                            point: {
+                                radius: 4,
+                                borderWidth: 2,
+                                hoverRadius: 4,
+                                hoverBorderWidth: 2
+                            }
+                        },
+                        scales: {
+                            xAxes: [
+                                {
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        fontColor: 'rgba(0,0,0,0.54)',
+                                        autoSkip: false,
+                                    }
+
+                                }
+                            ],
+                            yAxes: [
+                                {
+                                    gridLines: {
+                                        tickMarkLength: 1
+                                    },
+                                    ticks: {
+                                        beginAtZero: true,
+                                        min: 0
+                                    }
+                                }
+                            ]
+                        },
+                        plugins: {
+                            filler: {
+                                propagate: false
+                            }
                         }
-                    }
-                ]
-            },
-            plugins: {
-                filler: {
-                    propagate: false
+                    };
                 }
             }
-        };
+        }, error => {
+            this.errMsg = error.message;
+        });
+        // portfolioData.map((item, i) => {
+        //     // console.log(item);
+        //     if (days === 'Daily' && group === 'all') {
+        //         if (moment().isSame(item.realCreateDate, 'day')) {
+        //             this.portfolioPrice.push(item.real_time_price_value);
+        //             this.realTimePrice.push(item.current_price);
+        //             this.portfolioLabels.push(`${moment(item.realCreateDate).format('hh:mm A')} | ${item.stock_name}`)
+        //         }
+        //     } else if (days === 'Weekly') {
+        //         console.log(moment(item.realCreateDate).isBetween(moment().startOf('week'), moment().endOf('week')));
+        //         console.log(moment().startOf('week'), moment().endOf('week'));
+        //         // if (moment().startOf('week') >= moment(item.real_time_price_update_date) && moment().endOf('week') >= moment(item.real_time_price_update_date)) {
+        //         //     console.log();
+        //         // }
+        //     }
+        // });
+
+
     }
 
     selectedDayGroup(e): void {
-        this.loadChart(this._analyticsDashboardService.portfolio, this.selectGroups.triggerValue, this.selectdays.triggerValue);
+        console.log(this.selectGroups);
+        if (this.selectGroups.value === undefined) {
+            this.loadChart(this.selectGroups.triggerValue, this.selectdays.triggerValue);
+        } else if (this.selectGroups.value === 'all') {
+            this.loadChart(this.selectGroups.value, this.selectdays.triggerValue);
+        } else {
+            this.loadChart(this.selectGroups.value.group_id, this.selectdays.triggerValue);
+        }
     }
 
     selectedDay(e): void {
@@ -246,7 +327,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this.router.navigate(['/apps/dashboards/analytics/prediction', btoa(data.id), data.group_name]);
     }
     selected(event): void {
-        this.dataSource.filter = event.value;
+        // console.log(event);
+        this.dataSource.filter = event.value.name;
         this.changeDetectorRefs.detectChanges();
 
     }

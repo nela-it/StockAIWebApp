@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { predictionGroup, getProductDetails, getPortfolio, getSub } from 'appConfig/appconfig';
+import { predictionGroup, getProductDetails, getPortfolio, getSub, getChartDataDetails } from 'appConfig/appconfig';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import _ from 'underscore';
@@ -120,11 +120,13 @@ export class AnalyticsDashboardService implements Resolve<any>
                     }
                     for (let a = 0; a < this.portfolio.length; a++) {
                         this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name'];
-                        this.groupsList.push(this.portfolio[a].Prediction_group['group_name']);
+                        this.groupsList.push({ 'name': this.portfolio[a].Prediction_group['group_name'], 'group_id': this.portfolio[a].group_id });
                         this.tickerArray.push(this.portfolio[a].ticker)
                     }
                     this.noOfTickers = _.uniq(this.tickerArray).length;
-                    this.allGroupData = _.uniq(this.groupsList);
+                    this.allGroupData = _.uniq(this.groupsList, (x) => {
+                        return x.name;
+                    });
 
                     this.onPortfolioChanged.next(this.portfolio);
                     resolve(response);
@@ -154,6 +156,17 @@ export class AnalyticsDashboardService implements Resolve<any>
         };
         return this._httpClient.get(getProductDetails, this.httpOptions);
     }
+
+    public getChartData(group, days): Observable<any> {
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
+        return this._httpClient.post(getChartDataDetails, { 'group': group, 'days': days }, this.httpOptions);
+    }
+
     public getSubPlan(): Observable<any> {
 
         this.httpOptions = {

@@ -22,5 +22,8 @@ router
   );
 
 router.route("/getPortfolio").get(checkAuth, portfolioController.getPortfolio);
+router.route("/getChartData").post(checkAuth, portfolioController.getChartData);
+
+
 
 module.exports = router;

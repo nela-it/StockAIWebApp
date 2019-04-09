@@ -30,19 +30,18 @@ app.use(
 );
 
 
-
 // Cron job for update realtime price of stock
-new CronJob(
-  "*/2 * * * *",
-  async () => {
-      console.log("<------------------2 mins Cron Job Start------------------>");
-      await stockService();
-      console.log("<------------------2 mins Cron Job End------------------>");
-    },
-    null,
-    true,
-    "America/Los_Angeles"
-);
+// new CronJob(
+//   "*/2 * * * *",
+//   async () => {
+//       console.log("<------------------2 mins Cron Job Start------------------>");
+//       await stockService();
+//       console.log("<------------------2 mins Cron Job End------------------>");
+//     },
+//     null,
+//     true,
+//     "America/Los_Angeles"
+// );
 
 // read excel sheet and update records in DB
 var watcher = chokidar.watch("./files", {

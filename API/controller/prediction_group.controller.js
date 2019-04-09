@@ -14,7 +14,9 @@ Stocks.belongsTo(realTimePrice, {
   foreignKey: "realtime_price_id"
 });
 
-// Stocks.sync({ force: true });
+// Stocks.sync({
+//   force: true
+// });
 // realTimePrice.sync({
 //   force: true
 // });
@@ -151,7 +153,7 @@ exports.exploreGroups = async (req, res, next) => {
             limit: 1
           });
           console.log(realTimeStockData);
-          isStockFound[i].dataValues.real_time_price = realTimeStockData;
+          isStockFound[i].dataValues.real_time_price = realTimeStockData.dataValues;
         }
       }
       if (isStockFound.length > 0) {

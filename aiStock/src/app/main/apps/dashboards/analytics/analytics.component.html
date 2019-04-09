@@ -132,7 +132,7 @@
                                 (selectionChange)="selectedDayGroup($event)" name="food">
                                 <mat-option value="all">All</mat-option>
                                 <mat-option *ngFor="let food of _analyticsDashboardService.allGroupData" [value]="food">
-                                    {{food}}
+                                    {{food.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -161,7 +161,7 @@
                     </div> -->
                 </div>
 
-                <div class="position-relative h-368 pb-16">
+                <div class="position-relative h-368 pb-16" *ngIf="portfolioPrice.length !== 0">
                     <canvas class="basechart" baseChart [datasets]="chartDatasets" [labels]="chartLabels"
                         [colors]="chartColors" [options]="chartOptions" [chartType]="chartType">
                     </canvas>
@@ -178,7 +178,7 @@
                             name="food">
                             <mat-option value="">All</mat-option>
                             <mat-option *ngFor="let food of _analyticsDashboardService.allGroupData" [value]="food">
-                                {{food}}
+                                {{food.name}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

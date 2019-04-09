@@ -3,8 +3,11 @@ const Portfolio = db.Portfolio;
 const Prediction_group = db.Prediction_group;
 const Stocks = db.Stocks;
 const realTimePrice = db.Real_time_price;
+const moment = require("moment");
 const Op = db.Op;
+const _ = require("lodash");
 const Sequelize = require("sequelize");
+
 
 // Portfolio.sync({
 //   force: true
@@ -107,14 +110,8 @@ exports.getPortfolio = async (req, res, next) => {
         order: [
           ['createdAt', 'DESC']
         ],
-        limit: 1
       });
 
-      // your_change_percentage: ((resultToJSON["05. price"] - stock.recommended_price) /
-      //     resultToJSON["05. price"]) *
-      //   100,
-      // your_change: resultToJSON["05. price"] - stock.recommended_price,
-      console.log(isrealTime.dataValues.current_price - isRecord[i].real_time_price_value, ((isrealTime.dataValues.current_price - isRecord[i].real_time_price_value) / isrealTime.dataValues.current_price) * 100);
       isrealTime.dataValues.your_change = `${(isrealTime.dataValues.current_price - isRecord[i].real_time_price_value).toFixed(4)}`;
       isrealTime.dataValues.your_change_percentage = `${(((isrealTime.dataValues.current_price - isRecord[i].real_time_price_value) / isrealTime.dataValues.current_price) * 100).toFixed(4)}`;
 
@@ -134,6 +131,171 @@ exports.getPortfolio = async (req, res, next) => {
         data: []
       });
     }
+  } catch (error) {
+    console.log("error-----------" + error);
+    next(error);
+  }
+};
+
+exports.getChartData = async (req, res, next) => {
+  // Portfolio.belongsTo(realTimePrice, {
+  //   foreignKey: "real_time_price_id"
+  // });
+  // realTimePrice.belongsTo(Stocks, {
+  //   foreignKey: "stock_id"
+  // });
+  Stocks.belongsTo(Prediction_group, {
+    foreignKey: "group_id"
+  });
+  try {
+    let dataChart = [];
+    let isRecord = await Portfolio.findAll({
+      where: {
+        user_id: req.user.id
+      }
+    });
+    let isStock, isrealTime;
+
+    for (let i = 0; i < isRecord.length; i++) {
+      if (req.body.group === 'all') {
+        isStock = await Stocks.findAll({
+          where: {
+            id: isRecord[i].stock_id,
+          },
+          include: {
+            model: Prediction_group
+          }
+        });
+      } else {
+        isStock = await Stocks.findAll({
+          where: {
+            id: isRecord[i].stock_id,
+            group_id: req.body.group
+          },
+          include: {
+            model: Prediction_group
+          }
+        });
+      }
+      if (isStock.length !== 0) {
+        if (req.body.days === 'Daily') {
+          if (req.body.group === 'all') {
+            isrealTime = await realTimePrice.findOne({
+              where: {
+                stock_id: isStock[0].dataValues.id,
+                createdAt: {
+                  [Op.gte]: moment().subtract(1, 'days').endOf('day'),
+                  [Op.lt]: moment().add(1, 'days').startOf('day')
+                }
+              },
+              order: [
+                ['createdAt', 'DESC']
+              ],
+            });
+            // console.log(isrealTime)
+            if (isrealTime !== null) {
+              dataChart.push({
+                'portfolio': isRecord[i].real_time_price_value,
+                'realTime': isrealTime.dataValues.current_price,
+                'time': moment(isrealTime.dataValues.createdAt).format('hh:mm A'),
+                'stockName': isStock[0].dataValues.stock_name
+              });
+            }
+          } else {
+            isrealTime = await realTimePrice.findAll({
+              where: {
+                stock_id: isStock[0].dataValues.id,
+                createdAt: {
+                  [Op.gte]: moment().subtract(1, 'days').endOf('day'),
+                  [Op.lt]: moment().add(1, 'days').startOf('day')
+                }
+              },
+              order: [
+                ['createdAt', 'DESC']
+              ],
+            });
+            for (let j = 0; j < isrealTime.length; j++) {
+              console.log(isrealTime[j].dataValues.id);
+              dataChart.push({
+                'portfolio': isRecord[i].real_time_price_value,
+                'realTime': isrealTime[j].dataValues.current_price,
+                'time': moment(isrealTime[j].dataValues.createdAt).format('hh:mm A'),
+                'stockName': isStock[0].dataValues.stock_name
+              });
+            }
+            // console.log(isrealTime)
+            // if (isrealTime !== null) {
+
+            // }
+          }
+        } else if (req.body.days === 'Weekly') {
+          for (let i = 0; i < 7; i++) {
+            console.log(moment().clone().weekday(0 + i).format('YYYY-MM-DD'), moment().subtract(1, 'days').endOf('day'));
+            isrealTime = await realTimePrice.findOne({
+              where: {
+                stock_id: isStock[0].dataValues.id,
+                createdAt: {
+                  [Op.gte]: moment(moment().clone().weekday(0 + i)).subtract(1, 'days').endOf('day'),
+                  [Op.lt]: moment(moment().clone().weekday(0 + i)).add(1, 'days').startOf('day')
+                }
+              },
+              order: [
+                ['createdAt', 'DESC']
+              ],
+              limit: 1
+            });
+            console.log(isrealTime);
+            // if (isrealTime !== null) {
+            dataChart.push({
+              'portfolio': isrealTime !== null ? isRecord[i].real_time_price_value : 0,
+              'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
+              'time': moment(moment().clone().weekday(0 + i).format('YYYY-MM-DD')).format('YYYY-MM-DD'),
+              'stockName': isStock[0].dataValues.stock_name
+            });
+            // console.log(dataChart);
+            // }
+          }
+        } else {
+          isrealTime = await realTimePrice.findAll({
+            where: {
+              stock_id: isStock[0].dataValues.id,
+              createdAt: {
+                [Op.gte]: moment().subtract(1, 'days').endOf('day'),
+                [Op.lt]: moment().add(1, 'days').startOf('day')
+              }
+            },
+            order: [
+              ['createdAt', 'DESC']
+            ],
+          });
+          // console.log(isrealTime);
+        }
+        // console.log(isRecord.length, i + 1);
+
+      }
+      if (isRecord.length === i + 1) {
+        return res.status(200).json({
+          message: "Chart data",
+          duration: req.body.days,
+          group: req.body.group,
+          data: _.orderBy(dataChart, ['time'], ['asc'])
+          // data: dataChart
+        });
+      }
+    }
+
+    // res.send(isStock);
+    // if (isRecord.length > 0) {
+    //   return res.status(200).json({
+    //     message: "Portfolio Found",
+    //     data: isRecord
+    //   });
+    // } else {
+    //   return res.status(404).json({
+    //     message: "Portfolio Not Found",
+    //     data: []
+    //   });
+    // }
   } catch (error) {
     console.log("error-----------" + error);
     next(error);
