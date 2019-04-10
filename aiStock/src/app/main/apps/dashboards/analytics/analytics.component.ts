@@ -107,26 +107,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         this.portfolioPrice = [];
         this.realTimePrice = [];
         this.portfolioLabels = [];
-        const d = {
-            'source': 'Google Trends',
-            'keywords':
-                [
-                    {
-                        'value': 'Keyword 1',
-                        'data':
-                            [
-                                {
-                                    'month': 'Dec',
-                                    'popularity': '10'
-                                },
-                                {
-                                    'month': 'Jan',
-                                    'popularity': '35'
-                                }
-                            ]
-                    },
-                ]
-        };
+
         this._analyticsDashboardService.getChartData(group, days).subscribe(res => {
             console.log(res);
             for (let i = 0; i < res.data.length; i++) {
@@ -139,13 +120,13 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     this.chartType = 'line';
                     this.chartDatasets = [
                         {
-                            label: 'User Portfolio price',
+                            label: 'User portfolio price',
                             data: this.portfolioPrice,
                             fill: false
 
                         },
                         {
-                            label: 'Real time Price',
+                            label: 'Real time price',
                             data: this.realTimePrice,
                             fill: false
                         }
@@ -192,10 +173,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                     this.chartLabels = this.portfolioLabels;
                     this.chartColors = [
                         {
-                            borderColor: '#3949ab',
-                            backgroundColor: '#3949ab',
-                            pointBackgroundColor: '#3949ab',
-                            pointHoverBackgroundColor: '#3949ab',
+                            borderColor: '#8262fa',
+                            backgroundColor: '#8262fa',
+                            pointBackgroundColor: '#8262fa',
+                            pointHoverBackgroundColor: '#8262fa',
                             pointBorderColor: '#ffffff',
                             pointHoverBorderColor: '#ffffff'
                         },
