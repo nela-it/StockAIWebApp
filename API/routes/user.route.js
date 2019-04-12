@@ -3,6 +3,8 @@ const router = express.Router();
 const Joi = require("joi");
 const validate = require("express-validation");
 const userController = require("../controller/user.controller");
+const alertController = require("../controller/alertNotify.controller");
+
 const checkAuth = require("../middleware/check-auth");
 
 const paramsValidation = {
@@ -63,5 +65,8 @@ router
 router.route("/userInfo").get(checkAuth, userController.userInfo);
 
 router.route("/getAllUsers").get(checkAuth, userController.getAllUser);
+
+router.route("/getAlertNotify").get(checkAuth, alertController.getAlertNotify);
+
 
 module.exports = router;

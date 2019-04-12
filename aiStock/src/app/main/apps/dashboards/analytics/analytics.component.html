@@ -125,22 +125,27 @@
                         <div class="text-color">% of Charge<div class="value">1.7%</div>
                         </div>
                     </div>
-
                     <div class="stock-filter" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign.lg="center">
                         <mat-form-field appearance="outline">
                             <mat-select #selectGroups [(ngModel)]="selectedGroups"
-                                (selectionChange)="selectedDayGroup($event)" name="food">
-                                <mat-option value="all">All</mat-option>
-                                <mat-option *ngFor="let food of _analyticsDashboardService.allGroupData" [value]="food">
-                                    {{food.name}}
+                                (selectionChange)="selectedGroup($event)" name="Group">
+                                <mat-option *ngFor="let group of _analyticsDashboardService.allGroupData;let i = index"
+                                    [value]="group">
+                                    {{group.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
 
+                        <mat-form-field appearance="outline">
+                            <mat-select #selectStocks (selectionChange)="selectedStocks($event)" name="Stock">
+                                <mat-option *ngFor="let Stock of stockList" [value]="Stock">
+                                    {{Stock.stockName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
                         <mat-form-field appearance="outline">
-                            <mat-select #selectdays [(ngModel)]="selecteddays"
-                                (selectionChange)="selectedDayGroup($event)">
+                            <mat-select #selectdays [(ngModel)]="selecteddays" (selectionChange)="selectedDays($event)">
                                 <mat-option value="Daily"> Daily </mat-option>
                                 <mat-option value="Weekly"> Weekly </mat-option>
                                 <mat-option value="Monthly"> Monthly </mat-option>

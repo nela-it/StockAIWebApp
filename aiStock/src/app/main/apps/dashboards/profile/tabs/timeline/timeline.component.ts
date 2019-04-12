@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileService } from '../../profile.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'profile-timeline',
@@ -16,6 +17,8 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy {
     timeline: any;
     form: FormGroup;
     error: string;
+    filesToUpload: Array<File> = [];
+
     uploadResponse = { status: '', message: '', filePath: '' };
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -27,7 +30,8 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy {
      */
     constructor(
         private formBuilder: FormBuilder,
-        private _profileService: ProfileService
+        private _profileService: ProfileService,
+        public snackBar: MatSnackBar,
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -46,28 +50,39 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy {
             .subscribe(timeline => {
                 this.timeline = timeline;
             });
-        this.form = this.formBuilder.group({
-            avatar: ['']
+    }
+
+    uploadFile(): void {
+        const formData: any = new FormData();
+        const files: Array<File> = this.filesToUpload;
+
+        formData.append('uploads[]', files[0], files[0]['name']);
+
+        this._profileService.addFile(formData).subscribe(res => {
+            if (res.sucess) {
+                this.snackBar.open('Success', res.message, {
+                    duration: 5000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'top'
+                });
+            } else {
+                this.snackBar.open('Error', res.message, {
+                    duration: 5000,
+                    horizontalPosition: 'center',
+                    verticalPosition: 'top'
+                });
+            }
+        }, error => {
+            this.snackBar.open('Error', 'Please try again sometime. File was not uploaded.', {
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top'
+            });
         });
     }
-    readFile(e) {
-        console.log(e)
-        const file: File = e.target.files[0];
-        this.form.get('avatar').setValue(file);
-        console.log(file)
-        console.log('size', file.size);
-        console.log('type', file.type);
-    }
-    onSubmit() {
-        //alert('jhiihiiiiii')
-        const formData = new FormData();
-        formData.append('file', this.form.get('avatar').value);
-        console.log(formData);
-        console.log(this.form.get('avatar').value);
-        this._profileService.upload(formData).subscribe(
-            (res) => console.log(res),
-            (err) => this.error = err
-        );
+
+    fileChangeEvent(fileInput: any) {
+        this.filesToUpload = <Array<File>>fileInput.target.files;
     }
     /**
      * On destroy

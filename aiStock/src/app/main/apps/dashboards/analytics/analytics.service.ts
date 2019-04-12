@@ -13,6 +13,7 @@ export class AnalyticsDashboardService implements Resolve<any>
     product: any[];
     portfolio: any[] = [];
     groupsList: any[] = [];
+    stockList: any[] = [];
     allGroupData: any[] = [];
     tickerArray: any[] = [];
     realTimeData: any[] = [];
@@ -87,7 +88,7 @@ export class AnalyticsDashboardService implements Resolve<any>
             this._httpClient.get(getPortfolio, this.httpOptions)
                 .subscribe((response: any) => {
                     this.column = response.data;
-                    console.log(this.column);
+                    // console.log(this.column);
                     this.realTimeData = [];
                     for (let i = 0; i < this.column.length; i++) {
                         this.column[i]['real_time_price']['real_time_price_value'] = this.column[i].real_time_price_value;
@@ -120,7 +121,15 @@ export class AnalyticsDashboardService implements Resolve<any>
                     }
                     for (let a = 0; a < this.portfolio.length; a++) {
                         this.portfolio[a].groupName = this.portfolio[a].Prediction_group['group_name'];
-                        this.groupsList.push({ 'name': this.portfolio[a].Prediction_group['group_name'], 'group_id': this.portfolio[a].group_id });
+                        this.groupsList.push({
+                            'name': this.portfolio[a].Prediction_group['group_name'],
+                            'group_id': this.portfolio[a].group_id
+                        });
+                        this.stockList.push({
+                            'group_id': this.portfolio[a].group_id,
+                            'stockName': this.portfolio[a].stock_name,
+                            'stockId': this.portfolio[a].id
+                        });
                         this.tickerArray.push(this.portfolio[a].ticker)
                     }
                     this.noOfTickers = _.uniq(this.tickerArray).length;
@@ -157,14 +166,14 @@ export class AnalyticsDashboardService implements Resolve<any>
         return this._httpClient.get(getProductDetails, this.httpOptions);
     }
 
-    public getChartData(group, days): Observable<any> {
+    public getChartData(group, stock, days): Observable<any> {
         this.httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'authorization': localStorage.getItem('LoggedInUser')
             })
         };
-        return this._httpClient.post(getChartDataDetails, { 'group': group, 'days': days }, this.httpOptions);
+        return this._httpClient.post(getChartDataDetails, { 'group': group, 'stock': stock, 'days': days }, this.httpOptions);
     }
 
     public getSubPlan(): Observable<any> {

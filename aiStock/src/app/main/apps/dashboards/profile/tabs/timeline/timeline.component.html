@@ -13,14 +13,14 @@
                 <div class="info-line">
                     <div class="title">Upload FIle </div>
                     <div class="info">
-                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <form>
 
                             <button mat-icon-button matTooltip="Attach a file" (click)="fileInput.click()">
                                 <mat-icon>attach_file</mat-icon>
                             </button>
-                            <input name="avatar" hidden type="file" (change)="readFile($event)" #fileInput
+                            <input name="myfile" hidden type="file" (change)="fileChangeEvent($event)" #fileInput
                                 accept=".xlsx, .xls">
-                            <button class="submit-button" mat-stroked-button>Upload </button>
+                            <button class="submit-button" (click)="uploadFile()" mat-stroked-button>Upload </button>
                         </form>
 
                     </div>

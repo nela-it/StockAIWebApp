@@ -11,6 +11,7 @@ import { ProfileService } from './profile.service'
 })
 export class ProfileComponent {
     username: any;
+    isAdmin: any;
 
     /**
      * Constructor
@@ -20,6 +21,11 @@ export class ProfileComponent {
     }
     ngOnInit(): void {
         this.username = localStorage.getItem('username');
+        this._profileService.getUserInfo().subscribe(res => {
+            this.isAdmin = res.data.isAdmin;
+        }, error => {
+            console.log(error);
+        });
 
     }
 }

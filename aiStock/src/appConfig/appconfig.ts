@@ -1,5 +1,9 @@
 const serverUrl = 'https://stockzai.com/api/';
 const localUrl = 'http://localhost:3001/api/';
+
+// export const fileUpload: string = 'http://localhost:3001/fileupload';
+export const fileUpload: string = 'https://stockzai.com/fileupload';
+
 export const loginUrl: string = serverUrl + 'user/login';
 export const registerUrl: string = serverUrl + 'user/register';
 export const forgotPasswordUrl: string = serverUrl + 'user/forgotPassword';
@@ -24,5 +28,9 @@ export const getStockInfo: string = serverUrl + 'stocks/getStockInfo';
 export const getAlgorithm: string = serverUrl + 'algorithm/getAlgorithm';
 // User info 
 export const getUserInfo: string = serverUrl + 'user/userInfo';
+
+
+export const getAlertNotify: string = serverUrl + 'user/getAlertNotify';
+
 
 export const getSub: string = serverUrl + 'payment/payment';

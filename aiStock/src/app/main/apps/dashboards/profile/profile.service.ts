@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { getUserInfo, registerUrl } from 'appConfig/appconfig';
+import { getUserInfo, registerUrl, fileUpload } from 'appConfig/appconfig';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable()
@@ -119,5 +119,10 @@ export class ProfileService implements Resolve<any>
             })
         );
     }
+
+    public addFile(file): Observable<any> {
+        return this._httpClient.post(fileUpload, file);
+    }
+
 
 }

@@ -62,6 +62,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
+    isAdmin: {
+      type: DataTypes.ENUM("true", "false"),
+      defaultValue: "false"
+    },
     forgotPassword: {
       type: DataTypes.ENUM("true", "false"),
       defaultValue: "false"

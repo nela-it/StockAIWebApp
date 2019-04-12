@@ -79,20 +79,12 @@ db.User = require("../models/User")(sequelize, Sequelize);
 db.Audit = require("../models/audit")(sequelize, Sequelize);
 db.Payment = require("../models/payment")(sequelize, Sequelize);
 db.Portfolio = require("../models/portfolio")(sequelize, Sequelize);
-db.Prediction_group = require("../models/Prediction_group")(
-  sequelize,
-  Sequelize
-);
+db.Prediction_group = require("../models/Prediction_group")(sequelize, Sequelize);
 db.Product_info = require("../models/product_info")(sequelize, Sequelize);
-db.Real_time_price = require("../models/real_time_price_table")(
-  sequelize,
-  Sequelize
-);
+db.Real_time_price = require("../models/real_time_price_table")(sequelize, Sequelize);
 db.Stocks = require("../models/stocks")(sequelize, Sequelize);
-db.Algorithm_detail = require("../models/algorithm_detail")(
-  sequelize,
-  Sequelize
-);
+db.Algorithm_detail = require("../models/algorithm_detail")(sequelize, Sequelize);
+db.alertNotify = require("../models/alertNotify")(sequelize, Sequelize);
 db.Stock_history = require("../models/stock_history")(sequelize, Sequelize);
 
 module.exports = db;

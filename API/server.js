@@ -15,6 +15,8 @@ const chokidar = require("chokidar");
 const XLSX = require("xlsx");
 const CronJob = require("cron").CronJob;
 
+let multer = require('multer');
+
 if (config.env === "development") {
   app.use(logger("dev"));
 } else {
@@ -23,32 +25,65 @@ if (config.env === "development") {
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+var storage = multer.diskStorage({
+  // destino del fichero
+  destination: function (req, file, cb) {
+    cb(null, './files/');
+  },
+  // renombrar fichero
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+var upload = multer({
+  storage: storage
+});
+
+
 
 
 // Cron job for update realtime price of stock
-new CronJob(
-  "*/2 * * * *",
-  async () => {
-      console.log("<------------------2 mins Cron Job Start------------------>");
-      await stockService();
-      console.log("<------------------2 mins Cron Job End------------------>");
-    },
-    null,
-    true,
-    "America/Los_Angeles"
-);
+// new CronJob(
+//   "*/2 * * * *",
+//   async () => {
+//       console.log("<------------------2 mins Cron Job Start------------------>");
+//       await stockService();
+//       console.log("<------------------2 mins Cron Job End------------------>");
+//     },
+//     null,
+//     true,
+//     "America/Los_Angeles"
+// );
+
+
+
+app.post("/fileupload", upload.array("uploads[]", 12), function (req, res) {
+  console.log('files', req.files);
+  if (!req.files) {
+    res.json({
+      sucess: true,
+      message: 'File not uploaded'
+    });
+  } else {
+    res.json({
+      sucess: true,
+      message: 'File uploaded successfully'
+    });
+  }
+});
+
 
 // read excel sheet and update records in DB
 var watcher = chokidar.watch("./files", {
   persistent: true
 });
 
-watcher.on("add", async function (path) {
+watcher.on("add", async (path) => {
   console.log("File", path, "has been added");
   if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
     var workbook = XLSX.readFile(`./${path}`, {
@@ -60,7 +95,7 @@ watcher.on("add", async function (path) {
     console.log("excel sheet name", sheet_name_list[0]);
     await service.saveGroupData(data);
     await stockService();
-  }
+  };
 });
 
 app.use("/api", routes);

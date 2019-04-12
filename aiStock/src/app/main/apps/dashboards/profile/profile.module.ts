@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule, MatDividerModule, MatIconModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatDividerModule, MatIconModule, MatSnackBarModule, MatTabsModule } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
@@ -35,6 +35,7 @@ const routes = [
         MatDividerModule,
         MatIconModule,
         MatTabsModule,
+        MatSnackBarModule,
 
         FuseSharedModule
     ],

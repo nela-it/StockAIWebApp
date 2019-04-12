@@ -190,7 +190,8 @@ exports.userInfo = async (req, res, next) => {
             username: isUser.dataValues.username,
             email: isUser.dataValues.email,
             address: isUser.dataValues.address,
-            contact_no: isUser.dataValues.contact_no
+            contact_no: isUser.dataValues.contact_no,
+            isAdmin: isUser.dataValues.isAdmin
           },
           payment_detail: isPayment
         });
@@ -201,7 +202,8 @@ exports.userInfo = async (req, res, next) => {
             username: isUser.dataValues.username,
             email: isUser.dataValues.email,
             address: isUser.dataValues.address,
-            contact_no: isUser.dataValues.contact_no
+            contact_no: isUser.dataValues.contact_no,
+            isAdmin: isUser.dataValues.isAdmin
           },
           payment_detail: {}
         });

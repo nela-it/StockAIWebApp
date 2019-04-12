@@ -1,4 +1,4 @@
-<mat-list class="date" cdkFocusRegionStart>
+<!-- <mat-list class="date" cdkFocusRegionStart>
 
     <h3 matSubheader cdkFocusInit>
         <span>Today</span>
@@ -14,24 +14,24 @@
             <span> {{date | date:'MMMM'}}</span>
         </div>
     </div>
-</mat-list>
+</mat-list> -->
 
 <mat-divider cdkFocusRegionEnd></mat-divider>
 
 <mat-list>
     <h3 matSubheader>
-        <span>Events</span>
+        <span>Alerts & Notifications</span>
     </h3>
 
-    <mat-list-item *ngFor="let event of events">
-        <h3 matLine>{{event.title}}</h3>
-        <p matLine class="secondary-text">{{event.detail}}</p>
+    <mat-list-item *ngFor="let event of alertData">
+        <h3 matLine class="whiteSpace">{{event.message}}</h3>
+        <p matLine class="secondary-text">{{event.messageType}}</p>
     </mat-list-item>
 </mat-list>
 
 <mat-divider></mat-divider>
 
-<mat-list>
+<!-- <mat-list>
     <h3 matSubheader>
         <span>Notes</span>
     </h3>
@@ -69,4 +69,4 @@
             <h3>Retro Thrusters</h3>
         </mat-slide-toggle>
     </mat-list-item>
-</mat-list>
+</mat-list> -->

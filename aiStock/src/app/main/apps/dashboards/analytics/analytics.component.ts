@@ -1,3 +1,4 @@
+import { group } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewEncapsulation, ViewChild, OnDestroy, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MatPaginator, MatSort, MatSelect } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
@@ -25,7 +26,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     widget5SelectedDay = 'today';
     activeStock = 'prediction';
     selectedStock = '';
-    selectedGroups = 'all';
+    selectedGroups = '';
     selecteddays = 'Daily';
     predictionGroupData: any;
     isSubscribed: any;
@@ -42,6 +43,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     portfolioPrice = [];
     realTimePrice = [];
     portfolioLabels = [];
+    stockList = [];
     displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice',
         'currentPrice', 'suggestedDate', 'tragetPrice', 'todayChangePercentage', 'addTodayChange', 'yourChangePercentage', 'addYourChange'];
     stockName: string;
@@ -55,6 +57,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
     @ViewChild('selectGroups') selectGroups: MatSelect;
     @ViewChild('selectdays') selectdays: MatSelect;
+    @ViewChild('selectStocks') selectStocks: MatSelect;
+
 
 
     @ViewChild(MatSort)
@@ -100,21 +104,32 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
             this.errMsg = error.message;
         });
         this.dataSource = new FilesDataSource(this._analyticsDashboardService, this.paginator, this.sort);
-        this.loadChart('all', 'Daily');
+        setTimeout(() => {
+            this.selectGroups.value = this._analyticsDashboardService.allGroupData[0];
+            for (let i = 0; i < this._analyticsDashboardService.stockList.length; i++) {
+                if (this._analyticsDashboardService.stockList[i].group_id === this.selectGroups.value.group_id) {
+                    this.stockList.push(this._analyticsDashboardService.stockList[i]);
+                }
+            }
+        }, 0);
+        setTimeout(() => {
+            this.selectStocks.value = this.stockList[0];
+            this.loadChart(this.selectGroups.value.group_id, this.selectStocks.value.stockId, this.selectdays.triggerValue);
+        }, 0);
     }
 
-    loadChart(group, days): void {
+    loadChart(group: any, stock: any, days: any): void {
         this.portfolioPrice = [];
         this.realTimePrice = [];
         this.portfolioLabels = [];
 
-        this._analyticsDashboardService.getChartData(group, days).subscribe(res => {
-            console.log(res);
+        this._analyticsDashboardService.getChartData(group, stock, days).subscribe(res => {
+            // console.log(res);
             for (let i = 0; i < res.data.length; i++) {
                 this.portfolioPrice.push(res.data[i].portfolio);
                 this.realTimePrice.push(res.data[i].realTime);
-                this.portfolioLabels.push(`${res.data[i].time} | ${res.data[i].stockName}`);
-                console.log(res.data.length, i + 1);
+                this.portfolioLabels.push(res.data[i].time);
+                // console.log(res.data.length, i + 1);
                 if (res.data.length === i + 1) {
                     // line horizontalBar
                     this.chartType = 'line';
@@ -131,45 +146,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                             fill: false
                         }
                     ];
-                    // [
-                    //     {
-                    //         label: 'User Portfolio price',
-                    //         data: this.portfolioPrice,
-                    //         fill: false
 
-                    //     },
-                    //     {
-                    //         label: 'Real time Price',
-                    //         data: this.realTimePrice,
-                    //         fill: false
-                    //     }
-                    // ]
-                    // [{
-                    //     data: [86, 114, 106, 106, 107, 111, 133, 221, 783, 2478],
-                    //     label: 'Africa',
-                    //     borderColor: '#3e95cd',
-                    //     fill: false
-                    // }, {
-                    //     data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
-                    //     label: 'Asia',
-                    //     borderColor: '#8e5ea2',
-                    //     fill: false
-                    // }, {
-                    //     data: [168, 170, 178, 190, 203, 276, 408, 547, 675, 734],
-                    //     label: 'Europe',
-                    //     borderColor: '#3cba9f',
-                    //     fill: false
-                    // }, {
-                    //     data: [40, 20, 10, 16, 24, 38, 74, 167, 508, 784],
-                    //     label: 'Latin America',
-                    //     borderColor: '#e8c3b9',
-                    //     fill: false
-                    // }, {
-                    //     data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
-                    //     label: 'North America',
-                    //     borderColor: '#c45850',
-                    //     fill: false
-                    // }]
                     this.chartLabels = this.portfolioLabels;
                     this.chartColors = [
                         {
@@ -271,27 +248,26 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
     }
 
-    selectedDayGroup(e): void {
-        console.log(this.selectGroups);
-        if (this.selectGroups.value === undefined) {
-            this.loadChart(this.selectGroups.triggerValue, this.selectdays.triggerValue);
-        } else if (this.selectGroups.value === 'all') {
-            this.loadChart(this.selectGroups.value, this.selectdays.triggerValue);
-        } else {
-            this.loadChart(this.selectGroups.value.group_id, this.selectdays.triggerValue);
+    selectedGroup(e): void {
+        this.stockList = [];
+        for (let i = 0; i < this._analyticsDashboardService.stockList.length; i++) {
+            if (this._analyticsDashboardService.stockList[i].group_id === this.selectGroups.value.group_id) {
+                this.stockList.push(this._analyticsDashboardService.stockList[i]);
+            }
         }
+        setTimeout(() => {
+            this.selectStocks.value = this.stockList[0];
+            this.loadChart(this.selectGroups.value.group_id, this.selectStocks.value.stockId, this.selectdays.triggerValue);
+        }, 0);
     }
 
-    selectedDay(e): void {
-        if (e.value === 'Daily') {
-            console.log(moment());
-        } else if (e.value === 'Weekly') {
-            console.log(moment().startOf('week'), moment().endOf('week'));
-        } else {
-            console.log(moment().month());
-        }
+    selectedStocks(e): void {
+        this.loadChart(this.selectGroups.value.group_id, this.selectStocks.value.stockId, this.selectdays.triggerValue);
     }
 
+    selectedDays(e): void {
+        this.loadChart(this.selectGroups.value.group_id, this.selectStocks.value.stockId, this.selectdays.triggerValue);
+    }
 
     active_stock(tab): void {
         this.activeStock = tab;
