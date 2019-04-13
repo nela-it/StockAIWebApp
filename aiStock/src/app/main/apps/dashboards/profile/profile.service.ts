@@ -16,7 +16,7 @@ export class ProfileService implements Resolve<any>
     aboutOnChanged: BehaviorSubject<any>;
     photosVideosOnChanged: BehaviorSubject<any>;
     fileToUpload: File = null;
-    httpOptions
+    httpOptions;
     /**
      * Constructor
      *
@@ -121,7 +121,12 @@ export class ProfileService implements Resolve<any>
     }
 
     public addFile(file): Observable<any> {
-        return this._httpClient.post(fileUpload, file);
+        this.httpOptions = {
+            headers: new HttpHeaders({
+                'authorization': localStorage.getItem('LoggedInUser')
+            })
+        };
+        return this._httpClient.post(fileUpload, file, this.httpOptions);
     }
 
 

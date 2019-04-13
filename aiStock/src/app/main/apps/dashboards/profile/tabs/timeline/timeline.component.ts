@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -18,6 +18,8 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy {
     form: FormGroup;
     error: string;
     filesToUpload: Array<File> = [];
+    fi;
+    @ViewChild('fileInput') fileInput;
 
     uploadResponse = { status: '', message: '', filePath: '' };
     // Private
@@ -53,36 +55,40 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy {
     }
 
     uploadFile(): void {
-        const formData: any = new FormData();
-        const files: Array<File> = this.filesToUpload;
-
-        formData.append('uploads[]', files[0], files[0]['name']);
-
-        this._profileService.addFile(formData).subscribe(res => {
-            if (res.sucess) {
-                this.snackBar.open('Success', res.message, {
+        if (this.fi.files && this.fi.files[0]) {
+            const fileToUpload = this.fi.files[0];
+            const input = new FormData();
+            input.append('file', fileToUpload);
+            this._profileService.addFile(input).subscribe(res => {
+                if (res.sucess) {
+                    this.snackBar.open('Success', res.message, {
+                        duration: 5000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top'
+                    });
+                } else {
+                    this.snackBar.open('Error', res.message, {
+                        duration: 5000,
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top'
+                    });
+                }
+            }, error => {
+                this.snackBar.open('Error', 'Please try again sometime. File was not uploaded.', {
                     duration: 5000,
                     horizontalPosition: 'center',
                     verticalPosition: 'top'
                 });
-            } else {
-                this.snackBar.open('Error', res.message, {
-                    duration: 5000,
-                    horizontalPosition: 'center',
-                    verticalPosition: 'top'
-                });
-            }
-        }, error => {
-            this.snackBar.open('Error', 'Please try again sometime. File was not uploaded.', {
-                duration: 5000,
-                horizontalPosition: 'center',
-                verticalPosition: 'top'
             });
-        });
+        }
+
+
     }
 
     fileChangeEvent(fileInput: any) {
-        this.filesToUpload = <Array<File>>fileInput.target.files;
+        // this.filesToUpload = <Array<File>>fileInput.target.files;
+        this.fi = this.fileInput.nativeElement;
+
     }
     /**
      * On destroy

@@ -1,8 +1,8 @@
 const serverUrl = 'https://stockzai.com/api/';
 const localUrl = 'http://localhost:3001/api/';
 
-// export const fileUpload: string = 'http://localhost:3001/fileupload';
-export const fileUpload: string = 'https://stockzai.com/fileupload';
+// export const fileUpload = 'http://localhost:3001/fileupload';
+export const fileUpload = 'https://stockzai.com/fileupload';
 
 export const loginUrl: string = serverUrl + 'user/login';
 export const registerUrl: string = serverUrl + 'user/register';

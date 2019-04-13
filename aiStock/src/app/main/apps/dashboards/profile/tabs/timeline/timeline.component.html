@@ -18,7 +18,7 @@
                             <button mat-icon-button matTooltip="Attach a file" (click)="fileInput.click()">
                                 <mat-icon>attach_file</mat-icon>
                             </button>
-                            <input name="myfile" hidden type="file" (change)="fileChangeEvent($event)" #fileInput
+                            <input name="file" hidden type="file" (change)="fileChangeEvent($event)" #fileInput
                                 accept=".xlsx, .xls">
                             <button class="submit-button" (click)="uploadFile()" mat-stroked-button>Upload </button>
                         </form>
