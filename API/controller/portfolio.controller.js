@@ -71,21 +71,6 @@ exports.getPortfolio = async (req, res, next) => {
     foreignKey: "group_id"
   });
   try {
-    // let isRecords = await Portfolio.findAll({
-    //   where: {
-    //     user_id: req.user.id
-    //   },
-    //   include: [{
-    //     model: realTimePrice,
-    //     include: [{
-    //       model: Stocks,
-    //       include: {
-    //         model: Prediction_group
-    //       }
-    //     }]
-    //   }]
-    // });
-
     let isRecord = await Portfolio.findAll({
       where: {
         user_id: req.user.id
@@ -153,20 +138,40 @@ exports.getChartData = async (req, res, next) => {
           where: {
             stock_id: isRecord[0].dataValues.stock_id,
             createdAt: {
-              [Op.gte]: moment(moment().set('hour', 0 + i)).subtract(1, 'hours').endOf('hours'),
-              [Op.lt]: moment(moment().set('hour', 0 + i)).add(1, 'hours').startOf('hours')
+              [Op.gte]: moment.utc(moment().set('hour', i)).subtract(1, 'hours').endOf('hours'),
+              [Op.lt]: moment.utc(moment().set('hour', i)).add(1, 'hours').startOf('hours')
             }
           },
           order: [
-            ['createdAt', 'DESC']
-          ],
-        });
-        dataChart.push({
-          'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
-          'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
-          'time': moment().set('hour', i).minutes(0).format('hh:mm A'),
+            ['id', 'DESC']
+          ]
         });
 
+
+        let active_time = moment.utc();
+        let current_time = moment.utc(moment().set('hour', i).minutes(0));
+
+        if (active_time.isAfter(current_time)) {
+          if (dataChart.length === 0) {
+            dataChart.push({
+              'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
+              'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
+              'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A'),
+            });
+          } else {
+            dataChart.push({
+              'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : dataChart[dataChart.length - 1]['portfolio'],
+              'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : dataChart[dataChart.length - 1]['realTime'],
+              'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A'),
+            });
+          }
+        } else {
+          dataChart.push({
+            'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
+            'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
+            'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A'),
+          });
+        }
         if (24 === i + 1) {
           return res.status(200).json({
             message: "Chart data Found",
@@ -201,7 +206,6 @@ exports.getChartData = async (req, res, next) => {
             data: dataChart
           });
         }
-
       }
     } else {
       for (let i = 0; i < moment().daysInMonth(); i++) {

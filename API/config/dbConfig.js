@@ -5,7 +5,10 @@ module.exports = {
     database: "aiStock",
     host: "localhost",
     port: 3306,
-    dialect: "mysql"
+    dialect: "mysql",
+    dialectOptions: {
+      useUTC: false //for reading from database
+    },
   },
   production: {
     username: "root",
