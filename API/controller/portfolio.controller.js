@@ -131,7 +131,7 @@ exports.getChartData = async (req, res, next) => {
         stock_id: req.body.stock
       }
     });
-    let isStock, isrealTime;
+    let isrealTime;
     if (req.body.days === 'Daily') {
       for (let i = 0; i < 24; i++) {
         isrealTime = await realTimePrice.findOne({
@@ -147,12 +147,27 @@ exports.getChartData = async (req, res, next) => {
           ]
         });
 
+        let current = moment.utc();
+        let stockTime = moment.utc(moment().set('hour', i).minutes(0));
 
-        let active_time = moment.utc();
-        let current_time = moment.utc(moment().set('hour', i).minutes(0));
 
-        if (active_time.isAfter(current_time)) {
+
+        if (current.isAfter(stockTime)) {
           if (dataChart.length === 0) {
+            if (isrealTime === null) {
+              isrealTime = await realTimePrice.findOne({
+                where: {
+                  stock_id: isRecord[0].dataValues.stock_id,
+                  createdAt: {
+                    [Op.gte]: moment().subtract(1, 'days').endOf('day'),
+                    [Op.lt]: moment().add(1, 'days').startOf('day')
+                  }
+                },
+                order: [
+                  ['id', 'DESC']
+                ]
+              });
+            }
             dataChart.push({
               'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
               'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
