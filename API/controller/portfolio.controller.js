@@ -150,8 +150,6 @@ exports.getChartData = async (req, res, next) => {
         let current = moment.utc();
         let stockTime = moment.utc(moment().set('hour', i).minutes(0));
 
-
-
         if (current.isAfter(stockTime)) {
           if (dataChart.length === 0) {
             if (isrealTime === null) {
@@ -180,12 +178,6 @@ exports.getChartData = async (req, res, next) => {
               'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A'),
             });
           }
-        } else {
-          dataChart.push({
-            'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
-            'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
-            'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A'),
-          });
         }
         if (24 === i + 1) {
           return res.status(200).json({
