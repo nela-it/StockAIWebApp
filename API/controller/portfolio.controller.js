@@ -157,8 +157,8 @@ exports.getChartData = async (req, res, next) => {
                 where: {
                   stock_id: isRecord[0].dataValues.stock_id,
                   createdAt: {
-                    [Op.gte]: moment().subtract(1, 'days').endOf('day'),
-                    [Op.lt]: moment().add(1, 'days').startOf('day')
+                    [Op.gte]: moment.utc().subtract(2, 'days').endOf('day'),
+                    [Op.lt]: moment.utc().startOf('day')
                   }
                 },
                 order: [
