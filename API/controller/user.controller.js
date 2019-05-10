@@ -4,6 +4,12 @@ const bcryptService = require("../middleware/bcryptService");
 const userService = require("../middleware/user.service");
 const mailService = require("../middleware/mailService");
 const forgotPasswordTemplate = require("../middleware/templates");
+const fs = require("fs");
+const chokidar = require("chokidar");
+const XLSX = require("xlsx");
+const service = require("./prediction_group.controller");
+const stockService = require("./stocks.controller")
+  .updateRealtimePrice;
 const User = db.User;
 const Payment = db.Payment;
 const atob = require("atob");
@@ -222,5 +228,45 @@ exports.getAllUser = (req, res, next) => {
   return res.status(200).json({
     message: "get all user",
     data: req.user
+  });
+};
+
+exports.fileUpload = (req, res, next) => {
+
+  let fstream;
+  // console.log(req.busboy);
+  req.pipe(req.busboy);
+  req.busboy.on('file', (fieldname, file, filename) => {
+    if (filename.split(".")[1] === "xlsx" || filename.split(".")[1] === "xls") {
+      fstream = fs.createWriteStream('./files/' + filename);
+      file.pipe(fstream);
+      fstream.on('close', () => {
+        let watcher = chokidar.watch("./files", {
+          persistent: true
+        });
+        watcher.on("add", async (path) => {
+          if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
+            let workbook = XLSX.readFile(`./${path}`, {
+              cellDates: true,
+              cellText: false
+            });
+            let sheet_name_list = workbook.SheetNames;
+            let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+            console.log("excel sheet name", sheet_name_list[0]);
+            await service.saveGroupData(data);
+            // await stockService();
+            res.status(200).json({
+              sucess: true,
+              message: 'File uploaded successfully'
+            });
+          }
+        });
+      });
+    } else {
+      res.status(200).json({
+        sucess: false,
+        message: 'Please upload excel sheet file.'
+      });
+    }
   });
 };

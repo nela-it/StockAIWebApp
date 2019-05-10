@@ -68,5 +68,7 @@ router.route("/getAllUsers").get(checkAuth, userController.getAllUser);
 
 router.route("/getAlertNotify").get(checkAuth, alertController.getAlertNotify);
 
+router.route("/fileUpload").post(checkAuth, userController.fileUpload);
+
 
 module.exports = router;

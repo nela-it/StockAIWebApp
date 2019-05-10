@@ -121,12 +121,16 @@ export class ProfileService implements Resolve<any>
     }
 
     public addFile(file): Observable<any> {
+        const input = new FormData();
+        input.append('file', file);
+
         this.httpOptions = {
             headers: new HttpHeaders({
+                'Accept': 'application/json',
                 'authorization': localStorage.getItem('LoggedInUser')
             })
         };
-        return this._httpClient.post(fileUpload, file, this.httpOptions);
+        return this._httpClient.post(fileUpload, input, this.httpOptions);
     }
 
 

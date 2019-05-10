@@ -75,7 +75,6 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((response: any) => {
                 this.alertData = response.data;
-                console.log(this.alertData);
             });
     }
 

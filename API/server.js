@@ -59,39 +59,41 @@ app.post("/fileupload", (req, res) => {
   console.log(req);
   console.log(req.busboy);
   req.pipe(req.busboy);
-  req.busboy.on('file', (fieldname, file, filename) => {
-    if (filename.split(".")[1] === "xlsx" || filename.split(".")[1] === "xls") {
-      fstream = fs.createWriteStream(__dirname + '/files/' + filename);
-      file.pipe(fstream);
-      fstream.on('close', () => {
-        let watcher = chokidar.watch("./files", {
-          persistent: true
-        });
-        watcher.on("add", async (path) => {
-          if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
-            let workbook = XLSX.readFile(`./${path}`, {
-              cellDates: true,
-              cellText: false
-            });
-            let sheet_name_list = workbook.SheetNames;
-            let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-            console.log("excel sheet name", sheet_name_list[0]);
-            await service.saveGroupData(data);
-            await stockService();
-            res.status(200).json({
-              sucess: true,
-              message: 'File uploaded successfully'
-            });
-          }
-        });
-      });
-    } else {
-      res.status(200).json({
-        sucess: false,
-        message: 'Please upload excel sheet file.'
-      });
-    }
-  });
+  // req.busboy.on('file', (fieldname, file, filename) => {
+  //   if (filename.split(".")[1] === "xlsx" || filename.split(".")[1] === "xls") {
+  //     fstream = fs.createWriteStream(__dirname + '/files/' + filename);
+  //     file.pipe(fstream);
+  //     fstream.on('close', () => {
+  //       let watcher = chokidar.watch("./files", {
+  //         persistent: true
+  //       });
+  //       watcher.on("add", async (path) => {
+  //         if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
+  //           let workbook = XLSX.readFile(`./${path}`, {
+  //             cellDates: true,
+  //             cellText: false
+  //           });
+  //           let sheet_name_list = workbook.SheetNames;
+  //           let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+  //           console.log("excel sheet name", sheet_name_list[0]);
+  //           await service.saveGroupData(data);
+  //           await stockService();
+  //           res.status(200).json({
+  //             sucess: true,
+  //             message: 'File uploaded successfully'
+  //           });
+  //         }
+  //       });
+  //     });
+  //   } else {
+  //     res.status(200).json({
+  //       sucess: false,
+  //       message: 'Please upload excel sheet file.'
+  //     });
+  //   }
+  // });
+
+  
   // if (!req.files) {
   //   res.json({
   //     sucess: false,

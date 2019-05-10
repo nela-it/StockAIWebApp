@@ -54,12 +54,21 @@ export class ProfileTimelineComponent implements OnInit, OnDestroy {
             });
     }
 
+    // blobToBase64(blob, (base64) => { // encode
+    //     var update = { 'blob': base64 };
+    //     $http.post('/api/save_recording', update)
+    //         .success(function (new_recording) {
+    //             console.log("success");
+    //         });
+    // });
+
     uploadFile(): void {
         if (this.fi.files && this.fi.files[0]) {
             const fileToUpload = this.fi.files[0];
-            const input = new FormData();
-            input.append('file', fileToUpload);
-            this._profileService.addFile(input).subscribe(res => {
+            // const input = new FormData();
+            // input.append('file', fileToUpload);
+
+            this._profileService.addFile(fileToUpload).subscribe(res => {
                 if (res.sucess) {
                     this.snackBar.open('Success', res.message, {
                         duration: 5000,
