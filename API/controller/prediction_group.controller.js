@@ -13,6 +13,8 @@ Stocks.belongsTo(Prediction_group, {
 Stocks.belongsTo(realTimePrice, {
   foreignKey: "realtime_price_id"
 });
+const _ = require("lodash");
+
 
 // Stocks.sync({
 //   force: true
@@ -24,32 +26,45 @@ Stocks.belongsTo(realTimePrice, {
 
 exports.saveGroupData = data => {
   try {
-    data.forEach(async (column, i) => {
-      setTimeout(async () => {
-        let isGroupExists = await Prediction_group.findAll({
-          where: {
-            group_id: column.GroupId
-          }
-        });
-        if (isGroupExists.length === 0) {
-          console.log("not found");
-          let isGroupCreated = await Prediction_group.create({
-            group_id: column.GroupId,
-            group_name: column.GroupName,
-            group_image: column["Group Image File"]
-          });
-          if (isGroupCreated) {
-            console.log("group created-------", isGroupCreated.dataValues.id);
-            column.prediction_group_id = isGroupCreated.dataValues.id;
-            await updateStocks(column);
-          }
-        } else {
-          console.log("found", isGroupExists[0].dataValues.id);
-          column.prediction_group_id = isGroupExists[0].dataValues.id;
-          await updateStocks(column);
-        }
-      }, 200 * i);
+    let value;
+    let correctData = _.some(data, function (o) {
+      return _.has(o, 'GroupId');
     });
+    if (correctData) {
+      for (let i = 0; i < data.length; i++) {
+        setTimeout(async () => {
+          let isGroupExists = await Prediction_group.findAll({
+            where: {
+              group_id: data[i].GroupId
+            }
+          });
+          if (isGroupExists.length === 0) {
+            console.log("not found");
+            let isGroupCreated = await Prediction_group.create({
+              group_id: data[i].GroupId,
+              group_name: data[i].GroupName,
+              group_image: data[i]["Group Image File"]
+            });
+            if (isGroupCreated) {
+              console.log("group created-------", isGroupCreated.dataValues.id);
+              data[i].prediction_group_id = isGroupCreated.dataValues.id;
+              await updateStocks(data[i]);
+            }
+          } else {
+            console.log("found", isGroupExists[0].dataValues.id);
+            data[i].prediction_group_id = isGroupExists[0].dataValues.id;
+            await updateStocks(data[i]);
+          }
+        }, 200 * i);
+        if (data.length === i + 1) {
+          value = true;
+          return value;
+        }
+      }
+    } else {
+      value = false;
+      return value;
+    }
   } catch (error) {
     console.log("error----", error);
   }

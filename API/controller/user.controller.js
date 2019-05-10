@@ -15,6 +15,7 @@ const Payment = db.Payment;
 const atob = require("atob");
 const btoa = require("btoa");
 
+
 // User.sync({
 //   force: true
 // });
@@ -232,9 +233,7 @@ exports.getAllUser = (req, res, next) => {
 };
 
 exports.fileUpload = (req, res, next) => {
-
   let fstream;
-  // console.log(req.busboy);
   req.pipe(req.busboy);
   req.busboy.on('file', (fieldname, file, filename) => {
     if (filename.split(".")[1] === "xlsx" || filename.split(".")[1] === "xls") {
@@ -253,12 +252,26 @@ exports.fileUpload = (req, res, next) => {
             let sheet_name_list = workbook.SheetNames;
             let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
             console.log("excel sheet name", sheet_name_list[0]);
-            await service.saveGroupData(data);
+            let groupData = await service.saveGroupData(data);
             // await stockService();
-            res.status(200).json({
-              sucess: true,
-              message: 'File uploaded successfully'
-            });
+            console.log('groupData', groupData)
+            if (groupData === true) {
+              var filePath = './files/' + filename;
+              fs.unlinkSync(filePath);
+
+              res.status(200).json({
+                sucess: true,
+                message: 'File uploaded successfully'
+              });
+            } else if (groupData === false) {
+              var filePath = './files/' + filename;
+              fs.unlinkSync(filePath);
+
+              res.status(200).json({
+                sucess: false,
+                message: 'Uploaded file records are incorrect'
+              });
+            }
           }
         });
       });

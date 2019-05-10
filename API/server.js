@@ -7,17 +7,11 @@ const expressValidation = require("express-validation");
 const cors = require("cors");
 const APIError = require("./helpers/APIError");
 const config = require("./config/index");
-const service = require("./controller/prediction_group.controller");
 const stockService = require("./controller/stocks.controller")
   .updateRealtimePrice;
 const logger = require("morgan");
-const chokidar = require("chokidar");
-const XLSX = require("xlsx");
 const CronJob = require("cron").CronJob;
 var busboy = require('connect-busboy');
-const fs = require('fs');
-
-let multer = require('multer');
 
 if (config.env === "development") {
   app.use(logger("dev"));
@@ -38,74 +32,6 @@ app.use(bodyParser.urlencoded({
   limit: "50mb"
 }));
 app.use("/API", express.static(__dirname + "/files"));
-
-// var storage = multer.diskStorage({
-//   // destino del fichero
-//   destination: function (req, file, cb) {
-//     cb(null, './files/');
-//   },
-//   // renombrar fichero
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname);
-//   }
-// });
-
-// var upload = multer({
-//   storage: storage
-// });
-
-app.post("/fileupload", (req, res) => {
-  let fstream;
-  console.log(req);
-  console.log(req.busboy);
-  req.pipe(req.busboy);
-  // req.busboy.on('file', (fieldname, file, filename) => {
-  //   if (filename.split(".")[1] === "xlsx" || filename.split(".")[1] === "xls") {
-  //     fstream = fs.createWriteStream(__dirname + '/files/' + filename);
-  //     file.pipe(fstream);
-  //     fstream.on('close', () => {
-  //       let watcher = chokidar.watch("./files", {
-  //         persistent: true
-  //       });
-  //       watcher.on("add", async (path) => {
-  //         if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
-  //           let workbook = XLSX.readFile(`./${path}`, {
-  //             cellDates: true,
-  //             cellText: false
-  //           });
-  //           let sheet_name_list = workbook.SheetNames;
-  //           let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-  //           console.log("excel sheet name", sheet_name_list[0]);
-  //           await service.saveGroupData(data);
-  //           await stockService();
-  //           res.status(200).json({
-  //             sucess: true,
-  //             message: 'File uploaded successfully'
-  //           });
-  //         }
-  //       });
-  //     });
-  //   } else {
-  //     res.status(200).json({
-  //       sucess: false,
-  //       message: 'Please upload excel sheet file.'
-  //     });
-  //   }
-  // });
-
-  
-  // if (!req.files) {
-  //   res.json({
-  //     sucess: false,
-  //     message: 'File not uploaded'
-  //   });
-  // } else {
-  //   res.json({
-  //     sucess: true,
-  //     message: 'File uploaded successfully'
-  //   });
-  // }
-});
 
 // Cron job for update realtime price of stock
 new CronJob(
