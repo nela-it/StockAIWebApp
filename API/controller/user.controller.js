@@ -14,6 +14,7 @@ const User = db.User;
 const Payment = db.Payment;
 const atob = require("atob");
 const btoa = require("btoa");
+const rimraf = require("rimraf");
 
 
 // User.sync({
@@ -233,7 +234,7 @@ exports.getAllUser = (req, res, next) => {
 };
 
 exports.fileUpload = (req, res, next) => {
-  let fstream;
+  let fstream, filesName;
   req.pipe(req.busboy);
   req.busboy.on('file', (fieldname, file, filename) => {
     if (filename.split(".")[1] === "xlsx" || filename.split(".")[1] === "xls") {
@@ -244,6 +245,7 @@ exports.fileUpload = (req, res, next) => {
           persistent: true
         });
         watcher.on("add", async (path) => {
+          filesName = path;
           if (path.split(".")[1] === "xlsx" || path.split(".")[1] === "xls") {
             let workbook = XLSX.readFile(`./${path}`, {
               cellDates: true,
@@ -251,22 +253,24 @@ exports.fileUpload = (req, res, next) => {
             });
             let sheet_name_list = workbook.SheetNames;
             let data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-            console.log("excel sheet name", sheet_name_list[0]);
+            console.log("excel sheet name", sheet_name_list[0], data);
             let groupData = await service.saveGroupData(data);
             // await stockService();
             console.log('groupData', groupData)
             if (groupData === true) {
-              var filePath = './files/' + filename;
-              fs.unlinkSync(filePath);
-
+              rimraf.sync("./files");
+              if (!fs.existsSync("./files")) {
+                fs.mkdirSync("./files");
+              }
               res.status(200).json({
                 sucess: true,
                 message: 'File uploaded successfully'
               });
             } else if (groupData === false) {
-              var filePath = './files/' + filename;
-              fs.unlinkSync(filePath);
-
+              rimraf.sync("./files");
+              if (!fs.existsSync("./files")) {
+                fs.mkdirSync("./files");
+              }
               res.status(200).json({
                 sucess: false,
                 message: 'Uploaded file records are incorrect'
