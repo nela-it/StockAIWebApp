@@ -12,6 +12,8 @@ const stockService = require("./controller/stocks.controller")
 const logger = require("morgan");
 const CronJob = require("cron").CronJob;
 var busboy = require('connect-busboy');
+const path = require("path");
+
 
 if (config.env === "development") {
   app.use(logger("dev"));
@@ -48,6 +50,7 @@ new CronJob(
 
 
 // read excel sheet and update records in DB
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 
 app.use("/api", routes);

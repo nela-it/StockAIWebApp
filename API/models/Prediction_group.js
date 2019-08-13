@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     group_image: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    imagePath: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   });
 
