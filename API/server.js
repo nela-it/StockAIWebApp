@@ -50,8 +50,8 @@ new CronJob(
 
 
 // read excel sheet and update records in DB
-app.use(express.static(path.join(__dirname, 'uploads')));
-
+// app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static('uploads'));
 
 app.use("/api", routes);
 
