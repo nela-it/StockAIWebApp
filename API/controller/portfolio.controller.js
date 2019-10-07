@@ -1,3 +1,5 @@
+/*jshint esversion: 8 */
+
 const db = require("../models/index");
 const Portfolio = db.Portfolio;
 const Prediction_group = db.Prediction_group;
@@ -124,7 +126,9 @@ exports.getPortfolio = async (req, res, next) => {
 
 exports.getChartData = async (req, res, next) => {
   try {
+
     let dataChart = [];
+    let chargePer = [];
     let isRecord = await Portfolio.findAll({
       where: {
         user_id: req.user.id,
@@ -146,43 +150,36 @@ exports.getChartData = async (req, res, next) => {
             ['id', 'DESC']
           ]
         });
-
         let current = moment.utc();
         let stockTime = moment.utc(moment().set('hour', i).minutes(0));
-
         if (current.isAfter(stockTime)) {
-          if (dataChart.length === 0) {
-            if (isrealTime === null) {
-              isrealTime = await realTimePrice.findOne({
-                where: {
-                  stock_id: isRecord[0].dataValues.stock_id,
-                  createdAt: {
-                    [Op.gte]: moment.utc().subtract(2, 'days').endOf('day'),
-                    [Op.lt]: moment.utc().startOf('day')
-                  }
-                },
-                order: [
-                  ['id', 'DESC']
-                ]
-              });
-            }
-            dataChart.push({
-              'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
-              'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
-              'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A'),
-            });
-          } else {
-            dataChart.push({
-              'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : dataChart[dataChart.length - 1]['portfolio'],
-              'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : dataChart[dataChart.length - 1]['realTime'],
-              'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A'),
+          if (isrealTime === null) {
+            isrealTime = await realTimePrice.findOne({
+              where: {
+                stock_id: isRecord[0].dataValues.stock_id,
+                createdAt: {
+                  [Op.gte]: moment.utc().subtract(2, 'days').endOf('day'),
+                  [Op.lt]: moment.utc().startOf('day')
+                }
+              },
+              order: [
+                ['id', 'DESC']
+              ]
             });
           }
+
+          chargePer = [...chargePer, isrealTime !== null ? ((parseInt(isrealTime.dataValues.current_price) - parseInt(isRecord[0].real_time_price_value)) / (parseInt(isRecord[0].real_time_price_value))) * 100 : 0];
+          dataChart = [...dataChart, {
+            'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
+            'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
+            'time': moment.utc().set('hour', i).minutes(0).format('hh:mm A')
+          }];
         }
         if (24 === i + 1) {
           return res.status(200).json({
             message: "Chart data Found",
-            data: dataChart
+            data: dataChart,
+            charge: chargePer = (chargePer.reduce((a, b) => a + b, 0) / chargePer.length).toFixed(2)
           });
         }
       }
@@ -201,16 +198,22 @@ exports.getChartData = async (req, res, next) => {
           ],
         });
 
-        dataChart.push({
-          'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
-          'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
-          'time': moment(moment().clone().weekday(0 + i).format('YYYY-MM-DD')).format('YYYY-MM-DD'),
-        });
+        let currentWeek = moment.utc();
+        let stockWeek = moment(moment().clone().weekday(0 + i).format('YYYY-MM-DD')).utc();
+        if (currentWeek.isAfter(stockWeek)) {
+          chargePer = [...chargePer, isrealTime !== null ? ((parseInt(isrealTime.dataValues.current_price) - parseInt(isRecord[0].real_time_price_value)) / (parseInt(isRecord[0].real_time_price_value))) * 100 : 0];
+          dataChart.push({
+            'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
+            'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
+            'time': moment(moment().clone().weekday(0 + i).format('YYYY-MM-DD')).format('YYYY-MM-DD'),
+          });
+        }
 
         if (7 === i + 1) {
           return res.status(200).json({
             message: "Chart data Found",
-            data: dataChart
+            data: dataChart,
+            charge: chargePer = (chargePer.reduce((a, b) => a + b, 0) / chargePer.length).toFixed(2)
           });
         }
       }
@@ -228,16 +231,23 @@ exports.getChartData = async (req, res, next) => {
             ['createdAt', 'DESC']
           ],
         });
-        dataChart.push({
-          'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
-          'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
-          'time': moment().set('date', 1 + i).format('YYYY-MM-DD'),
-        });
+        let currentDate = moment();
+        let stockDate = moment().set('date', 1 + i).utc();
+
+        if (currentDate.isSameOrAfter(stockDate)) {
+          chargePer = [...chargePer, isrealTime !== null ? ((parseInt(isrealTime.dataValues.current_price) - parseInt(isRecord[0].real_time_price_value)) / (parseInt(isRecord[0].real_time_price_value))) * 100 : 0];
+          dataChart.push({
+            'portfolio': isrealTime !== null ? isRecord[0].real_time_price_value : 0,
+            'realTime': isrealTime !== null ? isrealTime.dataValues.current_price : 0,
+            'time': moment().set('date', 1 + i).format('YYYY-MM-DD'),
+          });
+        }
 
         if (moment().daysInMonth() === i + 1) {
           return res.status(200).json({
             message: "Chart data Found",
-            data: dataChart
+            data: dataChart,
+            charge: chargePer = (chargePer.reduce((a, b) => a + b, 0) / chargePer.length).toFixed(2)
           });
         }
       }

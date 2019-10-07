@@ -88,7 +88,6 @@ export class AppComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        console.log("")
         this.username = localStorage.getItem('username');
         if (this.username) {
             this.userlogin = true;

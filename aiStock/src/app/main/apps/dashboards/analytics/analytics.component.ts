@@ -44,6 +44,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     realTimePrice = [];
     portfolioLabels = [];
     stockList = [];
+    numberOfChange: string;
     displayedColumns = ['ticker', 'groupName', 'stockName', 'recommendedPrice',
         'currentPrice', 'suggestedDate', 'tragetPrice', 'todayChangePercentage', 'addTodayChange', 'yourChangePercentage', 'addYourChange'];
     stockName: string;
@@ -114,7 +115,9 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         }, 0);
         setTimeout(() => {
             this.selectStocks.value = this.stockList[0];
-            this.loadChart(this.selectGroups.value.group_id, this.selectStocks.value.stockId, this.selectdays.triggerValue);
+            if (this.selectGroups.value) {
+                this.loadChart(this.selectGroups.value.group_id, this.selectStocks.value.stockId, this.selectdays.triggerValue);
+            }
         }, 0);
     }
 
@@ -131,6 +134,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
                 this.portfolioLabels.push(res.data[i].time);
                 // console.log(res.data.length, i + 1);
                 if (res.data.length === i + 1) {
+                    this.numberOfChange = res.charge;
                     // line horizontalBar
                     this.chartType = 'line';
                     this.chartDatasets = [
@@ -245,7 +249,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
         //     }
         // });
 
-
+        this.changeDetectorRefs.detectChanges();
     }
 
     selectedGroup(e): void {
@@ -447,20 +451,19 @@ export class FilesDataSource extends DataSource<any>
                 case 'date':
                     [propertyA, propertyB] = [a.target_date, b.target_date];
                     break;
-                case 'todaychangeper':
+                case 'todayChangePercentage':
                     [propertyA, propertyB] = [a.today_change_percentage, b.today_change_percentage];
                     break;
-                case 'addtodaychange':
+                case 'addTodayChange':
                     [propertyA, propertyB] = [a.today_change, b.today_change];
                     break;
-                case 'yourchangeper':
+                case 'yourChangePercentage':
                     [propertyA, propertyB] = [a.your_change_percentage, b.your_change_percentage];
                     break;
-                case 'addyourchange':
+                case 'addYourChange':
                     [propertyA, propertyB] = [a.your_change, b.your_change];
                     break;
             }
-
             const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
             const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 

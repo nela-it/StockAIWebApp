@@ -104,7 +104,7 @@
         </div>
         <!-- *ngIf="activeStock ==='portfolio'" -->
         <div class="portfolio" [hidden]="activeStock!=='portfolio'">
-            <div class=" fuse-card auto-width">
+            <div class=" fuse-card auto-width" [hidden]="portfolioPrice.length == 0">
                 <span class="h2" fxLayout.xs="row">Summary</span>
                 <div class="position-relative" fxLayout="row" fxLayout.xs="column" fxLayoutAlign.xs="none"
                     fxLayoutAlign="space-between center">
@@ -122,7 +122,7 @@
                         <div class="text-color">No. of Stocks<div class="value">
                                 {{_analyticsDashboardService.noOfTickers}}</div>
                         </div>
-                        <div class="text-color">% of Charge<div class="value">1.7%</div>
+                        <div class="text-color">% of Charge<div class="value">{{numberOfChange}} %</div>
                         </div>
                     </div>
                     <div class="stock-filter" fxLayout.xs="column" fxLayout.sm="column" fxLayoutAlign.lg="center">
@@ -228,7 +228,7 @@
                             </mat-header-cell>
 
                             <mat-cell *matCellDef="let portfolio">
-                                <img src="assets/images/company/{{portfolio.ticker_image}}.png" height="25px"
+                                <img src="assets/images/company/{{portfolio.ticker_image}}.png" alt="" height="25px"
                                     width="25px">
                                 <p (click)="openStockDetail(portfolio.id,portfolio.realId,portfolio.group_id,portfolio.groupName,'true')"
                                     class="text-truncate iconWidth blackFontColor">
