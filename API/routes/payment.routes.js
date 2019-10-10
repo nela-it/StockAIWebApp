@@ -15,5 +15,6 @@ const paramsValidation = {
 
 router.route("/payment").get(checkAuth, paymentController.payment);
 router.route("/successPayment").get(paymentController.successPayment);
+router.route("/paypalPayment").get(checkAuth, paymentController.mobilePaypal);
 
 module.exports = router;

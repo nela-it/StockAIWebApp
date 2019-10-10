@@ -23,36 +23,34 @@ exports.payment = async (req, res, next) => {
         }`,
         cancel_url: `${config.frontImage}#/apps/dashboards/analytics`
       },
-      transactions: [
-        {
-          item_list: {
-            items: [
-              {
-                name: "AI Stock Subscribe Pro",
-                price: price,
-                currency: "USD",
-                quantity: 1
-              }
-            ]
-          },
-          amount: {
+      transactions: [{
+        item_list: {
+          items: [{
+            name: "AI Stock Subscribe Pro",
+            price: price,
             currency: "USD",
-            total: price
-          },
-          description: "Subscribe Pro for Stock AI."
-        }
-      ]
+            quantity: 1
+          }]
+        },
+        amount: {
+          currency: "USD",
+          total: price
+        },
+        description: "Subscribe Pro for Stock AI."
+      }]
     };
 
   try {
-    paypal.payment.create(create_payment_json, function(error, payment) {
+    paypal.payment.create(create_payment_json, function (error, payment) {
       if (error) {
         next(error);
       } else {
         payment.links.forEach(link => {
-          link.rel === "approval_url"
-            ? res.status(200).json({ redirection_link: link.href })
-            : null;
+          link.rel === "approval_url" ?
+            res.status(200).json({
+              redirection_link: link.href
+            }) :
+            null;
         });
       }
     });
@@ -77,6 +75,30 @@ exports.successPayment = async (req, res, next) => {
           config.frontImage
         }#/apps/dashboards/analytics'>Click here...</a>`
       );
+    } else {
+      res.status(404).json({
+        message: "Subscription failed"
+      });
+    }
+  } catch (e) {
+    next(e);
+  }
+};
+
+exports.mobilePaypal = async (req, res, next) => {
+  try {
+    let createPayment = await Payment.create({
+      user_id: req.body.userId,
+      transaction_id: req.body.paymentId,
+      subscription_plan: "Subscribe Pro",
+      subscription_amount: "5",
+      subscription_details: JSON.stringify(req.body.paypalResponse),
+      timestamp: Date()
+    });
+    if (createPayment) {
+      res.status(200).json({
+        message: "Subscription payment successful"
+      });
     } else {
       res.status(404).json({
         message: "Subscription failed"
