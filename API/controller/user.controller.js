@@ -16,7 +16,6 @@ const atob = require("atob");
 const btoa = require("btoa");
 const rimraf = require("rimraf");
 
-
 // User.sync({
 //   force: true
 // });

@@ -1,5 +1,4 @@
 const db = require("../models/index");
-const waterfall = require("async-waterfall");
 const config = require("../config");
 const Stocks = db.Stocks;
 const Real_time_price = db.Real_time_price;
@@ -18,7 +17,8 @@ exports.getStockInfo = async (req, res, next) => {
     });
     let stockDetail = await Stocks.findOne({
       where: {
-        id: req.body.stockId
+        id: req.body.stockId,
+        version: 'A'
       },
       include: [Prediction_group, Real_time_price]
     });
