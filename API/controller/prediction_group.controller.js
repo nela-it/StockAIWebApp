@@ -132,7 +132,8 @@ exports.exploreGroups = async (req, res, next) => {
       if (isSubscribed) {
         isStockFound = await Stocks.findAll({
           where: {
-            group_id: atob(req.body.group_id)
+            group_id: atob(req.body.group_id),
+            version: "A"
           },
           include: [realTimePrice]
         });
@@ -145,14 +146,14 @@ exports.exploreGroups = async (req, res, next) => {
               ['createdAt', 'DESC']
             ],
             limit: 1
-
           });
           isStockFound[i].dataValues.real_time_price = realTimeStockData[0];
         }
       } else {
         isStockFound = await Stocks.findAll({
           where: {
-            group_id: atob(req.body.group_id)
+            group_id: atob(req.body.group_id),
+            version: "A"
           },
           include: [realTimePrice],
           limit: 2
@@ -167,15 +168,15 @@ exports.exploreGroups = async (req, res, next) => {
             ],
             limit: 1
           });
-          console.log(realTimeStockData);
+          // console.log(realTimeStockData);
           isStockFound[i].dataValues.real_time_price = realTimeStockData.dataValues;
         }
       }
       if (isStockFound.length > 0) {
         checkPortfolio(req, async (err, getPortfolio) => {
           if (getPortfolio.length > 0) {
-            isStockFound.forEach(async stock => {
-              getPortfolio.forEach(async portfolio => {
+            isStockFound.forEach(stock => {
+              getPortfolio.forEach(portfolio => {
                 if (
                   stock.dataValues.id ===
                   portfolio.dataValues.real_time_price.dataValues.stock_id
@@ -188,7 +189,7 @@ exports.exploreGroups = async (req, res, next) => {
                 }
               });
             });
-            return await res.status(200).json({
+            return res.status(200).json({
               message: "Stocks Found",
               data: isStockFound,
               isSubscribed: isSubscribed
@@ -197,7 +198,7 @@ exports.exploreGroups = async (req, res, next) => {
             isStockFound.forEach(async (stock, i) => {
               stock.dataValues.addedToPortfolio = false;
             });
-            return await res.status(200).json({
+            return res.status(200).json({
               message: "Stocks Found",
               data: isStockFound,
               isSubscribed: isSubscribed

@@ -63,7 +63,6 @@ exports.register = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  console.log(req.body);
   if (req.body.apiType === "socialLogin") {
     let params = req.body.providerData ? req.body.providerData : {};
     if (params.id && params.provider) {

@@ -287,6 +287,6 @@ exports.checkPortfolio = async (params, cb) => {
       await cb(null, []);
     }
   } catch (error) {
-    next(error);
+    await cb(null, []);
   }
 };

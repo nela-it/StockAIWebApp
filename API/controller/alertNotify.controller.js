@@ -19,7 +19,6 @@ exports.getAlertNotify = async (req, res, next) => {
                     alertNtfy.push(value.dataValues)
                 }
             })
-            console.log(alertNtfy);
             return res.status(200).json({
                 message: "AlertNotifys Found",
                 data: alertNtfy
