@@ -433,6 +433,9 @@ export class FilesDataSource extends DataSource<any>
                 case 'ticker':
                     [propertyA, propertyB] = [a.ticker, b.ticker];
                     break;
+                case 'groupName':
+                        [propertyA, propertyB] = [a.groupName, b.groupName];
+                        break;
                 case 'stockName':
                     [propertyA, propertyB] = [a.stock_name, b.stock_name];
                     break;

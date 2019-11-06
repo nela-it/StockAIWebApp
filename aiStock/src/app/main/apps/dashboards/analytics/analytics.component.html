@@ -293,7 +293,7 @@
                             </mat-header-cell>
                             <mat-cell *matCellDef="let portfolio" fxHide fxShow.gt-md>
                                 <p [ngStyle]="{'color':portfolio.todayaddfontColor}">
-                                    {{portfolio.today_change | currency:'USD':'symbol'}}
+                                    ${{portfolio.today_change}}
                                 </p>
                             </mat-cell>
                         </ng-container>

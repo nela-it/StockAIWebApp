@@ -94,7 +94,6 @@ export class PredictionListService implements Resolve<any>
         };
         return this._httpClient.post(addPortfolio, stockId, this.httpOptions).pipe(
             tap((result) => {
-                console.log('user data', result);
             }, err => {
                 console.log(err);
             })
