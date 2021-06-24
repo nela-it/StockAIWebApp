@@ -28,7 +28,7 @@ class _ProductinfoScreenState extends State<Productinfo> {
           //print(userData["token"]);
           HttpClient client = new HttpClient();
           //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-          String url ='https://stockzai.com/api/product/getProductInfo';
+          String url ='https://api.stockzed.com/api/product/getProductInfo';
           HttpClientRequest request = await client.getUrl(Uri.parse(url));
           request.headers.set('authorization', userData["token"]);
           HttpClientResponse response = await request.close();

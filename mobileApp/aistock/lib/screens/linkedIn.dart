@@ -15,7 +15,7 @@ class LinkedinLogin extends StatefulWidget {
 _loginApi(context,reqBody) async {
     HttpClient client = new HttpClient();
                 //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-                String url ='https://stockzai.com/api/user/login';
+                String url ='https://api.stockzed.com/api/user/login';
                 HttpClientRequest request = await client.postUrl(Uri.parse(url));
                 request.headers.set('content-type', 'application/json');
 

@@ -211,7 +211,7 @@ class _MainScreenState extends State<MainScreen> {
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
     //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-    String url = 'https://stockzai.com/api/prediction_group/getGroups';
+    String url = 'https://api.stockzed.com/api/prediction_group/getGroups';
     HttpClientRequest request = await client.getUrl(Uri.parse(url));
     request.headers.set('authorization', userData["token"]);
     HttpClientResponse response = await request.close();
@@ -249,7 +249,7 @@ class _MainScreenState extends State<MainScreen> {
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
     //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-    String url = 'https://stockzai.com/api/prediction_group/exploreGroups';
+    String url = 'https://api.stockzed.com/api/prediction_group/exploreGroups';
     HttpClientRequest request = await client.postUrl(Uri.parse(url));
     request.headers.set('authorization', userData["token"]);
     request.headers.set('content-type', 'application/json');
@@ -285,7 +285,7 @@ class _MainScreenState extends State<MainScreen> {
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
     //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-    String url = 'https://stockzai.com/api/algorithm/getAlgorithm';
+    String url = 'https://api.stockzed.com/api/algorithm/getAlgorithm';
     HttpClientRequest request = await client.postUrl(Uri.parse(url));
     request.headers.set('authorization', userData["token"]);
     request.headers.set('content-type', 'application/json');
@@ -319,7 +319,7 @@ class _MainScreenState extends State<MainScreen> {
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
     //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-    String url = 'https://stockzai.com/api/stocks/getStockInfo';
+    String url = 'https://api.stockzed.com/api/stocks/getStockInfo';
     HttpClientRequest request = await client.postUrl(Uri.parse(url));
     request.headers.set('authorization', userData["token"]);
     request.headers.set('content-type', 'application/json');
@@ -357,7 +357,7 @@ class _MainScreenState extends State<MainScreen> {
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
     //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
-    String url = 'https://stockzai.com/api/portfolio/addPortfolio';
+    String url = 'https://api.stockzed.com/api/portfolio/addPortfolio';
     HttpClientRequest request = await client.postUrl(Uri.parse(url));
     request.headers.set('authorization', userData["token"]);
     request.headers.set('content-type', 'application/json');

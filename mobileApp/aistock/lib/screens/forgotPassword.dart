@@ -33,7 +33,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       });
     HttpClient client = new HttpClient();
       //client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true); 
-      String url = "https://stockzai.com/api/user/forgotPassword";
+      String url = "https://api.stockzed.com/api/user/forgotPassword";
       HttpClientRequest request = await client.postUrl(Uri.parse(url));
       request.headers.set('content-type', 'application/json');
       request.add(utf8.encode(json.encode({"email":email})));

@@ -32,7 +32,7 @@ class _paymentScreenState extends State<paymentScreen> {
     var user = storage.getString('userData');
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
-    String url = 'https://stockzai.com/api/payment/payment';
+    String url = 'https://api.stockzed.com/api/payment/payment';
     HttpClientRequest request = await client.getUrl(Uri.parse(url));
     request.headers.set('authorization', userData["token"]);
     HttpClientResponse response = await request.close();

@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<Settings> {
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
     //client.badCertificateCallback=((X509Certificate cert, String host, int port) => true);
-    String url = 'https://stockzai.com/api/user/userInfo';
+    String url = 'https://api.stockzed.com/api/user/userInfo';
     HttpClientRequest request = await client.getUrl(Uri.parse(url));
     request.headers.set('authorization', userData['token']);
     HttpClientResponse response = await request.close();

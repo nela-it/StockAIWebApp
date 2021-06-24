@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
 
   _loginApiRefresh(reqBody) async {
     HttpClient client = new HttpClient();
-    String url = 'https://stockzai.com/api/user/login';
+    String url = 'https://api.stockzed.com/api/user/login';
     HttpClientRequest request = await client.postUrl(Uri.parse(url));
     request.headers.set('content-type', 'application/json');
     request.add(utf8.encode(json.encode(reqBody)));

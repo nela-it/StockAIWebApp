@@ -26,7 +26,7 @@ class _notificationState extends State<notification> {
     var user = storage.getString('userData');
     var userData = jsonDecode(user);
     HttpClient client = new HttpClient();
-    String url = 'https://stockzai.com/api/user/getAlertNotify';
+    String url = 'https://api.stockzed.com/api/user/getAlertNotify';
     HttpClientRequest request = await client.getUrl(Uri.parse(url));
     request.headers.set('authorization', userData["token"]);
     HttpClientResponse response = await request.close();
