@@ -678,7 +678,7 @@ class _PortfolioScreenState extends State<Portfolio> {
                                               Row(
                                                 children: <Widget>[
                                                   Image.network(
-                                                    "https://stockzai.com/group/company/${filterStockData[index]["real_time_price"]["stock"]["ticker_image"]}.png",
+                                                    "${filterStockData[index]["real_time_price"]["stock"]["ticker_image"]}",
                                                     height: 40,
                                                     width: 40,
                                                   ),
@@ -1164,7 +1164,7 @@ class _PortfolioScreenState extends State<Portfolio> {
                                 children: <Widget>[
                                   //Text("a",style: TextStyle(fontSize: 70,color:Colors.black,fontWeight:FontWeight.bold),),
                                   Image.network(
-                                    "https://stockzai.com/group/company/${stockDetails["ticker_image"]}.png",
+                                    "${stockDetails["ticker_image"]}",
                                     height: 40,
                                     width: 40,
                                   ),

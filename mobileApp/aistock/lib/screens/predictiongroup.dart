@@ -456,7 +456,7 @@ class _PredictionGroupState extends State<PredictionGroup> {
                                             Row(
                                               children: <Widget>[
                                                 Image.network(
-                                                  "https://stockzai.com/group/company/${stockListData[index]["ticker_image"]}.png",
+                                                  "${stockListData[index]["ticker_image"]}",
                                                   height: 40,
                                                   width: 40,
                                                 ),
@@ -889,7 +889,7 @@ class _PredictionGroupState extends State<PredictionGroup> {
                                   children: <Widget>[
                                     //Text("a",style: TextStyle(fontSize: 70,color:Colors.black,fontWeight:FontWeight.bold),),
                                     Image.network(
-                                      "https://stockzai.com/group/company/${stockDetails["ticker_image"]}.png",
+                                      "${stockDetails["ticker_image"]}",
                                       height: 40,
                                       width: 40,
                                     ),
@@ -1291,7 +1291,7 @@ class _PredictionGroupState extends State<PredictionGroup> {
                                     margin: EdgeInsets.only(left: 10, right: 7),
                                     child: Image.network(
                                       //list[index]["image"],
-                                      "http://stockzai.com${stockData[index]["imagePath"]}",
+                                      "${stockData[index]["imagePath"]}",
                                       height: 40,
                                       width: 40,
                                     ),

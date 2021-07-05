@@ -222,6 +222,9 @@ class _MainScreenState extends State<MainScreen> {
       setState(() {
         stockData = result["data"];
         loading = false;
+        for(int i=0; i<stockData.length ;i++){
+          print(stockData[i]["imagePath"]);
+        }
       });
     } else {
       String res = await response.transform(utf8.decoder).join();
@@ -614,7 +617,7 @@ class _MainScreenState extends State<MainScreen> {
                                                 Row(
                                                   children: <Widget>[
                                                     Image.network(
-                                                      "https://stockzai.com/group/company/${stockListData[index]["ticker_image"]}.png",
+                                                      "${stockListData[index]["ticker_image"]}",
                                                       height: 40,
                                                       width: 40,
                                                     ),
@@ -1047,7 +1050,7 @@ class _MainScreenState extends State<MainScreen> {
                                     children: <Widget>[
                                       //Text("a",style: TextStyle(fontSize: 70,color:Colors.black,fontWeight:FontWeight.bold),),
                                       Image.network(
-                                        "https://stockzai.com/group/company/${stockDetails["ticker_image"]}.png",
+                                        "${stockDetails["ticker_image"]}",
                                         height: 40,
                                         width: 40,
                                       ),
@@ -1449,7 +1452,7 @@ class _MainScreenState extends State<MainScreen> {
                                     margin: EdgeInsets.only(left: 10,right: 7),
                                     child: Image.network(
                                       //list[index]["image"],
-                                      "http://stockzai.com${stockData[index]["imagePath"]}",
+                                      "${stockData[index]["imagePath"]}",
                                       height: 40,
                                       width: 40,
                                     ),
